@@ -79,3 +79,10 @@ export function createMainWin(): void {
   });
   initWinUrl(mainWindow);
 }
+
+export const mainLogSend = (data) => {
+  const allWindows = BrowserWindow.getAllWindows();
+  allWindows.forEach((window) => {
+    window.webContents.send("MAIN_LOG", data);
+  });
+};

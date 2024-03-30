@@ -1,17 +1,21 @@
 import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
+import { mainLogSend } from "../../helper";
 
 const getFfmpegPath = () => {
+  const basePath = app.isPackaged
+    ? path.join(process.resourcesPath, "app.asar.unpacked/resources")
+    : path.join(__dirname, "../../resources");
   if (process.platform === "darwin") {
     return {
-      ffmpegPath: path.join(__dirname, "../../resources", "mac/ffmpeg"),
-      ffprobePath: path.join(__dirname, "../../resources", "mac/ffprobe"),
+      ffmpegPath: path.join(basePath, "mac/ffmpeg"),
+      ffprobePath: path.join(basePath, "mac/ffprobe"),
     };
   } else {
     return {
-      ffmpegPath: path.join(__dirname, "../../resources", "win/ffmpeg"),
-      ffprobePath: path.join(__dirname, "../../resources", "win/ffprobe"),
+      ffmpegPath: path.join(basePath, "win/ffmpeg"),
+      ffprobePath: path.join(basePath, "win/ffprobe"),
     };
   }
 };
@@ -22,7 +26,7 @@ const { ffmpegPath, ffprobePath } = getFfmpegPath();
 
 execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
   if (error) {
-    console.error(`执行 ffmpeg 失败：${error}`);
+    mainLogSend(error);
     return;
   }
   console.log(`ffmpeg 版本信息：\n${stdout}`);
@@ -44,6 +48,8 @@ ipcMain.handle("SELECT_FILE", async (e, data) => {
 });
 
 ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
+  mainLogSend(`FFMPEG_COMMAND: ${ffmpegPath}`);
+  mainLogSend(`FFMPEG_COMMAND: ${data.command}`);
   const videoDuration = await getFileTime(data.inputFilePath);
   const outputFilePath = path.join(
     DEFAULT_OUTPUT_PATH,
@@ -104,6 +110,8 @@ const getFileTime = async (videoFilePath): Promise<number> => {
       (error, stdout, stderr) => {
         if (error) {
           console.error(`执行出错: ${error.message}`);
+          mainLogSend({ error, ffprobePath });
+          reject(error);
           return;
         }
         if (stderr) {

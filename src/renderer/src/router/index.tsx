@@ -16,6 +16,9 @@ export default function BaseRouter() {
   useEffect(() => {
     initTheme();
     window.electron.ipcRenderer.on("THEME_CHANGE", initTheme);
+    window.electron.ipcRenderer.on("MAIN_LOG", (e, data) => {
+      console.log("main log", data);
+    });
   }, []);
 
   // 初始化
