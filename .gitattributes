@@ -1,0 +1,2 @@
+resources/mac/ffprobe filter=lfs diff=lfs merge=lfs -text
+resources/win/* filter=lfs diff=lfs merge=lfs -text

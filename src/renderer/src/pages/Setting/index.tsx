@@ -1,0 +1,25 @@
+import React, { useEffect, useState } from "react";
+import { Radio } from "antd";
+
+export default function Setting() {
+  const [theme, setTheme] = useState();
+  useEffect(() => {
+    window.api.getStore("theme").then((res) => {
+      setTheme(res);
+    });
+  }, []);
+  const onChange = async (e: any) => {
+    setTheme(e.target.value);
+    await window.api.setStoreSend("theme", e.target.value);
+  };
+  return (
+    <div className="setting">
+      <div>通用设置</div>
+      <Radio.Group value={theme} onChange={onChange}>
+        <Radio value={"light"}>浅色模式</Radio>
+        <Radio value={"dark"}>深色模式</Radio>
+        <Radio value={"system"}>跟随系统</Radio>
+      </Radio.Group>
+    </div>
+  );
+}
