@@ -19,11 +19,11 @@ function InjectData(webContents, data) {
 }
 
 // 加载的url
-const initWinUrl = (win: BrowserWindow, url: string) => {
+const initWinUrl = (win: BrowserWindow) => {
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}${url}`);
+    win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}`);
   } else {
-    win.loadFile(join(__dirname, `../renderer${url}`));
+    win.loadFile(join(__dirname, `../renderer/index.html`));
   }
 };
 
@@ -48,7 +48,7 @@ export function createWin({
   });
   InjectData(win.webContents, injectData);
   showCustomMenu(win);
-  initWinUrl(win, url);
+  initWinUrl(win);
   return win;
 }
 
@@ -77,5 +77,5 @@ export function createMainWin(): void {
     shell.openExternal(details.url);
     return { action: "deny" };
   });
-  initWinUrl(mainWindow, "/");
+  initWinUrl(mainWindow);
 }

@@ -22,6 +22,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "ajv": "^8.12.0",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.7",
     "fluent-ffmpeg": "^2.1.2",
@@ -44,7 +45,6 @@
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
     "generic-names": "^4.0.0",
-    "js-web-screen-shot": "1.9.9-rc.10",
     "less": "^4.2.0",
     "mobx": "^6.12.0",
     "postcss-less": "^6.0.0",
@@ -52,6 +52,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.2",
+    "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
     "vite-plugin-react-css-modules": "^1.0.0"

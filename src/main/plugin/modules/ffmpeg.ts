@@ -5,13 +5,13 @@ import path, { resolve } from "path";
 const getFfmpegPath = () => {
   if (process.platform === "darwin") {
     return {
-      ffmpegPath: path.join(__dirname, "..", "mac/ffmpeg"),
-      ffprobePath: path.join(__dirname, "..", "mac/ffprobe"),
+      ffmpegPath: path.join(__dirname, "../../resources", "mac/ffmpeg"),
+      ffprobePath: path.join(__dirname, "../../resources", "mac/ffprobe"),
     };
   } else {
     return {
-      ffmpegPath: path.join(__dirname, "..", "win/ffmpeg"),
-      ffprobePath: path.join(__dirname, "..", "win/ffprobe"),
+      ffmpegPath: path.join(__dirname, "../../resources", "win/ffmpeg"),
+      ffprobePath: path.join(__dirname, "../../resources", "win/ffprobe"),
     };
   }
 };
@@ -36,6 +36,8 @@ ipcMain.handle("SELECT_FILE", async (e, data) => {
     .then((result) => {
       if (!result.canceled) {
         return result.filePaths;
+      } else {
+        return null;
       }
     });
   // BrowserWindow.fromWebContents(e.sender)?.hide();

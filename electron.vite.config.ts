@@ -4,12 +4,22 @@ import react from "@vitejs/plugin-react";
 import reactCssModule from "vite-plugin-react-css-modules";
 import genericNames from "generic-names";
 import autoprefixer from "autoprefixer";
+import copy from "rollup-plugin-copy";
 
 const generateScopedName = genericNames("[name]__[local]__[hash:base64:4]");
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()],
+    plugins: [
+      externalizeDepsPlugin(),
+      // copy({
+      //   targets: [
+      //     // 将文件夹复制到输出目录
+      //     { src: "resources/mac", dest: "out" },
+      //     { src: "resources/win", dest: "out" },
+      //   ],
+      // }),
+    ],
   },
   preload: {
     // build: {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { lazy, Suspense } from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 
 import { ROUTERS } from "./ROUTERS";
 import { ConfigProvider, Spin, theme } from "antd";
@@ -42,7 +42,7 @@ export default function BaseRouter() {
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >
-      <BrowserRouter>
+      <HashRouter>
         <div styleName={`app${isDark ? " is-dark" : " is-light"}`}>
           <Nav />
           <Suspense fallback={<Spin />}>
@@ -53,7 +53,7 @@ export default function BaseRouter() {
             </Routes>
           </Suspense>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   );
 }

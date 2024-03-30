@@ -40,11 +40,10 @@ const Nav: React.FC = () => {
   const [selectKey, setSelectKey] = useState<string[]>([]);
 
   useEffect(() => {
-    setSelectKey([location.pathname]);
-  }, [location.pathname]);
+    setSelectKey([location.hash.replace("#", "")]);
+  }, [location.hash]);
 
   const handleMenuClick = (e: any) => {
-    console.log("click ", e.key);
     navigate(e.key);
   };
 

@@ -16,9 +16,6 @@ function App() {
     console.log(res);
   };
 
-  useEffect(() => {
-    console.log(1111);
-  }, []);
   return (
     <div className="container">
       <div>主页</div>
