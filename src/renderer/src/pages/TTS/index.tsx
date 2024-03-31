@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import "./index.module.less";
-import { Button, Input, Table, Cascader } from "antd";
+import { Button, Input, Table, Cascader, message } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
@@ -60,10 +60,22 @@ export default function TTS() {
         width: 100,
       },
       {
-        title: "状态",
-        dataIndex: "status",
-        key: "status",
+        title: "操作",
+        dataIndex: "action",
+        key: "action",
         width: 100,
+        render: (_, record) => {
+          return (
+            <Button
+              onClick={() => {
+                console.log(record);
+              }}
+              type="link"
+            >
+              下载
+            </Button>
+          );
+        },
       },
     ];
   }, []);
@@ -84,6 +96,10 @@ export default function TTS() {
   }, []);
 
   const createTTS = async () => {
+    if (!value) {
+      message.error("请输入文本");
+      return;
+    }
     const id = nanoid(16);
     setAudioList((res) => {
       return [
@@ -125,17 +141,35 @@ export default function TTS() {
   return (
     <div styleName="tts">
       <Input.TextArea
-        placeholder="请输入文本"
+        placeholder="请输入文本（最多200个字符）"
         value={value}
+        count={{
+          max: 200,
+          exceedFormatter: (value, config) => {
+            return value.slice(0, config.max);
+          },
+        }}
         onChange={(e) => setValue(e.target.value)}
+        autoSize={{
+          minRows: 5,
+          maxRows: 5,
+        }}
       />
-      <Cascader
-        allowClear={false}
-        options={options}
-        value={voiceSelect}
-        onChange={(value) => setVoiceSelect(value)}
-      />
-      <Button onClick={createTTS}>生成</Button>
+      <div styleName="action">
+        <div>
+          <span styleName="label">声线</span>
+          <Cascader
+            allowClear={false}
+            options={options}
+            value={voiceSelect}
+            onChange={(value) => setVoiceSelect(value)}
+          />
+        </div>
+        <Button onClick={createTTS} type="primary">
+          生成
+        </Button>
+      </div>
+
       <div>
         <Table columns={columns} dataSource={audioList} rowKey="id" />
       </div>
