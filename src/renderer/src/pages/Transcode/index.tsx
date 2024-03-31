@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { Button, message } from "antd";
 import { nanoid } from "nanoid";
+import "./index.module.less";
 
-export default function Translate() {
+export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
   const selectFile = async () => {
     const res = await window.api.selectFile();

@@ -31,6 +31,10 @@ function getItem(
 const items: MenuItem[] = [
   getItem("主页", ROUTERS.HOME, <PieChartOutlined />),
   getItem("转码", ROUTERS.TRANSCODE, <DesktopOutlined />),
+  getItem("提取音视频", ROUTERS.EXTRACT, <ContainerOutlined />),
+  getItem("TTS", ROUTERS.TTS, <ContainerOutlined />),
+  getItem("录屏", ROUTERS.SCREEN_RECORD, <ContainerOutlined />),
+  getItem("截图", ROUTERS.SCREEN_SHOT, <ContainerOutlined />),
   getItem("设置", ROUTERS.SETTING, <ContainerOutlined />),
 ];
 

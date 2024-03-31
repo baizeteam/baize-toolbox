@@ -7,9 +7,13 @@ import { ConfigProvider, Spin, theme } from "antd";
 import Nav from "@renderer/components/Nav";
 import "./index.module.less";
 
-const Setting = lazy(() => import("@renderer/pages/Setting"));
 const Home = lazy(() => import("@renderer/pages/Home"));
-const Translate = lazy(() => import("@renderer/pages/Translate"));
+const Transcode = lazy(() => import("@renderer/pages/Transcode"));
+const Extract = lazy(() => import("@renderer/pages/Extract"));
+const TTS = lazy(() => import("@renderer/pages/TTS"));
+const Setting = lazy(() => import("@renderer/pages/Setting"));
+const ScreenRecord = lazy(() => import("@renderer/pages/ScreenRecord"));
+const ScreenShot = lazy(() => import("@renderer/pages/ScreenShot"));
 
 export default function BaseRouter() {
   const [isDark, setIsDark] = React.useState(false);
@@ -50,11 +54,20 @@ export default function BaseRouter() {
         <div styleName={`app${isDark ? " is-dark" : " is-light"}`}>
           <Nav />
           <Suspense fallback={<Spin />}>
-            <Routes>
-              <Route path={ROUTERS.HOME} element={<Home />} />
-              <Route path={ROUTERS.SETTING} element={<Setting />} />
-              <Route path={ROUTERS.TRANSCODE} element={<Translate />} />
-            </Routes>
+            <div styleName="container">
+              <Routes>
+                <Route path={ROUTERS.HOME} element={<Home />} />
+                <Route path={ROUTERS.TRANSCODE} element={<Transcode />} />
+                <Route path={ROUTERS.EXTRACT} element={<Extract />} />
+                <Route path={ROUTERS.TTS} element={<TTS />} />
+                <Route
+                  path={ROUTERS.SCREEN_RECORD}
+                  element={<ScreenRecord />}
+                />
+                <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
+                <Route path={ROUTERS.SETTING} element={<Setting />} />
+              </Routes>
+            </div>
           </Suspense>
         </div>
       </HashRouter>
