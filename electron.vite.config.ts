@@ -33,10 +33,15 @@ export default defineConfig({
     ],
     css: {
       modules: {
-        generateScopedName,
+        generateScopedName: generateScopedName,
       },
       postcss: {
         plugins: [autoprefixer],
+      },
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
+        },
       },
     },
   },
