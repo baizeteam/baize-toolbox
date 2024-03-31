@@ -1,7 +1,7 @@
 import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
-import { mainLogSend } from "../../helper";
+// import { mainLogSend } from "../../helper";
 
 const getFfmpegPath = () => {
   const basePath = app.isPackaged
@@ -26,15 +26,12 @@ const { ffmpegPath, ffprobePath } = getFfmpegPath();
 
 execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
   if (error) {
-    mainLogSend(error);
     return;
   }
   console.log(`ffmpeg 版本信息：\n${stdout}`);
 });
 
 ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
-  mainLogSend(`FFMPEG_COMMAND: ${ffmpegPath}`);
-  mainLogSend(`FFMPEG_COMMAND: ${data.command}`);
   const videoDuration = await getFileTime(data.inputFilePath);
   const outputFilePath = path.join(
     DEFAULT_OUTPUT_PATH,
@@ -95,7 +92,6 @@ const getFileTime = async (videoFilePath): Promise<number> => {
       (error, stdout, stderr) => {
         if (error) {
           console.error(`执行出错: ${error.message}`);
-          mainLogSend({ error, ffprobePath });
           reject(error);
           return;
         }

@@ -1,0 +1,66 @@
+:global {
+  .ant-tooltip.ellipsis-tooltips {
+    z-index: 9999;
+    max-width: 300px;
+    padding-top: 0 !important;
+    margin-top: -8px;
+
+    .ant-tooltip-arrow {
+      display: none;
+    }
+
+    .ant-tooltip-inner {
+      font-size: 12px;
+      color: #999;
+      line-height: 18px;
+      word-wrap: break-word;
+      border-radius: initial;
+      background: #fff;
+      box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);
+      padding: 5px 6px;
+      border-radius: 2px;
+      min-height: auto;
+      max-height: 200px;
+      overflow: overlay;
+    }
+  }
+
+  .ellipsis-text-container {
+    padding-right: 1px;
+    word-break: break-all;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ellipsis-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 20px; // 部分字体会被截断，所以给一个默认的高度
+    overflow: hidden;
+  }
+  .no-default-span {
+    all: revert;
+  }
+
+  .last-ellipsis {
+    position: relative;
+    overflow: hidden;
+    &::after {
+      content: " ";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 60px;
+      height: 20px;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.5) 7%,
+        #fff 100%
+      );
+    }
+  }
+  .content-calculation {
+    visibility: hidden;
+  }
+}
