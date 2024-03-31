@@ -1,24 +1,44 @@
-import { ipcMain, BrowserWindow } from "electron";
+import { ipcMain, BrowserWindow, dialog } from "electron";
 import { createWin } from "../../helper";
 
-ipcMain.on("CREATE_WIN", (e, data) => {
+// 创建窗口
+ipcMain.on("WIN_CREATE", (e, data) => {
   createWin(data);
 });
 
+// 隐藏窗口
 ipcMain.on("HIDE_WIN", (e, data) => {
   BrowserWindow.fromWebContents(e.sender)?.hide();
 });
 
-ipcMain.on("DRAG_WIN", (e, data) => {
+// 窗口拖拽
+ipcMain.on("WIN_DRAG", (e, data) => {
   if (e?.sender && !isNaN(data.x) && !isNaN(data.y)) {
     BrowserWindow.fromWebContents(e.sender)?.setPosition(data.x, data.y);
   }
 });
 
-ipcMain.handle("GET_WIN_POSITION", (e, data) => {
+// 获取窗口位置
+ipcMain.handle("WIN_GET_POSITION", (e, data) => {
   return BrowserWindow.fromWebContents(e.sender)?.getPosition();
 });
 
-ipcMain.on("CLOSE_WIN", (e, data) => {
+// 关闭窗口
+ipcMain.on("WIN_CLOSE", (e, data) => {
   BrowserWindow.fromWebContents(e.sender)?.close();
+});
+
+// 选择文件
+ipcMain.handle("WIN_SELECT_FILE", async (e, data) => {
+  return dialog
+    .showOpenDialog({
+      properties: ["openFile"],
+    })
+    .then((result) => {
+      if (!result.canceled) {
+        return result.filePaths;
+      } else {
+        return null;
+      }
+    });
 });

@@ -32,21 +32,6 @@ execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
   console.log(`ffmpeg 版本信息：\n${stdout}`);
 });
 
-ipcMain.handle("SELECT_FILE", async (e, data) => {
-  return dialog
-    .showOpenDialog({
-      properties: ["openFile"],
-    })
-    .then((result) => {
-      if (!result.canceled) {
-        return result.filePaths;
-      } else {
-        return null;
-      }
-    });
-  // BrowserWindow.fromWebContents(e.sender)?.hide();
-});
-
 ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
   mainLogSend(`FFMPEG_COMMAND: ${ffmpegPath}`);
   mainLogSend(`FFMPEG_COMMAND: ${data.command}`);

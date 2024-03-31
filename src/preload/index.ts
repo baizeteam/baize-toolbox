@@ -4,22 +4,22 @@ import { electronAPI } from "@electron-toolkit/preload";
 // Custom APIs for renderer
 const api = {
   createWin: (params) => {
-    ipcRenderer.send("CREATE_WIN", params);
+    ipcRenderer.send("WIN_CREATE", params);
   },
   hideWin: () => {
     ipcRenderer.send("HIDE_WIN");
   },
   dragWin: (params) => {
-    ipcRenderer.send("DRAG_WIN", params);
+    ipcRenderer.send("WIN_DRAG", params);
   },
   getWinPosition: async () => {
-    return await ipcRenderer.invoke("GET_WIN_POSITION");
+    return await ipcRenderer.invoke("WIN_GET_POSITION");
   },
   closeWin: () => {
-    ipcRenderer.send("CLOSE_WIN");
+    ipcRenderer.send("WIN_CLOSE");
   },
   selectFile: async () => {
-    return await ipcRenderer.invoke("SELECT_FILE");
+    return await ipcRenderer.invoke("WIN_SELECT_FILE");
   },
   setStore: (key, value) => {
     ipcRenderer.send("SET_STORE", key, value);

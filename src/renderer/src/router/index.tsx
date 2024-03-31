@@ -13,6 +13,7 @@ const Translate = lazy(() => import("@renderer/pages/Translate"));
 
 export default function BaseRouter() {
   const [isDark, setIsDark] = React.useState(false);
+
   useEffect(() => {
     initTheme();
     window.electron.ipcRenderer.on("THEME_CHANGE", initTheme);
@@ -21,7 +22,7 @@ export default function BaseRouter() {
     });
   }, []);
 
-  // 初始化
+  // 初始化主题
   const initTheme = async () => {
     const themeRes = await window.api.getStore("theme");
     if (themeRes === "dark") {

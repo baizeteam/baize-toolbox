@@ -1,17 +1,23 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { nanoid } from "nanoid";
 
 export default function Translate() {
   const [filePath, setFilePath] = useState(null);
   const selectFile = async () => {
     const res = await window.api.selectFile();
-    setFilePath(res[0]);
-    console.log(res);
+    if (res) {
+      console.log(res);
+      setFilePath(res[0]);
+    }
   };
 
   const handleFile = () => {
+    if (!filePath) {
+      message.error("请先选择文件");
+      return;
+    }
     const outputFileName = `${new Date().getTime()}.mp4`;
     const taskId = nanoid(16);
     window.api.ffmpegCommand({
