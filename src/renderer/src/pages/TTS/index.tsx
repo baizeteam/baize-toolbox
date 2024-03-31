@@ -6,17 +6,17 @@ import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import AudioPlay from "@renderer/components/AudioPlay";
-import TTSWorker from "./tts.worker?worker";
+// import TTSWorker from "./tts.worker?worker";
 
-const ttsFunc = async (params): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    const worker = new TTSWorker();
-    worker.postMessage({ event: "TTS_CREATE", data: params });
-    worker.onmessage = function (event) {
-      resolve(event);
-    };
-  });
-};
+// const ttsFunc = async (params): Promise<any> => {
+//   return new Promise((resolve, reject) => {
+//     const worker = new TTSWorker();
+//     worker.postMessage({ event: "TTS_CREATE", data: params });
+//     worker.onmessage = function (event) {
+//       resolve(event);
+//     };
+//   });
+// };
 
 interface IAudioItem {
   id: string;
@@ -130,7 +130,9 @@ export default function TTS() {
       },
     };
     // const res = await window.electron.ipcRenderer.invoke("TTS_CREATE", payload);
-    const res = await ttsFunc(payload);
+    // const res = await ttsFunc(payload);
+    const tts = new EdgeSpeechTTS({ locale: "zh-CN" });
+    const res = await tts.create(payload);
     console.log(res);
     const buffer = await res.arrayBuffer();
     const blob = new Blob([buffer], { type: "audio/mp3" });
