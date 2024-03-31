@@ -12,7 +12,6 @@ ipcMain.handle("GET_STORE", (_, key) => {
 });
 
 ipcMain.on("SET_STORE_SEND", (_, key, value) => {
-  console.log("theme change");
   store.set(key, value);
   const allWindows = BrowserWindow.getAllWindows();
   allWindows.forEach((window) => {
