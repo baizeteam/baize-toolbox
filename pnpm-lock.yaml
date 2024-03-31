@@ -37,6 +37,9 @@ devDependencies:
   '@electron-toolkit/tsconfig':
     specifier: ^1.0.1
     version: 1.0.1(@types/node@18.19.28)
+  '@koale/useworker':
+    specifier: ^4.0.2
+    version: 4.0.2(react@18.2.0)
   '@lobehub/tts':
     specifier: ^1.24.0
     version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.363.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
@@ -1031,6 +1034,15 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /@koale/useworker@4.0.2(react@18.2.0):
+    resolution: {integrity: sha512-xPIPADtom8/3/4FLNj7MvNcBM/Z2FleH85Fdx2O869eoKW8+PoEgtSVvoxWjCWMA46Sm9A5/R1TyzNGc+yM0wg==}
+    peerDependencies:
+      react: ^16.8.0
+    dependencies:
+      dequal: 1.0.1
+      react: 18.2.0
     dev: true
 
   /@lit-labs/ssr-dom-shim@1.2.0:
@@ -3060,6 +3072,11 @@ packages:
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+    dev: true
+
+  /dequal@1.0.1:
+    resolution: {integrity: sha512-Fx8jxibzkJX2aJgyfSdLhr9tlRoTnHKrRJuu2XHlAgKioN2j19/Bcbe0d4mFXYZ3+wpE2KVobUVTfDutcD17xQ==}
+    engines: {node: '>=6'}
     dev: true
 
   /dequal@2.0.3:

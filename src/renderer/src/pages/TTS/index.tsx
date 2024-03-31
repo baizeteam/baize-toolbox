@@ -4,11 +4,19 @@ import { Button, Input, Table, Cascader, message } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
-import * as TTSApi from "@lobehub/tts";
 import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import AudioPlay from "@renderer/components/AudioPlay";
+import TTSWorker from "./tts.worker?worker";
 
-console.log(TTSApi, EdgeSpeechTTS.voiceName);
+const ttsFunc = async (params): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    const worker = new TTSWorker();
+    worker.postMessage({ event: "TTS_CREATE", data: params });
+    worker.onmessage = function (event) {
+      resolve(event);
+    };
+  });
+};
 
 interface IAudioItem {
   id: string;
@@ -68,6 +76,7 @@ export default function TTS() {
           return (
             <Button
               onClick={() => {
+                // todo
                 console.log(record);
               }}
               type="link"
@@ -121,8 +130,7 @@ export default function TTS() {
       },
     };
     // const res = await window.electron.ipcRenderer.invoke("TTS_CREATE", payload);
-    const tts = new EdgeSpeechTTS({ locale: "zh-CN" });
-    const res = await tts.create(payload);
+    const res = await ttsFunc(payload);
     console.log(res);
     const buffer = await res.arrayBuffer();
     const blob = new Blob([buffer], { type: "audio/mp3" });
