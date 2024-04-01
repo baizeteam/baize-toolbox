@@ -4,7 +4,7 @@ import { Radio } from "antd";
 export default function Setting() {
   const [theme, setTheme] = useState();
   useEffect(() => {
-    window.electron.ipcRenderer.invoke("GET_STORE", theme).then((res) => {
+    window.electron.ipcRenderer.invoke("GET_STORE", "theme").then((res) => {
       setTheme(res);
     });
   }, []);

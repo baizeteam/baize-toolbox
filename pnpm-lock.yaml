@@ -42,7 +42,7 @@ devDependencies:
     version: 4.0.2(react@18.2.0)
   '@lobehub/tts':
     specifier: ^1.24.0
-    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.363.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
+    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.364.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
   '@types/node':
     specifier: ^18.19.5
     version: 18.19.28
@@ -70,6 +70,9 @@ devDependencies:
   babel-plugin-react-css-modules:
     specifier: ^5.2.6
     version: 5.2.6(@babel/core@7.24.3)
+  bufferutil:
+    specifier: ^4.0.8
+    version: 4.0.8
   electron:
     specifier: ^28.1.1
     version: 28.2.9
@@ -112,12 +115,18 @@ devDependencies:
   typescript:
     specifier: ^5.3.3
     version: 5.4.3
+  utf-8-validate:
+    specifier: ^6.0.3
+    version: 6.0.3
   vite:
     specifier: 5.0.12
     version: 5.0.12(@types/node@18.19.28)(less@4.2.0)(terser@5.30.0)
   vite-plugin-react-css-modules:
     specifier: ^1.0.0
     version: 1.0.0(vite@5.0.12)
+  ws:
+    specifier: ^8.16.0
+    version: 8.16.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
 
 packages:
 
@@ -1059,7 +1068,7 @@ packages:
     resolution: {integrity: sha512-s9KnjaPjsEefaNv150G3aifvB+J3P4eEKG+epY9zDPS2BeB6+V2jELWqAZll+nkogMaVovjEE813z3V751QwGw==}
     dev: true
 
-  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.363.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
+  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.364.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
     resolution: {integrity: sha512-1YXSdaY9P8kOEnTxgv/0JmUEvrxg4Uit61gfBN6z70ANzOQAIHVOx3KGjgxChjQsA36ZJtDabNybYyGBlKUeyw==}
     peerDependencies:
       '@lobehub/ui': '>=1'
@@ -1075,7 +1084,7 @@ packages:
       antd: 5.15.4(react-dom@18.2.0)(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.2.73)(antd@5.15.4)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.363.0(react@18.2.0)
+      lucide-react: 0.364.0(react@18.2.0)
       openai: 4.31.0
       query-string: 8.2.0
       react: 18.2.0
@@ -1129,7 +1138,7 @@ packages:
       immer: 10.0.4
       leva: 0.9.35(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.363.0(react@18.2.0)
+      lucide-react: 0.364.0(react@18.2.0)
       polished: 4.3.1
       prism-react-renderer: 2.3.1(react@18.2.0)
       query-string: 9.0.0
@@ -2627,6 +2636,14 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+    dev: true
+
+  /bufferutil@4.0.8:
+    resolution: {integrity: sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.8.0
     dev: true
 
   /builder-util-runtime@9.2.3:
@@ -4562,8 +4579,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-react@0.363.0(react@18.2.0):
-    resolution: {integrity: sha512-AlsfPCsXQyQx7wwsIgzcKOL9LwC498LIMAo+c0Es5PkHJa33xwmYAkkSoKoJWWWSYQEStqu58/jT4tL2gi32uQ==}
+  /lucide-react@0.364.0(react@18.2.0):
+    resolution: {integrity: sha512-eHfdbJExWtTaZ0tBMGtI7PA/MbqV5wt+o4/yitDce17tadH/75Gq3Tq8jSteb3LhLr0eay/j5YUuN4yXjnI3aw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -5239,6 +5256,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: true
+
+  /node-gyp-build@4.8.0:
+    resolution: {integrity: sha512-u6fs2AEUljNho3EYTJNBfImO5QTo/J/1Etd+NVdCj7qWKUSN/bSLkZwhDv7I+w/MSC6qJ4cknepkAYykDdK8og==}
+    hasBin: true
     dev: true
 
   /node-releases@2.0.14:
@@ -7182,6 +7204,14 @@ packages:
       react: 18.2.0
     dev: true
 
+  /utf-8-validate@6.0.3:
+    resolution: {integrity: sha512-uIuGf9TWQ/y+0Lp+KGZCMuJWc3N9BHA+l/UmHd/oUHwJJDeysyTRxNQVkbzsIWfGFbRe3OcgML/i0mvVRPOyDA==}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.8.0
+    dev: true
+
   /utf8-byte-length@1.0.4:
     resolution: {integrity: sha512-4+wkEYLBbWxqTahEsWrhxepcoVOJ+1z5PGIjPZxRkytcdSUaNjIjBM7Xn8E+pdSuV7SzvWovBFA54FO0JSoqhA==}
     dev: true
@@ -7382,6 +7412,22 @@ packages:
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  /ws@8.16.0(bufferutil@4.0.8)(utf-8-validate@6.0.3):
+    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dependencies:
+      bufferutil: 4.0.8
+      utf-8-validate: 6.0.3
+    dev: true
 
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}

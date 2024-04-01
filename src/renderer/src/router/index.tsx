@@ -28,7 +28,10 @@ export default function BaseRouter() {
 
   // 初始化主题
   const initTheme = async () => {
-    const themeRes = await window.api.getStore("theme");
+    const themeRes = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "theme"
+    );
     if (themeRes === "dark") {
       setIsDark(true);
     } else if (themeRes === "light") {

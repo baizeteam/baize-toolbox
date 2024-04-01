@@ -4,3 +4,4 @@ import "./modules/ipcWin";
 import "./modules/MenuManger";
 import "./modules/store";
 import "./modules/ffmpeg";
+import "./modules/tts";

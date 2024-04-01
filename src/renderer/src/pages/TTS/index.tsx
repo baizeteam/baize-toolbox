@@ -17,12 +17,19 @@ import AudioPlay from "@renderer/components/AudioPlay";
 //   });
 // };
 
+enum EStatus {
+  pending = "pending",
+  success = "success",
+  error = "error",
+}
+
 interface IAudioItem {
   id: string;
+  voice: string;
   text: string;
   url: string;
   createTime: number;
-  status: "pending" | "success" | "error";
+  status: EStatus;
 }
 
 export default function TTS() {
@@ -100,24 +107,33 @@ export default function TTS() {
     });
   }, []);
 
+  const base64ToBlob = (base64: string) => {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    let blob = new Blob([bytes], { type: "audio/mp3" });
+    const url = URL.createObjectURL(blob);
+    return url;
+  };
+
   const createTTS = async () => {
     if (!value) {
       message.error("请输入文本");
       return;
     }
     const id = nanoid(16);
+    const params = {
+      id,
+      text: value,
+      voice: voiceSelect[1],
+      url: null,
+      createTime: Date.now(),
+      status: EStatus.pending,
+    };
     setAudioList((res) => {
-      return [
-        ...res,
-        {
-          id,
-          text: value,
-          voice: voiceSelect[1],
-          url: null,
-          createTime: Date.now(),
-          status: "pending",
-        },
-      ];
+      return [...res, params];
     });
     const payload = {
       input: value,
@@ -125,23 +141,19 @@ export default function TTS() {
         voice: voiceSelect[1],
       },
     };
-    // const res = await window.electron.ipcRenderer.invoke("TTS_CREATE", payload);
-    // const res = await ttsFunc(payload);
-    const tts = new EdgeSpeechTTS({ locale: "zh-CN" });
-    const res = await tts.create(payload);
-    console.log(res);
-    const buffer = await res.arrayBuffer();
-    const blob = new Blob([buffer], { type: "audio/mp3" });
-    const url = URL.createObjectURL(blob);
+    const ttsRes = await window.electron.ipcRenderer.invoke(
+      "TTS_CREATE",
+      payload
+    );
+    console.log(ttsRes);
     setAudioList((res) => {
       return res.map((item) => {
         if (item.id === id) {
-          return { ...item, url, status: "success" };
+          return { ...item, ...ttsRes, url: base64ToBlob(ttsRes.url) };
         }
         return item;
       });
     });
-    console.log(url);
   };
 
   return (
