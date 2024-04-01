@@ -11,7 +11,7 @@ export default function Setting() {
   const onChange = async (e: any) => {
     setTheme(e.target.value);
     await window.electron.ipcRenderer.send(
-      "SET_STORE",
+      "SET_STORE_SEND",
       "theme",
       e.target.value
     );
