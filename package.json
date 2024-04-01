@@ -44,7 +44,7 @@
     "axios": "^1.6.5",
     "babel-plugin-react-css-modules": "^5.2.6",
     "bufferutil": "^4.0.8",
-    "electron": "^28.1.1",
+    "electron": "^29.1.6",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
     "generic-names": "^4.0.0",
