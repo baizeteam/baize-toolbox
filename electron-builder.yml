@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-app
+appId: com.baize.box.app
+productName: baize-box
 directories:
   buildResources: build
 files:
@@ -9,10 +9,17 @@ files:
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!resources/win/*'
+  - '!resources/mac/*'
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-app
+  executableName: baize-box
+  files:
+    - from: 'resources/win'
+      to: 'resources/win'
+      filter:
+        - '**/*'
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -25,9 +32,20 @@ mac:
     - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
   notarize: false
+  files:
+    - from: 'resources/mac'
+      to: 'resources/mac'
+      filter:
+        - '**/*'
 dmg:
-  artifactName: ${name}-${version}.${ext}
+  format: ULFO
+  artifactName: ${name}-${version}-${arch}.${ext}
 linux:
   target:
     - AppImage

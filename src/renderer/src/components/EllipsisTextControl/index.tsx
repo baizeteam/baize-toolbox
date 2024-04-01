@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Tooltip } from "antd";
-import { TooltipPlacement } from "antd/lib/tooltip";
-import "./index.less";
-import classNames from "classnames";
+import React, { useEffect, useRef, useState } from 'react';
+import { Tooltip } from 'antd';
+import { TooltipPlacement } from 'antd/lib/tooltip';
+import './index.less';
+import classNames from 'classnames';
 
 interface EllipsisTextControlProps {
   /** 显示的文体内容 */
@@ -22,7 +22,7 @@ interface EllipsisTextControlProps {
   /** 渲染节点 */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   /** 省略类型：多行文本省略，单行文本省略，枚举值：single|multiple，默认单行 */
-  type?: "single" | "multiple";
+  type?: 'single' | 'multiple';
   /** 是否需要显示tip，默认为true */
   showTooltip?: boolean;
   /** 扩展需要特殊处理的 hovertitle */
@@ -46,11 +46,11 @@ const EllipsisTextControl = ({
   contentClassName,
   tooltipsClassName,
   getPopupContainer,
-  type = "single",
+  type = 'single',
   showTooltip = true,
   tooltipTitle,
-  placement = "bottomLeft",
-  endContent = "",
+  placement = 'bottomLeft',
+  endContent = '',
 }: EllipsisTextControlProps) => {
   /** 主体显示的内容 */
   const ellipsisInputRef = useRef<HTMLDivElement>(null);
@@ -149,34 +149,34 @@ const EllipsisTextControl = ({
   };
 
   const style = {
-    maxWidth: maxWidth ?? width ?? "none",
-    width: width ?? "none",
-    maxHeight: type === "multiple" ? maxHeight : "none",
+    maxWidth: maxWidth ?? width ?? 'none',
+    width: width ?? 'none',
+    maxHeight: type === 'multiple' ? maxHeight : 'none',
   };
 
   return (
     <Tooltip
       overlayClassName={`ellipsis-tooltips ${
-        tooltipsClassName ? tooltipsClassName : ""
+        tooltipsClassName ? tooltipsClassName : ''
       }`}
       title={tooltipTitle ?? content}
       placement={placement}
       {...optionProps}
       getPopupContainer={getPopupContainer}
-      trigger={showTooltip ? "hover" : ""}
+      // trigger={showTooltip ? "hover" : ""}
     >
       <div
         ref={ellipsisContainerRef}
         style={style}
-        className={classNames("ellipsis-text-container", {
-          "ellipsis-text": type === "single",
+        className={classNames('ellipsis-text-container', {
+          'ellipsis-text': type === 'single',
           [contentClassName]: !!contentClassName,
         })}
       >
         {contentText ? (
           <>
             <div
-              className={showLastEllipsis ? "last-ellipsis" : ""}
+              className={showLastEllipsis ? 'last-ellipsis' : ''}
               style={{
                 height: maxHeight,
                 maxWidth: maxWidth,
@@ -195,7 +195,7 @@ const EllipsisTextControl = ({
           </span>
         )}
 
-        {type === "multiple" && endContent}
+        {type === 'multiple' && endContent}
       </div>
     </Tooltip>
   );
