@@ -10,7 +10,11 @@ export default function Setting() {
   }, []);
   const onChange = async (e: any) => {
     setTheme(e.target.value);
-    await window.electron.ipcRenderer.send("SET_STORE", "theme", e.target.value));
+    await window.electron.ipcRenderer.send(
+      "SET_STORE",
+      "theme",
+      e.target.value
+    );
   };
   return (
     <div className="setting">
