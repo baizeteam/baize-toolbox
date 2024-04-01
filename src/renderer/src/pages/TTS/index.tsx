@@ -1,21 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./index.module.less";
 import { Button, Input, Table, Cascader, message } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
-// import TTSWorker from "./tts.worker?worker";
-
-// const ttsFunc = async (params): Promise<any> => {
-//   return new Promise((resolve, reject) => {
-//     const worker = new TTSWorker();
-//     worker.postMessage({ event: "TTS_CREATE", data: params });
-//     worker.onmessage = function (event) {
-//       resolve(event);
-//     };
-//   });
-// };
 
 enum EStatus {
   pending = "pending",
@@ -32,6 +21,17 @@ interface IAudioItem {
   status: EStatus;
 }
 
+const base64ToBlob = (base64: string) => {
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  let blob = new Blob([bytes], { type: "audio/mp3" });
+  const url = URL.createObjectURL(blob);
+  return url;
+};
+
 export default function TTS() {
   const [value, setValue] = useState("如果你也喜欢这个项目就点个star吧");
   const [voiceSelect, setVoiceSelect] = useState<string[]>([
@@ -39,6 +39,12 @@ export default function TTS() {
     "zh-CN-XiaoxiaoNeural",
   ]);
   const [audioList, setAudioList] = useState<IAudioItem[]>([]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
+      setAudioList(res);
+    });
+  }, []);
 
   const columns = useMemo(() => {
     return [
@@ -54,7 +60,7 @@ export default function TTS() {
         width: 200,
         key: "url",
         render: (url: string) => {
-          return url ? <AudioPlay src={url} /> : "生成中。。。";
+          return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。";
         },
       },
       {
@@ -107,17 +113,6 @@ export default function TTS() {
     });
   }, []);
 
-  const base64ToBlob = (base64: string) => {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    let blob = new Blob([bytes], { type: "audio/mp3" });
-    const url = URL.createObjectURL(blob);
-    return url;
-  };
-
   const createTTS = async () => {
     if (!value) {
       message.error("请输入文本");
@@ -133,7 +128,7 @@ export default function TTS() {
       status: EStatus.pending,
     };
     setAudioList((res) => {
-      return [...res, params];
+      return [params, ...res];
     });
     const payload = {
       input: value,
@@ -141,19 +136,14 @@ export default function TTS() {
         voice: voiceSelect[1],
       },
     };
-    const ttsRes = await window.electron.ipcRenderer.invoke(
-      "TTS_CREATE",
-      payload
+
+    await window.electron.ipcRenderer.invoke("TTS_CREATE", params);
+    const ttsList = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "ttsList"
     );
-    console.log(ttsRes);
-    setAudioList((res) => {
-      return res.map((item) => {
-        if (item.id === id) {
-          return { ...item, ...ttsRes, url: base64ToBlob(ttsRes.url) };
-        }
-        return item;
-      });
-    });
+    console.log(ttsList);
+    setAudioList(ttsList);
   };
 
   return (

@@ -1,7 +1,7 @@
 import ElectronStore from "electron-store";
 import { ipcMain, BrowserWindow } from "electron";
 
-const store = new ElectronStore();
+export const store = new ElectronStore();
 
 ipcMain.on("SET_STORE", (_, key, value) => {
   store.set(key, value);
@@ -23,6 +23,7 @@ ipcMain.on("SET_STORE_SEND", (_, key, value) => {
 const defaultStore = {
   defaultSetting: "default",
   theme: "system",
+  ttsList: [],
 };
 
 if (!store.get("defaultSetting")) {
