@@ -163,7 +163,7 @@ const EllipsisTextControl = ({
       placement={placement}
       {...optionProps}
       getPopupContainer={getPopupContainer}
-      trigger={showTooltip ? "hover" : ""}
+      // {showTooltip ? "hover" : ""}
     >
       <div
         ref={ellipsisContainerRef}
