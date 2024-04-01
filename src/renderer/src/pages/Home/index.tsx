@@ -10,16 +10,9 @@ function App() {
     navigate("/setting");
   };
 
-  const testStore = async () => {
-    window.api.setStore("test", "1234");
-    const res = await window.api.getStore("test");
-    console.log(res);
-  };
-
   return (
     <div className="container">
       <div>主页</div>
-      <Button onClick={testStore}>test store</Button>
       <Button onClick={gotoSetting}>goto setting</Button>
     </div>
   );

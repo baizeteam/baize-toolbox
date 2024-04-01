@@ -4,13 +4,13 @@ import { Radio } from "antd";
 export default function Setting() {
   const [theme, setTheme] = useState();
   useEffect(() => {
-    window.api.getStore("theme").then((res) => {
+    window.electron.ipcRenderer.invoke("GET_STORE", theme).then((res) => {
       setTheme(res);
     });
   }, []);
   const onChange = async (e: any) => {
     setTheme(e.target.value);
-    await window.api.setStoreSend("theme", e.target.value);
+    await window.electron.ipcRenderer.send("SET_STORE", "theme", e.target.value));
   };
   return (
     <div className="setting">

@@ -7,7 +7,7 @@ import "./index.module.less";
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
   const selectFile = async () => {
-    const res = await window.api.selectFile();
+    const res = await window.electron.ipcRenderer.invoke("WIN_SELECT_FILE");
     if (res) {
       console.log(res);
       setFilePath(res[0]);
@@ -21,7 +21,7 @@ export default function Transcode() {
     }
     const outputFileName = `${new Date().getTime()}.mp4`;
     const taskId = nanoid(16);
-    window.api.ffmpegCommand({
+    window.Electron.ipcRenderer.send("FFMPEG_COMMAND", {
       command: [
         "-i",
         filePath,

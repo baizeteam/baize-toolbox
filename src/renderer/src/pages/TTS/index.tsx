@@ -4,7 +4,6 @@ import { Button, Input, Table, Cascader, message } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
-import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import AudioPlay from "@renderer/components/AudioPlay";
 // import TTSWorker from "./tts.worker?worker";
 
@@ -41,9 +40,6 @@ export default function TTS() {
         dataIndex: "text",
         key: "text",
         width: 200,
-        render: (text: string) => {
-          return <EllipsisTextControl content={text} width={160} />;
-        },
       },
       {
         title: "音频",
