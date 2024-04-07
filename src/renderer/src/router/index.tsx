@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { lazy, Suspense } from "react";
-import { Routes, Route, HashRouter } from "react-router-dom";
-
+import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import { ROUTERS } from "./ROUTERS";
 import { ConfigProvider, Spin, theme } from "antd";
 import Nav from "@renderer/components/Nav";
+import KeepAlive from "@renderer/components/KeepAlive";
 import "./index.module.less";
 
 const Home = lazy(() => import("@renderer/pages/Home"));
@@ -56,16 +56,23 @@ export default function BaseRouter() {
           <Suspense fallback={<Spin />}>
             <div styleName="container">
               <Routes>
-                <Route path={ROUTERS.HOME} element={<Home />} />
-                <Route path={ROUTERS.TRANSCODE} element={<Transcode />} />
-                <Route path={ROUTERS.EXTRACT} element={<Extract />} />
-                <Route path={ROUTERS.TTS} element={<TTS />} />
+                <Route path={"/"} element={<KeepAlive />}>
+                  <Route path={ROUTERS.HOME} element={<Home />} />
+                  <Route path={ROUTERS.TRANSCODE} element={<Transcode />} />
+                  <Route path={ROUTERS.EXTRACT} element={<Extract />} />
+                  <Route path={ROUTERS.TTS} element={<TTS />} />
+                  <Route
+                    path={ROUTERS.SCREEN_RECORD}
+                    element={<ScreenRecord />}
+                  />
+                  <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
+                  <Route path={ROUTERS.SETTING} element={<Setting />} />
+                </Route>
+                {/* 通配符路由处理不匹配的情况 */}
                 <Route
-                  path={ROUTERS.SCREEN_RECORD}
-                  element={<ScreenRecord />}
+                  path="*"
+                  element={<Navigate to={ROUTERS.HOME} replace />}
                 />
-                <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
-                <Route path={ROUTERS.SETTING} element={<Setting />} />
               </Routes>
             </div>
           </Suspense>

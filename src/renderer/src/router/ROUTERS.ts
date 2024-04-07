@@ -1,5 +1,5 @@
 export const ROUTERS = {
-  HOME: "/",
+  HOME: "/home",
   SETTING: "/setting",
   TRANSCODE: "/transcode",
   EXTRACT: "/extract",

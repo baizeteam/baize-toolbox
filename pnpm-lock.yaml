@@ -42,7 +42,7 @@ devDependencies:
     version: 4.0.2(react@18.2.0)
   '@lobehub/tts':
     specifier: ^1.24.0
-    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.364.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
+    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.365.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
   '@types/node':
     specifier: ^18.19.5
     version: 18.19.28
@@ -58,6 +58,9 @@ devDependencies:
   '@vitejs/plugin-react':
     specifier: ^4.2.1
     version: 4.2.1(vite@5.0.12)
+  ahooks:
+    specifier: ^3.7.11
+    version: 3.7.11(react@18.2.0)
   antd:
     specifier: ^5.13.3
     version: 5.15.4(react-dom@18.2.0)(react@18.2.0)
@@ -73,6 +76,9 @@ devDependencies:
   bufferutil:
     specifier: ^4.0.8
     version: 4.0.8
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   electron:
     specifier: ^29.1.6
     version: 29.1.6
@@ -1068,7 +1074,7 @@ packages:
     resolution: {integrity: sha512-s9KnjaPjsEefaNv150G3aifvB+J3P4eEKG+epY9zDPS2BeB6+V2jELWqAZll+nkogMaVovjEE813z3V751QwGw==}
     dev: true
 
-  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.364.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
+  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.365.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
     resolution: {integrity: sha512-1YXSdaY9P8kOEnTxgv/0JmUEvrxg4Uit61gfBN6z70ANzOQAIHVOx3KGjgxChjQsA36ZJtDabNybYyGBlKUeyw==}
     peerDependencies:
       '@lobehub/ui': '>=1'
@@ -1084,7 +1090,7 @@ packages:
       antd: 5.15.4(react-dom@18.2.0)(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.2.73)(antd@5.15.4)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.364.0(react@18.2.0)
+      lucide-react: 0.365.0(react@18.2.0)
       openai: 4.31.0
       query-string: 8.2.0
       react: 18.2.0
@@ -1127,7 +1133,7 @@ packages:
       '@shikijs/transformers': 1.2.2
       '@splinetool/react-spline': 2.2.6(@splinetool/runtime@0.9.526)(react-dom@18.2.0)(react@18.2.0)
       '@splinetool/runtime': 0.9.526
-      ahooks: 3.7.10(react@18.2.0)
+      ahooks: 3.7.11(react@18.2.0)
       antd: 5.15.4(react-dom@18.2.0)(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.2.73)(antd@5.15.4)(react-dom@18.2.0)(react@18.2.0)
       chroma-js: 2.4.2
@@ -1138,7 +1144,7 @@ packages:
       immer: 10.0.4
       leva: 0.9.35(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.364.0(react@18.2.0)
+      lucide-react: 0.365.0(react@18.2.0)
       polished: 4.3.1
       prism-react-renderer: 2.3.1(react@18.2.0)
       query-string: 9.0.0
@@ -2162,8 +2168,8 @@ packages:
       humanize-ms: 1.2.1
     dev: true
 
-  /ahooks@3.7.10(react@18.2.0):
-    resolution: {integrity: sha512-/HLYif7sFA/5qSuWKrwvjDbf3bq+sdaMrUWS7XGCDRWdC2FrG/i+u5LZdakMYc6UIgJTMQ7tGiJCV7sdU4kSIw==}
+  /ahooks@3.7.11(react@18.2.0):
+    resolution: {integrity: sha512-BfSq7HJ9wk/7a2vX7WbLdwzHyQHmbNe21ipX1PfIzssXIzQfAl79WVJ9GjZaqNl4PFPsJusj/Xjg2OF+gIgGaQ==}
     engines: {node: '>=8.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2174,6 +2180,7 @@ packages:
       js-cookie: 2.2.1
       lodash: 4.17.21
       react: 18.2.0
+      react-fast-compare: 3.2.2
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       tslib: 2.6.2
@@ -4584,8 +4591,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-react@0.364.0(react@18.2.0):
-    resolution: {integrity: sha512-eHfdbJExWtTaZ0tBMGtI7PA/MbqV5wt+o4/yitDce17tadH/75Gq3Tq8jSteb3LhLr0eay/j5YUuN4yXjnI3aw==}
+  /lucide-react@0.365.0(react@18.2.0):
+    resolution: {integrity: sha512-sJYpPyyzGHI4B3pys+XSFnE4qtSWc68rFnDLxbNNKjkLST5XSx9DNn5+1Z3eFgFiw39PphNRiVBSVb+AL3oKwA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -6280,6 +6287,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       react: 18.2.0
+    dev: true
+
+  /react-fast-compare@3.2.2:
+    resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: true
 
   /react-is@16.13.1:
