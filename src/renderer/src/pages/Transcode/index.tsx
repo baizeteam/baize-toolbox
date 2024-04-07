@@ -1,8 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { Button, message } from "antd";
+import { Button, message, Upload, Radio } from "antd";
 import { nanoid } from "nanoid";
 import "./index.module.less";
+
+const { Dragger } = Upload;
+
+const VideoList = [
+  { label: "MP4", value: ".mp4" },
+  { label: "MKV", value: ".mkv" },
+  { label: "FLV", value: ".flv" },
+  { label: "AVI", value: ".avi" },
+  { label: "WMV", value: ".wmv" },
+  { label: "MOV", value: ".mov" },
+  { label: "3GP", value: ".3gp" },
+  { label: "OGG", value: ".ogg" },
+];
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
@@ -41,9 +54,32 @@ export default function Transcode() {
     });
   };
   return (
-    <div>
+    <div styleName="transcode">
       <Button onClick={selectFile}>select file</Button>
       <Button onClick={handleFile}> handleFile</Button>
+      <Dragger
+        customRequest={(e) => {
+          console.log(e);
+        }}
+        showUploadList={false}
+      >
+        <div>请选择文件</div>
+      </Dragger>
+      <div styleName="action">
+        <div>
+          <span styleName="label">请选择转换格式</span>
+          <Radio.Group>
+            {VideoList.map((item) => (
+              <Radio value={item.value} key={item.value}>
+                {item.label}
+              </Radio>
+            ))}
+          </Radio.Group>
+        </div>
+        <Button onClick={handleFile} type="primary">
+          转换
+        </Button>
+      </div>
     </div>
   );
 }
