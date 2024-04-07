@@ -5,6 +5,7 @@ import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
+import { formatTime } from "@renderer/utils/formatTime";
 
 enum EStatus {
   pending = "pending",
@@ -75,6 +76,7 @@ export default function TTS() {
         dataIndex: "createTime",
         key: "createTime",
         width: 100,
+        render: (createTime: number) => formatTime(createTime),
       },
       {
         title: "操作",
