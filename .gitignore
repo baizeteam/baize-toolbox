@@ -1,6 +1,7 @@
 node_modules
 resources/mac/*
 resources/win/*
+resources/linux/*
 dist
 out
 .DS_Store
