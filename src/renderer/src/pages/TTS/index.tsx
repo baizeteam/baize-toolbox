@@ -47,6 +47,24 @@ export default function TTS() {
     });
   }, []);
 
+  const downLoadTTS = async (record) => {
+    console.log(record);
+    const res = await window.electron.ipcRenderer.invoke("WIN_DOWNLOAD_FILE", {
+      base64: record.url,
+      fileName: `${record.createTime}-${nanoid(8)}.mp3`,
+      filePath: await window.electron.ipcRenderer.invoke(
+        "GET_STORE",
+        "defaultOutPath"
+      ),
+    });
+    if (res === true) {
+      message.success("下载成功");
+    } else {
+      message.error("下载失败");
+      console.log(res);
+    }
+  };
+
   const columns = useMemo(() => {
     return [
       {
@@ -85,13 +103,7 @@ export default function TTS() {
         width: 100,
         render: (_, record) => {
           return (
-            <Button
-              onClick={() => {
-                // todo
-                console.log(record);
-              }}
-              type="link"
-            >
+            <Button onClick={() => downLoadTTS(record)} type="link">
               下载
             </Button>
           );

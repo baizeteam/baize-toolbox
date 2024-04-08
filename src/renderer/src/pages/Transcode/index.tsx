@@ -13,7 +13,6 @@ export default function Transcode() {
   const transcodeListRef = useRef(transcodeList);
   // 选择文件
   const selectFile = async (e) => {
-    // const res = await window.electron.ipcRenderer.invoke("WIN_SELECT_FILE");
     if (e.file.path) {
       setFilePath(e.file.path);
       setShowTypeModal(true);
