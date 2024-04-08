@@ -8,17 +8,22 @@ const getFfmpegPath = () => {
   const basePath = app.isPackaged
     ? path.join(process.resourcesPath, "app.asar.unpacked/resources")
     : path.join(__dirname, "../../resources");
-  if (process.platform === "darwin") {
-    return {
-      ffmpegPath: path.join(basePath, "mac/ffmpeg"),
-      ffprobePath: path.join(basePath, "mac/ffprobe"),
-    };
-  } else {
-    return {
-      ffmpegPath: path.join(basePath, "win/ffmpeg"),
-      ffprobePath: path.join(basePath, "win/ffprobe"),
-    };
-  }
+  const platformObj = {
+    win32: "win",
+    darwin: "mac",
+    linux: "linux",
+    freebsd: "linux",
+    netbsd: "linux",
+    openbsd: "linux",
+    sunos: "linux",
+  };
+  return {
+    ffmpegPath: path.join(basePath, `${platformObj[process.platform]}/ffmpeg`),
+    ffprobePath: path.join(
+      basePath,
+      `${platformObj[process.platform]}/ffprobe`
+    ),
+  };
 };
 
 const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "/output";
@@ -34,8 +39,8 @@ execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
 
 ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
   const videoDuration = await getFileTime(data.inputFilePath);
-  checkFolderExists(DEFAULT_OUTPUT_PATH);
-  const outputFilePath = path.join(DEFAULT_OUTPUT_PATH, data.outputFileName);
+  checkFolderExists(data.outputFloaderPath);
+  const outputFilePath = path.join(data.outputFloaderPath, data.outputFileName);
   const command = [...data.command, outputFilePath];
   const ffmpegProcess = spawn(ffmpegPath, command);
   const taskId = data.taskId;
