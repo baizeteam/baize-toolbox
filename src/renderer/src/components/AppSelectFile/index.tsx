@@ -21,7 +21,7 @@ export default function AppSelectFile(props: IAppSelectFileProps) {
       <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
-      <p className="ant-upload-text">选择或拖动文件到此区域进行上传</p>
+      <p className="ant-upload-text">选择或拖动文件到此区域</p>
     </Dragger>
   );
 }

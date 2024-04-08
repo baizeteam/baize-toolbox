@@ -58,7 +58,7 @@ export default function TTS() {
       {
         title: "音频",
         dataIndex: "url",
-        width: 200,
+        width: 80,
         key: "url",
         render: (url: string) => {
           return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。";
