@@ -1,7 +1,7 @@
 import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
-import { checkFolderExists } from "../../utils/file";
+import { checkFolderExists } from "../../utils/fileHelper";
 // import { mainLogSend } from "../../helper";
 
 const getFfmpegPath = () => {
