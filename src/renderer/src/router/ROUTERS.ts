@@ -6,4 +6,5 @@ export const ROUTERS = {
   TTS: "/tts",
   SCREEN_RECORD: "/screen-record",
   SCREEN_SHOT: "/screen-shot",
+  COMPRESS: "/compress",
 };

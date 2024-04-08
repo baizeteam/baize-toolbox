@@ -14,6 +14,7 @@ const TTS = lazy(() => import("@renderer/pages/TTS"));
 const Setting = lazy(() => import("@renderer/pages/Setting"));
 const ScreenRecord = lazy(() => import("@renderer/pages/ScreenRecord"));
 const ScreenShot = lazy(() => import("@renderer/pages/ScreenShot"));
+const Compress = lazy(() => import("@renderer/pages/Compress"));
 
 export default function BaseRouter() {
   const [isDark, setIsDark] = React.useState(false);
@@ -67,6 +68,7 @@ export default function BaseRouter() {
                   />
                   <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
                   <Route path={ROUTERS.SETTING} element={<Setting />} />
+                  <Route path={ROUTERS.COMPRESS} element={<Compress />} />
                 </Route>
                 {/* 通配符路由处理不匹配的情况 */}
                 <Route

@@ -35,6 +35,7 @@ const items: MenuItem[] = [
   getItem("TTS", ROUTERS.TTS, <ContainerOutlined />),
   getItem("录屏", ROUTERS.SCREEN_RECORD, <ContainerOutlined />),
   getItem("截图", ROUTERS.SCREEN_SHOT, <ContainerOutlined />),
+  getItem("压缩", ROUTERS.COMPRESS, <ContainerOutlined />),
   getItem("设置", ROUTERS.SETTING, <ContainerOutlined />),
 ];
 
