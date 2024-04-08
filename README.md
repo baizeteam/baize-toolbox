@@ -8,13 +8,13 @@ An Electron application with React and TypeScript
 
 ## Project Setup
 
-### 安装
+### Install/安装
 
 ```bash
 $ pnpm install
 ```
 
-### Add Resources
+### Add Resources/加载资源
 
 百度网盘链接：https://pan.baidu.com/s/1r5NRUZOyqUkTIYDnp_lt5A?pwd=p7h7
 
@@ -22,13 +22,13 @@ $ pnpm install
 
 将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
 
-### Development
+### Development/开发
 
 ```bash
 $ pnpm dev
 ```
 
-### Build
+### Build/构建
 
 ```bash
 # For windows
