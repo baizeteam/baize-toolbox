@@ -1,18 +1,17 @@
 import React, { useMemo, useRef, useState } from "react";
-import { Button, message, Upload, Table, Progress } from "antd";
+import { Button, Table, Progress } from "antd";
 import { nanoid } from "nanoid";
 import AppSelectFile from "@renderer/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
 import { formatTime } from "@renderer/utils/formatTime";
 import "./index.module.less";
 
-const { Dragger } = Upload;
-
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
   const [showTypeModal, setShowTypeModal] = useState(false);
   const [transcodeList, setTranscodeList] = useState([]);
   const transcodeListRef = useRef(transcodeList);
+  // 选择文件
   const selectFile = async (e) => {
     // const res = await window.electron.ipcRenderer.invoke("WIN_SELECT_FILE");
     if (e.file.path) {
@@ -58,8 +57,10 @@ export default function Transcode() {
           return (
             <Button
               onClick={() => {
-                // todo
-                console.log(record);
+                console.log(record, record.outputFloaderPath);
+                window.electron.ipcRenderer.send("WIN_OPEN_FOLDER", {
+                  path: record.outputFloaderPath,
+                });
               }}
               type="link"
             >
@@ -71,15 +72,20 @@ export default function Transcode() {
     ];
   }, []);
 
+  // 更新转码列表
   const changeTranscodeList = (list) => {
-    console.log(list);
     transcodeListRef.current = list;
     setTranscodeList(list);
   };
 
-  const handleFile = (outputType) => {
+  // 转码
+  const handleFile = async (outputType) => {
     setShowTypeModal(false);
     const outputFileName = `${new Date().getTime()}.${outputType}`;
+    const outputFloaderPath = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "defaultOutPath"
+    );
     const taskId = nanoid(16);
     const params = {
       command: [
@@ -94,10 +100,12 @@ export default function Transcode() {
       ],
       taskId,
       inputFilePath: filePath,
+      outputFloaderPath,
       outputFileName,
       outputType,
       creatTime: new Date().getTime(),
       progress: 0,
+      code: "transcode",
     };
     changeTranscodeList([...(transcodeListRef.current || []), params]);
     window.electron.ipcRenderer.send("FFMPEG_COMMAND", params);

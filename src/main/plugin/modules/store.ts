@@ -1,5 +1,5 @@
 import ElectronStore from "electron-store";
-import { ipcMain, BrowserWindow } from "electron";
+import { app, ipcMain, BrowserWindow } from "electron";
 
 export const store = new ElectronStore();
 
@@ -19,8 +19,11 @@ ipcMain.on("SET_STORE_SEND", (_, key, value) => {
   });
 });
 
+const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output";
+
 // 默认设置
 const defaultStore = {
+  defaultOutPath: DEFAULT_OUTPUT_PATH,
   defaultSetting: "default",
   theme: "system",
   ttsList: [],

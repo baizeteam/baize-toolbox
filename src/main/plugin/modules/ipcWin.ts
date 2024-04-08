@@ -1,5 +1,6 @@
 import { ipcMain, BrowserWindow, dialog } from "electron";
 import { createWin } from "../../helper";
+import { openFolder } from "../../utils/fileHelper";
 
 // 创建窗口
 ipcMain.on("WIN_CREATE", (e, data) => {
@@ -41,4 +42,10 @@ ipcMain.handle("WIN_SELECT_FILE", async (e, data) => {
         return null;
       }
     });
+});
+
+// 打开文件夹
+ipcMain.on("WIN_OPEN_FOLDER", async (e, data) => {
+  console.log(data);
+  openFolder(data.path);
 });
