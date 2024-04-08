@@ -26,8 +26,6 @@ const getFfmpegPath = () => {
   };
 };
 
-const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "/output";
-
 const { ffmpegPath, ffprobePath } = getFfmpegPath();
 
 execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
