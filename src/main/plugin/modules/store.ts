@@ -3,7 +3,7 @@ import { app, ipcMain, BrowserWindow } from "electron";
 
 export const store = new ElectronStore();
 
-ipcMain.on("SET_STORE", (_, key, value) => {
+ipcMain.handle("SET_STORE", (_, key, value) => {
   store.set(key, value);
 });
 

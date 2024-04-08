@@ -44,6 +44,21 @@ ipcMain.handle("WIN_SELECT_FILE", async (e, data) => {
     });
 });
 
+// 选择文件夹
+ipcMain.handle("WIN_SELECT_FOLDER", async (e, data) => {
+  return dialog
+    .showOpenDialog({
+      properties: ["openDirectory"],
+    })
+    .then((result) => {
+      if (!result.canceled) {
+        return result.filePaths;
+      } else {
+        return null;
+      }
+    });
+});
+
 // 打开文件夹
 ipcMain.on("WIN_OPEN_FOLDER", async (e, data) => {
   console.log(data);
