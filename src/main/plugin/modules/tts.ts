@@ -1,7 +1,7 @@
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import WebSocket from "ws";
 import { ipcMain } from "electron";
-import { store } from "./store";
+import { queueStore } from "../../utils/storeHelper";
 
 global.WebSocket = WebSocket;
 const tts = new EdgeSpeechTTS({ locale: "en-ZH" });
@@ -23,11 +23,6 @@ ipcMain.handle("TTS_CREATE", async (e, data) => {
     status: "success",
   };
 
-  let ttsList = (store.get("ttsList") as Array<any>) || [];
-  if (ttsList.length >= 10) {
-    ttsList.pop();
-  }
-  ttsList.unshift(params);
-  store.set("ttsList", ttsList);
+  queueStore(params, "ttsList");
   return;
 });
