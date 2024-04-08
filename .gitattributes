@@ -1,6 +1,0 @@
-resources/mac/ffprobe filter=lfs diff=lfs merge=lfs -text
-resources/mac/ffmpeg filter=lfs diff=lfs merge=lfs -text
-resources/win/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text
-resources/win/ffprobe.exe filter=lfs diff=lfs merge=lfs -text
-resources/win/ffplay.exe filter=lfs diff=lfs merge=lfs -text
-resources/win/* filter=lfs diff=lfs merge=lfs -text
