@@ -1,20 +1,16 @@
-# electron-app
+# 白泽工具箱
 
 An Electron application with React and TypeScript
 
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
 ## Project Setup
 
-### Install/安装
+### 安装
 
 ```bash
 $ pnpm install
 ```
 
-### Add Resources/加载资源
+### 加载资源
 
 百度网盘链接：https://pan.baidu.com/s/1r5NRUZOyqUkTIYDnp_lt5A?pwd=p7h7
 
@@ -22,13 +18,13 @@ $ pnpm install
 
 将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
 
-### Development/开发
+### 开发
 
 ```bash
 $ pnpm dev
 ```
 
-### Build/构建
+### 构建
 
 ```bash
 # For windows
