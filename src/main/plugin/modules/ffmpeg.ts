@@ -1,6 +1,7 @@
 import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
+import { checkFolderExists } from "../../utils/file";
 // import { mainLogSend } from "../../helper";
 
 const getFfmpegPath = () => {
@@ -20,7 +21,7 @@ const getFfmpegPath = () => {
   }
 };
 
-const DEFAULT_OUTPUT_PATH = app.getPath("documents");
+const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "/output";
 
 const { ffmpegPath, ffprobePath } = getFfmpegPath();
 
@@ -33,11 +34,8 @@ execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
 
 ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
   const videoDuration = await getFileTime(data.inputFilePath);
-  const outputFilePath = path.join(
-    DEFAULT_OUTPUT_PATH,
-    "/output",
-    data.outputFileName
-  );
+  checkFolderExists(DEFAULT_OUTPUT_PATH);
+  const outputFilePath = path.join(DEFAULT_OUTPUT_PATH, data.outputFileName);
   const command = [...data.command, outputFilePath];
   const ffmpegProcess = spawn(ffmpegPath, command);
   const taskId = data.taskId;
