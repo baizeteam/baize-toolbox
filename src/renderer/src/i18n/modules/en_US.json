@@ -1,4 +1,37 @@
 {
+  "commonText": {
+    "text": "Text",
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "file": "File",
+    "folder": "Folder",
+    "action": "Action",
+    "progress": "Progress",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "name": "Name",
+    "size": "Size",
+    "type": "Type",
+    "path": "Path",
+    "select": "Select",
+    "change": "Change",
+    "generate": "Generate",
+    "create": "Create",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "copy": "Copy",
+    "delete": "Delete",
+    "download": "Download",
+    "downloadSuccess": "Download success",
+    "downloadError": "Download failed",
+    "createTime": "CreateTime",
+    "updateTime": "UpdateTime",
+    "vocalLine": "Vocal line",
+    "openFolder": "Open folder"
+  },
   "components": {
     "nav": {
       "home": "Home",
@@ -9,6 +42,9 @@
       "screenShot": "Screen Shot",
       "compress": "Compress",
       "setting": "Setting"
+    },
+    "appSelectFile": {
+      "title": "Select or drag files to this area"
     }
   },
   "pages": {
@@ -26,6 +62,9 @@
         "dark": "Dark",
         "system": "Follow system"
       }
+    },
+    "transcode": {
+      "transcodeType": "Transcode Type"
     }
   }
 }

@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   ContainerOutlined,
+  NodeExpandOutlined,
   DesktopOutlined,
-  PieChartOutlined,
+  HomeOutlined,
+  VideoCameraOutlined,
+  PictureOutlined,
+  AudioOutlined,
+  FallOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -36,38 +42,30 @@ const Nav: React.FC = () => {
   const { t } = useTranslation();
 
   const items: MenuItem[] = [
-    getItem(t("components.nav.home"), ROUTERS.HOME, <PieChartOutlined />),
+    getItem(t("components.nav.home"), ROUTERS.HOME, <HomeOutlined />),
     getItem(
       t("components.nav.transcode"),
       ROUTERS.TRANSCODE,
-      <DesktopOutlined />,
+      <NodeExpandOutlined />,
     ),
     getItem(
       t("components.nav.extract"),
       ROUTERS.EXTRACT,
       <ContainerOutlined />,
     ),
-    getItem(t("components.nav.TTS"), ROUTERS.TTS, <ContainerOutlined />),
+    getItem(t("components.nav.TTS"), ROUTERS.TTS, <AudioOutlined />),
     getItem(
       t("components.nav.screenRecord"),
       ROUTERS.SCREEN_RECORD,
-      <ContainerOutlined />,
+      <VideoCameraOutlined />,
     ),
     getItem(
       t("components.nav.screenShot"),
       ROUTERS.SCREEN_SHOT,
-      <ContainerOutlined />,
+      <PictureOutlined />,
     ),
-    getItem(
-      t("components.nav.compress"),
-      ROUTERS.COMPRESS,
-      <ContainerOutlined />,
-    ),
-    getItem(
-      t("components.nav.setting"),
-      ROUTERS.SETTING,
-      <ContainerOutlined />,
-    ),
+    getItem(t("components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
+    getItem(t("components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />),
   ];
 
   useEffect(() => {

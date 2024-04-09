@@ -1,14 +1,50 @@
 {
+  "commonText": {
+    "text": "文本",
+    "image": "图片",
+    "video": "视频",
+    "audio": "音频",
+    "file": "文件",
+    "folder": "文件夹",
+    "action": "操作",
+    "progress": "进度",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告",
+    "name": "名称",
+    "size": "大小",
+    "type": "类型",
+    "path": "路径",
+    "select": "选择",
+    "change": "修改",
+    "generate": "生成",
+    "create": "创建",
+    "cancel": "取消",
+    "confirm": "确定",
+    "close": "关闭",
+    "copy": "复制",
+    "delete": "删除",
+    "download": "下载",
+    "downloadSuccess": "下载成功",
+    "downloadError": "下载失败",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "vocalLine": "声线",
+    "openFolder": "打开文件夹"
+  },
   "components": {
     "nav": {
       "home": "主页",
       "transcode": "转码",
-      "extract": "提取音视频",
+      "extract": "提取",
       "TTS": "语音合成",
       "screenRecord": "录屏",
       "screenShot": "截屏",
       "compress": "压缩",
       "setting": "设置"
+    },
+    "appSelectFile": {
+      "title": "选择或拖拽文件到此区域"
     }
   },
   "pages": {
@@ -26,6 +62,9 @@
         "dark": "深色模式",
         "system": "跟随系统"
       }
+    },
+    "transcode": {
+      "transcodeType": "转换类型"
     }
   }
 }

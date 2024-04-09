@@ -5,12 +5,15 @@ import AppSelectFile from "@renderer/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
 import { formatTime } from "@renderer/utils/formatTime";
 import "./index.module.less";
+import { useTranslation } from "react-i18next";
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
   const [showTypeModal, setShowTypeModal] = useState(false);
   const [transcodeList, setTranscodeList] = useState([]);
   const transcodeListRef = useRef(transcodeList);
+  const { t } = useTranslation();
+
   // 选择文件
   const selectFile = async (e) => {
     if (e.file.path) {
@@ -19,57 +22,55 @@ export default function Transcode() {
     }
   };
 
-  const columns = useMemo(() => {
-    return [
-      {
-        title: "文件",
-        dataIndex: "inputFilePath",
-        key: "inputFilePath",
-        width: 200,
+  const columns = [
+    {
+      title: t("commonText.text"),
+      dataIndex: "inputFilePath",
+      key: "inputFilePath",
+      width: 200,
+    },
+    {
+      title: t("pages.transcode.transcodeType"),
+      dataIndex: "outputType",
+      key: "outputType",
+      width: 100,
+    },
+    {
+      title: t("commonText.progress"),
+      dataIndex: "progress",
+      key: "progress",
+      width: 100,
+      render: (progress) => <Progress percent={progress} />,
+    },
+    {
+      title: t("commonText.createTime"),
+      dataIndex: "createTime",
+      key: "createTime",
+      width: 100,
+      render: (createTime: number) => formatTime(createTime),
+    },
+    {
+      title: t("commonText.action"),
+      dataIndex: "action",
+      key: "action",
+      width: 100,
+      render: (_, record) => {
+        return (
+          <Button
+            onClick={() => {
+              console.log(record, record.outputFloaderPath);
+              window.electron.ipcRenderer.send("WIN_OPEN_FOLDER", {
+                path: record.outputFloaderPath,
+              });
+            }}
+            type="link"
+          >
+            {t("commonText.openFolder")}
+          </Button>
+        );
       },
-      {
-        title: "转换类型",
-        dataIndex: "outputType",
-        key: "outputType",
-        width: 100,
-      },
-      {
-        title: "进度",
-        dataIndex: "progress",
-        key: "progress",
-        width: 100,
-        render: (progress) => <Progress percent={progress} />,
-      },
-      {
-        title: "创建时间",
-        dataIndex: "createTime",
-        key: "createTime",
-        width: 100,
-        render: (createTime: number) => formatTime(createTime),
-      },
-      {
-        title: "操作",
-        dataIndex: "action",
-        key: "action",
-        width: 100,
-        render: (_, record) => {
-          return (
-            <Button
-              onClick={() => {
-                console.log(record, record.outputFloaderPath);
-                window.electron.ipcRenderer.send("WIN_OPEN_FOLDER", {
-                  path: record.outputFloaderPath,
-                });
-              }}
-              type="link"
-            >
-              打开文件夹
-            </Button>
-          );
-        },
-      },
-    ];
-  }, []);
+    },
+  ];
 
   // 更新转码列表
   const changeTranscodeList = (list) => {
@@ -83,7 +84,7 @@ export default function Transcode() {
     const outputFileName = `${new Date().getTime()}.${outputType}`;
     const outputFloaderPath = await window.electron.ipcRenderer.invoke(
       "GET_STORE",
-      "defaultOutPath"
+      "defaultOutPath",
     );
     const taskId = nanoid(16);
     const params = {

@@ -8,9 +8,9 @@ import "./index.module.less";
 export default function Setting() {
   return (
     <div styleName="setting">
-      <DefaultOutPath />
-      <Theme />
       <Language />
+      <Theme />
+      <DefaultOutPath />
     </div>
   );
 }

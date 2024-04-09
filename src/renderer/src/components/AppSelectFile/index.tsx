@@ -1,6 +1,7 @@
 import React from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { Upload, UploadProps } from "antd";
+import { useTranslation } from "react-i18next";
 import "./index.module.less";
 
 const { Dragger } = Upload;
@@ -11,6 +12,7 @@ interface IAppSelectFileProps extends UploadProps {
 
 export default function AppSelectFile(props: IAppSelectFileProps) {
   const { onSelectFile } = props;
+  const { t } = useTranslation();
   return (
     <Dragger
       styleName="app-select-file"
@@ -21,7 +23,7 @@ export default function AppSelectFile(props: IAppSelectFileProps) {
       <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
-      <p className="ant-upload-text">选择或拖动文件到此区域</p>
+      <p className="ant-upload-text">{t("components.appSelectFile.title")}</p>
     </Dragger>
   );
 }

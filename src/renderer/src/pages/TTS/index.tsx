@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
 import { formatTime } from "@renderer/utils/formatTime";
+import { useTranslation } from "react-i18next";
 
 enum EStatus {
   pending = "pending",
@@ -41,6 +42,8 @@ export default function TTS() {
   ]);
   const [audioList, setAudioList] = useState<IAudioItem[]>([]);
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
       setAudioList(res);
@@ -58,59 +61,61 @@ export default function TTS() {
       ),
     });
     if (res === true) {
-      message.success("下载成功");
+      message.success(t("commonText.downloadSuccess"));
     } else {
-      message.error("下载失败");
+      message.error(t("commonText.downloadErroe"));
       console.log(res);
     }
   };
 
-  const columns = useMemo(() => {
-    return [
-      {
-        title: "文本",
-        dataIndex: "text",
-        key: "text",
-        width: 200,
+  const columns = [
+    {
+      title: t("commonText.text"),
+      dataIndex: "text",
+      key: "text",
+      width: 200,
+    },
+    {
+      title: t("commonText.audio"),
+      dataIndex: "url",
+      width: 80,
+      key: "url",
+      render: (url: string) => {
+        return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。";
       },
-      {
-        title: "音频",
-        dataIndex: "url",
-        width: 80,
-        key: "url",
-        render: (url: string) => {
-          return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。";
-        },
+    },
+    {
+      title: t("commonText.vocalLine"),
+      dataIndex: "voice",
+      key: "voice",
+      width: 100,
+      render: (voice: string) => EdgeSpeechTTS.voiceName[voice],
+    },
+    {
+      title: t("commonText.createTime"),
+      dataIndex: "createTime",
+      key: "createTime",
+      width: 100,
+      render: (createTime: number) => formatTime(createTime),
+    },
+    {
+      title: t("commonText.action"),
+      dataIndex: "action",
+      key: "action",
+      width: 100,
+      render: (_, record) => {
+        return (
+          <Button
+            onClick={() => downLoadTTS(record)}
+            type="link"
+            style={{ padding: 0 }}
+          >
+            {t("commonText.download")}
+          </Button>
+        );
       },
-      {
-        title: "声线",
-        dataIndex: "voice",
-        key: "voice",
-        width: 100,
-        render: (voice: string) => EdgeSpeechTTS.voiceName[voice],
-      },
-      {
-        title: "创建时间",
-        dataIndex: "createTime",
-        key: "createTime",
-        width: 100,
-        render: (createTime: number) => formatTime(createTime),
-      },
-      {
-        title: "操作",
-        dataIndex: "action",
-        key: "action",
-        width: 100,
-        render: (_, record) => {
-          return (
-            <Button onClick={() => downLoadTTS(record)} type="link">
-              下载
-            </Button>
-          );
-        },
-      },
-    ];
-  }, []);
+    },
+  ];
 
   const options = useMemo(() => {
     return Object.keys(EdgeSpeechTTS.voiceList).map((item) => {
@@ -179,7 +184,7 @@ export default function TTS() {
       />
       <div styleName="action">
         <div>
-          <span styleName="label">声线</span>
+          <span styleName="label">{t("commonText.vocalLine")}</span>
           <Cascader
             allowClear={false}
             options={options}
@@ -188,7 +193,7 @@ export default function TTS() {
           />
         </div>
         <Button onClick={createTTS} type="primary">
-          生成
+          {t("commonText.generate")}
         </Button>
       </div>
 
