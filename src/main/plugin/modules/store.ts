@@ -1,5 +1,6 @@
 import ElectronStore from "electron-store";
 import { app, ipcMain, BrowserWindow } from "electron";
+import { queueStoreDelete } from "../../utils/storeHelper";
 
 export const store = new ElectronStore();
 
@@ -17,6 +18,10 @@ ipcMain.on("SET_STORE_SEND", (_, { key, value, code }) => {
   allWindows.forEach((window) => {
     window.webContents.send(`STORE_${code}_CHANGE`);
   });
+});
+
+ipcMain.handle("QUEUE_STORE_DELETE", (_, params) => {
+  return queueStoreDelete(params);
 });
 
 const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output";

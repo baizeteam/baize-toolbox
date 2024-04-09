@@ -1,5 +1,5 @@
 import { app, ipcMain, dialog } from "electron";
-import { openFile } from "../../utils/fileHelper";
+import { openFile, deleteFile } from "../../utils/fileHelper";
 import fs from "fs";
 import path from "path";
 
@@ -33,9 +33,14 @@ ipcMain.handle("WIN_SELECT_FOLDER", async (e, data) => {
     });
 });
 
-// 打开文件夹
+// 打开文件
 ipcMain.handle("WIN_OPEN_FILE", async (e, data) => {
   return openFile(data.path);
+});
+
+// 删除文件
+ipcMain.handle("WIN_DELETE_FILE", async (e, data) => {
+  return deleteFile(data.path);
 });
 
 // 下载文件

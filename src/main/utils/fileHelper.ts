@@ -22,3 +22,16 @@ export const openFile = (filePath: string) => {
     });
   });
 };
+
+// 删除文件
+export const deleteFile = (filePath: string) => {
+  return new Promise((resolve) => {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
