@@ -15,7 +15,6 @@ export default function AudioPlay({ src }: AudioPlayProps) {
     } else {
       audioRef.current.play();
     }
-    // setIsPlaying(!isPlaying);
   };
 
   const onPlay = () => {
@@ -33,6 +32,7 @@ export default function AudioPlay({ src }: AudioPlayProps) {
         controls
         ref={audioRef}
         onPlay={onPlay}
+        onPause={onEnded}
         onEnded={onEnded}
       />
       <div styleName="audio-content">

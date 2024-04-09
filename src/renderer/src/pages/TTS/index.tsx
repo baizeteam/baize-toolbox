@@ -54,7 +54,7 @@ export default function TTS() {
       fileName: `${record.createTime}-${nanoid(8)}.mp3`,
       filePath: await window.electron.ipcRenderer.invoke(
         "GET_STORE",
-        "defaultOutPath"
+        "defaultOutPath",
       ),
     });
     if (res === true) {
@@ -154,7 +154,7 @@ export default function TTS() {
     await window.electron.ipcRenderer.invoke("TTS_CREATE", params);
     const ttsList = await window.electron.ipcRenderer.invoke(
       "GET_STORE",
-      "ttsList"
+      "ttsList",
     );
     console.log(ttsList);
     setAudioList(ttsList);
@@ -193,7 +193,12 @@ export default function TTS() {
       </div>
 
       <div>
-        <Table columns={columns} dataSource={audioList} rowKey="id" />
+        <Table
+          columns={columns}
+          dataSource={audioList}
+          rowKey="id"
+          pagination={{ pageSize: 5, total: audioList.length }}
+        />
       </div>
     </div>
   );
