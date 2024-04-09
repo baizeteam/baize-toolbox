@@ -1,0 +1,31 @@
+{
+  "components": {
+    "nav": {
+      "home": "Home",
+      "transcode": "Transocde",
+      "extract": "Extract",
+      "TTS": "TTS",
+      "screenRecord": "Screen Record",
+      "screenShot": "Screen Shot",
+      "compress": "Compress",
+      "setting": "Setting"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Baize Toolbox",
+      "desc": "The Baize Toolbox is a powerful multimedia processing tool that can help users quickly and efficiently convert between different multimedia formats. Whether it's images, audio, or videos, this tool can easily handle them, making it more convenient and efficient for users to process multimedia files."
+    },
+    "setting": {
+      "outputPath": "Default output path",
+      "theme": "Theme",
+      "language": "Language",
+      "change": "Change",
+      "themeOptions": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "Follow system"
+      }
+    }
+  }
+}

@@ -11,11 +11,11 @@ ipcMain.handle("GET_STORE", (_, key) => {
   return store.get(key);
 });
 
-ipcMain.on("SET_STORE_SEND", (_, key, value) => {
+ipcMain.on("SET_STORE_SEND", (_, { key, value, code }) => {
   store.set(key, value);
   const allWindows = BrowserWindow.getAllWindows();
   allWindows.forEach((window) => {
-    window.webContents.send("THEME_CHANGE");
+    window.webContents.send(`STORE_${code}_CHANGE`);
   });
 });
 
@@ -27,14 +27,26 @@ const defaultStore = {
   defaultSetting: "default",
   theme: "system",
   ttsList: [],
+  i18n: "zhCN",
 };
 
-if (!store.get("defaultSetting")) {
-  Object.keys(defaultStore).forEach((key) => {
-    store.set(key, defaultStore[key]);
-  });
+const init = () => {
   const allWindows = BrowserWindow.getAllWindows();
-  allWindows.forEach((window) => {
-    window.webContents.send("THEME_CHANGE");
+  const sendChange = (key) => {
+    allWindows.forEach((window) => {
+      window.webContents.send(key);
+    });
+  };
+  const changeObj = {
+    theme: "STORE_THEME_CHANGE",
+    i18n: "STORE_I18N_CHANGE",
+  };
+  Object.keys(defaultStore).forEach((key) => {
+    if (store.get(key) === undefined) {
+      store.set(key, defaultStore[key]);
+      changeObj[key] && sendChange(changeObj[key]);
+    }
   });
-}
+};
+
+init();

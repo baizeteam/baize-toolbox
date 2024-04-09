@@ -2,16 +2,23 @@ import React, { useEffect } from "react";
 import { ConfigProvider, Spin, theme } from "antd";
 import "./app.module.less";
 
-import zhCN from "antd/locale/zh_CN";
 import BaseRouter from "./router";
+import i18n, { antdLocale } from "./i18n";
 
 export default function App() {
   const [isDark, setIsDark] = React.useState(false);
+  const [i18nCur, setI18nCur] = React.useState("");
 
   useEffect(() => {
-    initTheme();
-    window.electron.ipcRenderer.on("THEME_CHANGE", initTheme);
+    init();
   }, []);
+
+  const init = () => {
+    initTheme();
+    initI18n();
+    window.electron.ipcRenderer.on("STORE_THEME_CHANGE", initTheme);
+    window.electron.ipcRenderer.on("STORE_I18N_CHANGE", initI18n);
+  };
 
   // 初始化主题
   const initTheme = async () => {
@@ -34,12 +41,21 @@ export default function App() {
     }
   };
 
-  const initI18n = async () => {};
+  // 初始化国际化
+  const initI18n = async () => {
+    const i18nRes = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "i18n",
+    );
+    i18n.changeLanguage(i18nRes);
+    setI18nCur(i18nRes);
+  };
   return (
     <ConfigProvider
       theme={{
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
+      locale={antdLocale[i18nCur]}
     >
       <div styleName={`app${isDark ? " is-dark" : " is-light"}`}>
         <BaseRouter />

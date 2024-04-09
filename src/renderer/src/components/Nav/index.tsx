@@ -8,6 +8,7 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { ROUTERS } from "@renderer/router/ROUTERS";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./index.module.less";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -17,7 +18,7 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: "group"
+  type?: "group",
 ): MenuItem {
   return {
     key,
@@ -28,21 +29,46 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem("主页", ROUTERS.HOME, <PieChartOutlined />),
-  getItem("转码", ROUTERS.TRANSCODE, <DesktopOutlined />),
-  getItem("提取音视频", ROUTERS.EXTRACT, <ContainerOutlined />),
-  getItem("TTS", ROUTERS.TTS, <ContainerOutlined />),
-  getItem("录屏", ROUTERS.SCREEN_RECORD, <ContainerOutlined />),
-  getItem("截图", ROUTERS.SCREEN_SHOT, <ContainerOutlined />),
-  getItem("压缩", ROUTERS.COMPRESS, <ContainerOutlined />),
-  getItem("设置", ROUTERS.SETTING, <ContainerOutlined />),
-];
-
 const Nav: React.FC = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [selectKey, setSelectKey] = useState<string[]>([]);
+  const { t } = useTranslation();
+
+  const items: MenuItem[] = [
+    getItem(t("components.nav.home"), ROUTERS.HOME, <PieChartOutlined />),
+    getItem(
+      t("components.nav.transcode"),
+      ROUTERS.TRANSCODE,
+      <DesktopOutlined />,
+    ),
+    getItem(
+      t("components.nav.extract"),
+      ROUTERS.EXTRACT,
+      <ContainerOutlined />,
+    ),
+    getItem(t("components.nav.TTS"), ROUTERS.TTS, <ContainerOutlined />),
+    getItem(
+      t("components.nav.screenRecord"),
+      ROUTERS.SCREEN_RECORD,
+      <ContainerOutlined />,
+    ),
+    getItem(
+      t("components.nav.screenShot"),
+      ROUTERS.SCREEN_SHOT,
+      <ContainerOutlined />,
+    ),
+    getItem(
+      t("components.nav.compress"),
+      ROUTERS.COMPRESS,
+      <ContainerOutlined />,
+    ),
+    getItem(
+      t("components.nav.setting"),
+      ROUTERS.SETTING,
+      <ContainerOutlined />,
+    ),
+  ];
 
   useEffect(() => {
     if (location.hash === "") {
