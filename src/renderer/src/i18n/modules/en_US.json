@@ -30,7 +30,10 @@
     "createTime": "CreateTime",
     "updateTime": "UpdateTime",
     "vocalLine": "Vocal line",
-    "openFolder": "Open folder"
+    "openFolder": "Open folder",
+    "openFolderError": "Folder does not exist",
+    "openFile": "Open",
+    "openFileError": "File does not exist"
   },
   "components": {
     "nav": {

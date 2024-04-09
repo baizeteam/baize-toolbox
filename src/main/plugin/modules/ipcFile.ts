@@ -1,5 +1,5 @@
 import { app, ipcMain, dialog } from "electron";
-import { openFolder } from "../../utils/fileHelper";
+import { openFile } from "../../utils/fileHelper";
 import fs from "fs";
 import path from "path";
 
@@ -34,8 +34,8 @@ ipcMain.handle("WIN_SELECT_FOLDER", async (e, data) => {
 });
 
 // 打开文件夹
-ipcMain.on("WIN_OPEN_FOLDER", async (e, data) => {
-  openFolder(data.path);
+ipcMain.handle("WIN_OPEN_FILE", async (e, data) => {
+  return openFile(data.path);
 });
 
 // 下载文件

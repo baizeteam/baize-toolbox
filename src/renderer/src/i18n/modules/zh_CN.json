@@ -30,7 +30,10 @@
     "createTime": "创建时间",
     "updateTime": "更新时间",
     "vocalLine": "声线",
-    "openFolder": "打开文件夹"
+    "openFolder": "打开文件夹",
+    "openFolderError": "文件夹不存在",
+    "openFile": "打开",
+    "openFileError": "文件不存在"
   },
   "components": {
     "nav": {

@@ -8,14 +8,17 @@ export const checkFolderExists = (folderPath: string) => {
   }
 };
 
-// 打开文件夹
-export const openFolder = (folderPath: string) => {
+// 打开文件、文件夹
+export const openFile = (filePath: string) => {
   // 检查文件夹是否存在
-  fs.access(folderPath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error("文件夹不存在:", err);
-      return;
-    }
-    shell.openPath(folderPath);
+  return new Promise((resolve) => {
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        shell.openPath(filePath);
+        resolve(true);
+      }
+    });
   });
 };

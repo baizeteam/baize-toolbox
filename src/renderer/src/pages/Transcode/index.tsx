@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Table, Progress } from "antd";
+import { Button, Table, Progress, message } from "antd";
 import { nanoid } from "nanoid";
 import AppSelectFile from "@renderer/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
@@ -23,6 +23,32 @@ export default function Transcode() {
       setFilePath(e.file.path);
       setShowTypeModal(true);
     }
+  };
+
+  // 打开文件夹
+  const openFolder = (path) => {
+    window.electron.ipcRenderer
+      .invoke("WIN_OPEN_FILE", {
+        path,
+      })
+      .then((res) => {
+        if (!res) {
+          message.error(t("commonText.openFolderError"));
+        }
+      });
+  };
+
+  // 打开文件
+  const openFile = (path) => {
+    window.electron.ipcRenderer
+      .invoke("WIN_OPEN_FILE", {
+        path,
+      })
+      .then((res) => {
+        if (!res) {
+          message.error(t("commonText.openFileError"));
+        }
+      });
   };
 
   const columns = [
@@ -59,18 +85,26 @@ export default function Transcode() {
       width: 100,
       render: (_, record) => {
         return (
-          <Button
-            onClick={() => {
-              console.log(record, record.outputFloaderPath);
-              window.electron.ipcRenderer.send("WIN_OPEN_FOLDER", {
-                path: record.outputFloaderPath,
-              });
-            }}
-            type="link"
-            style={{ padding: 0 }}
-          >
-            {t("commonText.openFolder")}
-          </Button>
+          <>
+            <Button
+              onClick={() =>
+                openFile(
+                  `${record.outputFloaderPath}\\${record.outputFileName}`,
+                )
+              }
+              type="link"
+              style={{ padding: 0, marginRight: 10 }}
+            >
+              {t("commonText.openFile")}
+            </Button>
+            <Button
+              onClick={() => openFolder(record.outputFloaderPath)}
+              type="link"
+              style={{ padding: 0 }}
+            >
+              {t("commonText.openFolder")}
+            </Button>
+          </>
         );
       },
     },
@@ -108,7 +142,7 @@ export default function Transcode() {
       outputFloaderPath,
       outputFileName,
       outputType,
-      creatTime: new Date().getTime(),
+      createTime: new Date().getTime(),
       progress: 0,
       code: "transcode",
     };
