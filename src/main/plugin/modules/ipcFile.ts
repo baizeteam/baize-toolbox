@@ -35,7 +35,6 @@ ipcMain.handle("WIN_SELECT_FOLDER", async (e, data) => {
 
 // 打开文件夹
 ipcMain.on("WIN_OPEN_FOLDER", async (e, data) => {
-  console.log(data);
   openFolder(data.path);
 });
 

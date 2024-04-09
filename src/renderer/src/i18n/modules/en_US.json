@@ -64,7 +64,10 @@
       }
     },
     "transcode": {
-      "transcodeType": "Transcode Type"
+      "transcodeType": "Transcode Type",
+      "transcodeTypeModal": {
+        "title": "Please select the conversion format"
+      }
     }
   }
 }

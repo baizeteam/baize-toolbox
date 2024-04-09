@@ -2,6 +2,7 @@ import { ROUTERS } from "@renderer/router/ROUTERS";
 import { useUpdate } from "ahooks";
 import { useEffect, useRef } from "react";
 import { useLocation, useOutlet, useNavigate } from "react-router-dom";
+import "./index.module.less";
 
 function KeepAlive(props) {
   const componentList = useRef(new Map());
@@ -11,7 +12,6 @@ function KeepAlive(props) {
   const forceUpdate = useUpdate();
 
   useEffect(() => {
-    console.log("pathname", pathname);
     if (pathname === "/") {
       navigate(ROUTERS.HOME);
       return;
@@ -22,15 +22,15 @@ function KeepAlive(props) {
     forceUpdate();
   }, [pathname]);
 
-  return (
-    <div>
-      {Array.from(componentList.current).map(([key, component]) => (
-        <div key={key} style={{ display: pathname === key ? "block" : "none" }}>
-          {component}
-        </div>
-      ))}
+  return Array.from(componentList.current).map(([key, component]) => (
+    <div
+      key={key}
+      styleName="keep-alive"
+      style={{ display: pathname === key ? "block" : "none" }}
+    >
+      {component}
     </div>
-  );
+  ));
 }
 
 export default KeepAlive;

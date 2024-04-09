@@ -2,6 +2,7 @@ import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
 import { checkFolderExists } from "../../utils/fileHelper";
+import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 // import { mainLogSend } from "../../helper";
 
 const getFfmpegPath = () => {
@@ -21,7 +22,7 @@ const getFfmpegPath = () => {
     ffmpegPath: path.join(basePath, `${platformObj[process.platform]}/ffmpeg`),
     ffprobePath: path.join(
       basePath,
-      `${platformObj[process.platform]}/ffprobe`
+      `${platformObj[process.platform]}/ffprobe`,
     ),
   };
 };
@@ -35,17 +36,31 @@ execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
   console.log(`ffmpeg 版本信息：\n${stdout}`);
 });
 
-ipcMain.on("FFMPEG_COMMAND", async (e, data) => {
-  const videoDuration = await getFileTime(data.inputFilePath);
-  checkFolderExists(data.outputFloaderPath);
-  const outputFilePath = path.join(data.outputFloaderPath, data.outputFileName);
-  const command = [...data.command, outputFilePath];
+ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
+  console.log("FFMPEG_COMMAND", params);
+  const videoDuration = await getFileTime(params.inputFilePath);
+  checkFolderExists(params.outputFloaderPath);
+  const outputFilePath = path.join(
+    params.outputFloaderPath,
+    params.outputFileName,
+  );
+  const command = [...params.command, outputFilePath];
   const ffmpegProcess = spawn(ffmpegPath, command);
-  const taskId = data.taskId;
-  const sendFunc = (params) => {
+  const taskId = params.taskId;
+  queueStoreAdd({
+    params: { ...params, progress: 0 },
+    key: `${params.code}List`,
+  });
+  const sendFunc = (data) => {
+    const newParams = { ...params, ...data };
+    queueStoreUpdate({
+      params: newParams,
+      key: `${params.code}List`,
+      idKey: "taskId",
+    });
     BrowserWindow.fromWebContents(e.sender)?.webContents.send(
       `FFMPEG_PROGRESS_${taskId}`,
-      params
+      data,
     );
   };
 
@@ -104,7 +119,7 @@ const getFileTime = async (videoFilePath): Promise<number> => {
         const duration = parseFloat(stdout);
         console.log(`视频时长: ${duration} 秒`);
         resolve(duration);
-      }
+      },
     );
   });
 };

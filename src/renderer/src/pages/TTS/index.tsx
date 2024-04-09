@@ -7,6 +7,7 @@ import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
 import { formatTime } from "@renderer/utils/formatTime";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 enum EStatus {
   pending = "pending",
@@ -41,15 +42,16 @@ export default function TTS() {
     "zh-CN-XiaoxiaoNeural",
   ]);
   const [audioList, setAudioList] = useState<IAudioItem[]>([]);
-
   const { t } = useTranslation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
       setAudioList(res);
     });
-  }, []);
+  }, [pathname]);
 
+  // 下载语音
   const downLoadTTS = async (record) => {
     console.log(record);
     const res = await window.electron.ipcRenderer.invoke("WIN_DOWNLOAD_FILE", {
@@ -149,19 +151,11 @@ export default function TTS() {
     setAudioList((res) => {
       return [params, ...res];
     });
-    const payload = {
-      input: value,
-      options: {
-        voice: voiceSelect[1],
-      },
-    };
-
     await window.electron.ipcRenderer.invoke("TTS_CREATE", params);
     const ttsList = await window.electron.ipcRenderer.invoke(
       "GET_STORE",
       "ttsList",
     );
-    console.log(ttsList);
     setAudioList(ttsList);
   };
 

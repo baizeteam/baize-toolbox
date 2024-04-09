@@ -1,12 +1,13 @@
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import WebSocket from "ws";
 import { ipcMain } from "electron";
-import { queueStore } from "../../utils/storeHelper";
+import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 
 global.WebSocket = WebSocket;
 const tts = new EdgeSpeechTTS({ locale: "en-ZH" });
 
 ipcMain.handle("TTS_CREATE", async (e, data) => {
+  queueStoreAdd({ params: data, key: "ttsList" });
   const payload = {
     input: data.text,
     options: {
@@ -22,7 +23,6 @@ ipcMain.handle("TTS_CREATE", async (e, data) => {
     url: base64Data,
     status: "success",
   };
-
-  queueStore(params, "ttsList");
+  queueStoreUpdate({ params, key: "ttsList", idKey: "id" });
   return;
 });

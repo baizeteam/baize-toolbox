@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, ModalProps, Radio } from "antd";
 import "./index.module.less";
+import { useTranslation } from "react-i18next";
 
 const VideoList = [
   { label: "MP4", value: "mp4" },
@@ -18,7 +19,8 @@ interface ITranscodeTypeModalProps extends Omit<ModalProps, "onOk"> {
 }
 
 export default function TranscodeTypeModal(props: ITranscodeTypeModalProps) {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(VideoList[0].value);
+  const { t } = useTranslation();
 
   const _handleChange = (e: any) => {
     setValue(e.target.value);
@@ -31,14 +33,13 @@ export default function TranscodeTypeModal(props: ITranscodeTypeModalProps) {
 
   return (
     <Modal
-      title="请选择转换类型"
+      title={t("pages.transcode.transcodeTypeModal.title")}
       {...props}
       styleName="transcode-type-modal"
       onOk={_handleOk}
     >
       <div>
-        <span styleName="label">请选择转换格式</span>
-        <Radio.Group onChange={_handleChange}>
+        <Radio.Group value={value} onChange={_handleChange}>
           {VideoList.map((item) => (
             <Radio value={item.value} key={item.value}>
               {item.label}

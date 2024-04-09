@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Table, Progress } from "antd";
 import { nanoid } from "nanoid";
 import AppSelectFile from "@renderer/components/AppSelectFile";
@@ -6,6 +6,8 @@ import TranscodeTypeModal from "./components/TranscodeTypeModal";
 import { formatTime } from "@renderer/utils/formatTime";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { ROUTERS } from "@renderer/router/ROUTERS";
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
@@ -13,6 +15,7 @@ export default function Transcode() {
   const [transcodeList, setTranscodeList] = useState([]);
   const transcodeListRef = useRef(transcodeList);
   const { t } = useTranslation();
+  const { pathname } = useLocation();
 
   // 选择文件
   const selectFile = async (e) => {
@@ -64,6 +67,7 @@ export default function Transcode() {
               });
             }}
             type="link"
+            style={{ padding: 0 }}
           >
             {t("commonText.openFolder")}
           </Button>
@@ -81,7 +85,8 @@ export default function Transcode() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const outputFileName = `${new Date().getTime()}.${outputType}`;
+    const oldFileName = filePath.split("\\").pop().split(".").shift();
+    const outputFileName = `${oldFileName}-${new Date().getTime()}.${outputType}`;
     const outputFloaderPath = await window.electron.ipcRenderer.invoke(
       "GET_STORE",
       "defaultOutPath",
@@ -107,34 +112,53 @@ export default function Transcode() {
       progress: 0,
       code: "transcode",
     };
-    changeTranscodeList([...(transcodeListRef.current || []), params]);
+    changeTranscodeList([params, ...(transcodeListRef.current || [])]);
     window.electron.ipcRenderer.send("FFMPEG_COMMAND", params);
-    window.electron.ipcRenderer.on(`FFMPEG_PROGRESS_${taskId}`, (e, data) => {
-      console.log(transcodeListRef.current);
-      changeTranscodeList([
-        ...transcodeListRef.current?.map((item) => {
-          if (item?.taskId === taskId) {
-            item.progress = data.progress;
-          }
-          return item;
-        }),
-      ]);
-      console.log(data);
-    });
+    window.electron.ipcRenderer.on(`FFMPEG_PROGRESS_${taskId}`, (e, data) =>
+      onProgressChange(e, data, taskId),
+    );
   };
+
+  // 转码进度
+  const onProgressChange = (e, data, taskId) => {
+    changeTranscodeList([
+      ...transcodeListRef.current?.map((item) => {
+        if (item?.taskId === taskId) {
+          item.progress = data.progress;
+        }
+        return item;
+      }),
+    ]);
+    if (data.progress === 100) {
+      window.electron.ipcRenderer.removeAllListeners(
+        `FFMPEG_PROGRESS_${taskId}`,
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (pathname === ROUTERS.TRANSCODE) {
+      window.electron.ipcRenderer
+        .invoke("GET_STORE", "transcodeList")
+        .then((res) => {
+          changeTranscodeList(res);
+        });
+    }
+  }, [pathname]);
   return (
     <div styleName="transcode">
       <AppSelectFile onSelectFile={selectFile} />
-      <TranscodeTypeModal
-        open={showTypeModal}
-        onCancel={() => setShowTypeModal(false)}
-        onOk={handleFile}
-      />
       <Table
         styleName="transcode-table"
         columns={columns}
         dataSource={transcodeList}
         rowKey={"taskId"}
+        pagination={{ pageSize: 5, total: transcodeList.length }}
+      />
+      <TranscodeTypeModal
+        open={showTypeModal}
+        onCancel={() => setShowTypeModal(false)}
+        onOk={handleFile}
       />
     </div>
   );

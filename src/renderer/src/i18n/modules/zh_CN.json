@@ -64,7 +64,10 @@
       }
     },
     "transcode": {
-      "transcodeType": "转换类型"
+      "transcodeType": "转换类型",
+      "transcodeTypeModal": {
+        "title": "请选择转换格式"
+      }
     }
   }
 }

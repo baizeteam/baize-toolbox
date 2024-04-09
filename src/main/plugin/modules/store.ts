@@ -27,6 +27,7 @@ const defaultStore = {
   defaultSetting: "default",
   theme: "system",
   ttsList: [],
+  transcodeList: [],
   i18n: "zhCN",
 };
 
