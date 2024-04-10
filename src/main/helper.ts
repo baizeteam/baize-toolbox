@@ -8,15 +8,8 @@ import { join } from "path";
 import { is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { showCustomMenu } from "./plugin/modules/MenuManger";
-
-// 注入数据
-function InjectData(webContents, data) {
-  webContents.on("did-finish-load", () => {
-    webContents.executeJavaScript(`
-      window.injectData = ${JSON.stringify(data)};
-    `);
-  });
-}
+import { InjectData } from "./utils/inject";
+import { getSystemInfo } from "./utils/systemHelper";
 
 // 加载的url
 const initWinUrl = (win: BrowserWindow) => {
@@ -33,11 +26,11 @@ interface ICreateWin {
   injectData?: any;
 }
 
-export function createWin({
+export async function createWin({
   config,
   url,
   injectData,
-}: ICreateWin): BrowserWindow {
+}: ICreateWin): Promise<BrowserWindow> {
   const win = new BrowserWindow({
     ...config,
     webPreferences: {
@@ -46,13 +39,19 @@ export function createWin({
       preload: join(__dirname, "../preload/index.js"),
     },
   });
-  InjectData(win.webContents, injectData);
+  InjectData({
+    webContents: win.webContents,
+    data: {
+      system: await getSystemInfo(),
+      ...injectData,
+    },
+  });
   showCustomMenu(win);
   initWinUrl(win);
   return win;
 }
 
-export function createMainWin(): void {
+export async function createMainWin(): Promise<void> {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -66,6 +65,10 @@ export function createMainWin(): void {
       sandbox: false,
       webSecurity: false,
     },
+  });
+  InjectData({
+    webContents: mainWindow.webContents,
+    data: { system: await getSystemInfo() },
   });
   mainWindow["customId"] = "main";
   mainWindow.on("ready-to-show", () => {

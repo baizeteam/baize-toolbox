@@ -118,6 +118,9 @@ devDependencies:
   rollup-plugin-copy:
     specifier: ^3.5.0
     version: 3.5.0
+  systeminformation:
+    specifier: ^5.22.7
+    version: 5.22.7
   terser:
     specifier: ^5.30.0
     version: 5.30.0
@@ -1148,7 +1151,7 @@ packages:
       immer: 10.0.4
       leva: 0.9.35(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.365.0(react@18.2.0)
+      lucide-react: 0.366.0(react@18.2.0)
       polished: 4.3.1
       prism-react-renderer: 2.3.1(react@18.2.0)
       query-string: 9.0.0
@@ -4655,6 +4658,14 @@ packages:
       react: 18.2.0
     dev: true
 
+  /lucide-react@0.366.0(react@18.2.0):
+    resolution: {integrity: sha512-iUOsp/35wOkrgEzigZlZI/OhVxQZ8CmxjebdIjfSDzNBmrNYjQfKSpeKderaEFfGt3OycF1BE+wLlaqWRuoh4w==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: true
+
   /magic-string@0.30.8:
     resolution: {integrity: sha512-ISQTe55T2ao7XtlAStud6qwYPZjE4GK1S/BeVPus4jrq6JuOnQ00YKQC581RWhR122W7msZV263KzVeLoqidyQ==}
     engines: {node: '>=12'}
@@ -7017,6 +7028,13 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: true
+
+  /systeminformation@5.22.7:
+    resolution: {integrity: sha512-AWxlP05KeHbpGdgvZkcudJpsmChc2Y5Eo/GvxG/iUA/Aws5LZKHAMSeAo+V+nD+nxWZaxrwpWcnx4SH3oxNL3A==}
+    engines: {node: '>=8.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
+    hasBin: true
     dev: true
 
   /tabbable@6.2.0:
