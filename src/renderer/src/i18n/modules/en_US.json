@@ -53,6 +53,9 @@
     "deleteModal": {
       "content": "Confirm to delete?",
       "deleteFileText": "Delete files simultaneously?"
+    },
+    "appFunctionDev": {
+      "title": "In development, stay tuned for updates!"
     }
   },
   "pages": {

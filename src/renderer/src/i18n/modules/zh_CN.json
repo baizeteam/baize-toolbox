@@ -53,6 +53,9 @@
     "deleteModal": {
       "content": "确认删除？",
       "deleteFileText": "同时删除文件？"
+    },
+    "appFunctionDev": {
+      "title": "功能开发中,敬请期待！"
     }
   },
   "pages": {
