@@ -10,7 +10,7 @@ export default function Theme() {
   // 主题切换
   const onThemeChange = async (e) => {
     setTheme(e.target.value);
-    await window.electron.ipcRenderer.send("SET_STORE_SEND", {
+    await window.electron.ipcRenderer.invoke("SET_STORE_RELOAD", {
       key: "theme",
       value: e.target.value,
       code: "THEME",

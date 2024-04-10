@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "antd";
+import { Select, message } from "antd";
 import { useTranslation } from "react-i18next";
 import "./index.module.less";
 
@@ -13,7 +13,7 @@ export default function Language() {
   const { t } = useTranslation();
   const onChange = async (e) => {
     setLanguage(e);
-    await window.electron.ipcRenderer.send("SET_STORE_SEND", {
+    await window.electron.ipcRenderer.invoke("SET_STORE_RELOAD", {
       key: "i18n",
       value: e,
       code: "I18N",

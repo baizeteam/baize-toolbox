@@ -1,6 +1,7 @@
 import ElectronStore from "electron-store";
 import { app, ipcMain, BrowserWindow } from "electron";
 import { queueStoreDelete } from "../../utils/storeHelper";
+import { electronReload, electronRestart } from "../../utils/reload";
 
 export const store = new ElectronStore();
 const configIgnoreKeys = ["ttsList", "transcodeList", "extractList"];
@@ -15,12 +16,13 @@ ipcMain.handle("GET_STORE", (_, key) => {
   return store.get(key);
 });
 
-// 设置 store 并发送通知
-ipcMain.on("SET_STORE_SEND", (_, { key, value, code }) => {
+// 设置 store 并刷新页面
+ipcMain.handle("SET_STORE_RELOAD", (_, { key, value, code }) => {
   store.set(key, value);
   const allWindows = BrowserWindow.getAllWindows();
   allWindows.forEach((window) => {
-    window.webContents.send(`STORE_${code}_CHANGE`);
+    electronReload();
+    // window.webContents.send(`STORE_${code}_CHANGE`);
   });
 });
 
@@ -30,7 +32,7 @@ ipcMain.handle("QUEUE_STORE_DELETE", (_, params) => {
 });
 
 // 恢复默认设置
-ipcMain.handle("STORE_RESOTRE_CONFIG", () => {
+ipcMain.handle("STORE_RESTORE_CONFIG", () => {
   Object.keys(store.store).forEach((key) => {
     if (!configIgnoreKeys.includes(key)) {
       store.set(key, defaultStore[key]);
@@ -40,7 +42,7 @@ ipcMain.handle("STORE_RESOTRE_CONFIG", () => {
 });
 
 // 恢复所有设置
-ipcMain.handle("STORE_RESOTRE_ALL", () => {
+ipcMain.handle("STORE_RESTORE_ALL", () => {
   Object.keys(store.store).forEach((key) => {
     store.set(key, defaultStore[key]);
   });
@@ -48,11 +50,6 @@ ipcMain.handle("STORE_RESOTRE_ALL", () => {
 });
 
 const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output";
-
-const electronRestart = () => {
-  app.relaunch();
-  app.quit();
-};
 
 // 默认设置
 const defaultStore = {
@@ -66,22 +63,16 @@ const defaultStore = {
 };
 
 const init = () => {
-  const allWindows = BrowserWindow.getAllWindows();
-  const sendChange = (key) => {
-    allWindows.forEach((window) => {
-      window.webContents.send(key);
-    });
-  };
-  const changeObj = {
-    theme: "STORE_THEME_CHANGE",
-    i18n: "STORE_I18N_CHANGE",
-  };
+  let reloadTag = false;
   Object.keys(defaultStore).forEach((key) => {
     if (store.get(key) === undefined) {
       store.set(key, defaultStore[key]);
-      changeObj[key] && sendChange(changeObj[key]);
+      reloadTag = true;
     }
   });
+  if (reloadTag) {
+    electronReload();
+  }
 };
 
 init();

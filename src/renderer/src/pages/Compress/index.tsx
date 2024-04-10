@@ -1,5 +1,10 @@
 import React from "react";
+import AppFunctionDev from "@renderer/components/AppFuctionDev";
 
 export default function Compress() {
-  return <div>Compress</div>;
+  return (
+    <div>
+      <AppFunctionDev />
+    </div>
+  );
 }

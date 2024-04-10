@@ -24,6 +24,7 @@
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.7",
     "lodash": "^4.17.21",
+    "mobx-react": "^9.1.1",
     "nanoid": "^5.0.6",
     "path": "^0.12.7"
   },
