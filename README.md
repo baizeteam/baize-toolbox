@@ -22,6 +22,8 @@ $ pnpm install
 
 阿里网盘链接：https://www.alipan.com/s/WRjhfS4T2p7
 
+谷歌网盘链接 https://drive.google.com/file/d/1tgy_-SJcAIPOUvEc6MzD5aqJ10Gq0kTb/view?usp=sharing
+
 将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
 
 ### 开发
