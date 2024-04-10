@@ -104,6 +104,12 @@ const EllipsisTextControl = ({
   /** 处理单选 */
   const handleSingle = () => {
     const ellipsisContainer = ellipsisContainerRef.current;
+    console.log(
+      "%c [ ellipsisContainer ]-107",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      ellipsisContainer.offsetWidth,
+      ellipsisContainer.scrollWidth,
+    );
     // 说明没有超出范围
     if (ellipsisContainer.offsetWidth >= ellipsisContainer.scrollWidth) {
       handleHidePopupTip(true);
@@ -124,7 +130,7 @@ const EllipsisTextControl = ({
       }
       ellipsisInput.innerHTML = `${trueContentText.slice(
         0,
-        maxLength - 3 > 0 ? maxLength - 3 : 1
+        maxLength - 3 > 0 ? maxLength - 3 : 1,
       )}...`;
       handleHidePopupTip(false);
       return;
@@ -163,7 +169,7 @@ const EllipsisTextControl = ({
       placement={placement}
       {...optionProps}
       getPopupContainer={getPopupContainer}
-      // {showTooltip ? "hover" : ""}
+      trigger={showTooltip ? "hover" : null}
     >
       <div
         ref={ellipsisContainerRef}
