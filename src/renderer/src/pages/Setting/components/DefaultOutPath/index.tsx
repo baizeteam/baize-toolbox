@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import { useTranslation } from "react-i18next";
+import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import "./index.module.less";
 
 export default function DefaultOutPath() {
@@ -33,7 +34,9 @@ export default function DefaultOutPath() {
       <div styleName="block">
         <div styleName="title">{t("pages.setting.outputPath")}</div>
         <div styleName="path">
-          <div styleName="text">{defaultOutPath}</div>
+          <div styleName="text">
+            <EllipsisTextControl maxWidth={270} content={defaultOutPath} />
+          </div>
           <Button
             type="primary"
             styleName="btn"
