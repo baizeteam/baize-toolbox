@@ -1,7 +1,7 @@
 import ElectronStore from "electron-store";
 import { app, ipcMain, BrowserWindow } from "electron";
 import { queueStoreDelete } from "../../utils/storeHelper";
-import { electronReload } from "../../utils/reload";
+import { electronReload, electronRestart } from "../../utils/reload";
 
 export const store = new ElectronStore();
 const configIgnoreKeys = ["ttsList", "transcodeList", "extractList"];
@@ -16,12 +16,13 @@ ipcMain.handle("GET_STORE", (_, key) => {
   return store.get(key);
 });
 
-// 设置 store 并发送通知
-ipcMain.on("SET_STORE_SEND", (_, { key, value, code }) => {
+// 设置 store 并刷新页面
+ipcMain.handle("SET_STORE_RELOAD", (_, { key, value, code }) => {
   store.set(key, value);
   const allWindows = BrowserWindow.getAllWindows();
   allWindows.forEach((window) => {
-    window.webContents.send(`STORE_${code}_CHANGE`);
+    electronReload();
+    // window.webContents.send(`STORE_${code}_CHANGE`);
   });
 });
 
@@ -37,7 +38,7 @@ ipcMain.handle("STORE_RESTORE_CONFIG", () => {
       store.set(key, defaultStore[key]);
     }
   });
-  electronReload();
+  electronRestart();
 });
 
 // 恢复所有设置
@@ -45,7 +46,7 @@ ipcMain.handle("STORE_RESTORE_ALL", () => {
   Object.keys(store.store).forEach((key) => {
     store.set(key, defaultStore[key]);
   });
-  electronReload();
+  electronRestart();
 });
 
 const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output";

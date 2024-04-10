@@ -16,8 +16,6 @@ export default function App() {
   const init = () => {
     initTheme();
     initI18n();
-    window.electron.ipcRenderer.on("STORE_THEME_CHANGE", initTheme);
-    window.electron.ipcRenderer.on("STORE_I18N_CHANGE", initI18n);
   };
 
   // 初始化主题
