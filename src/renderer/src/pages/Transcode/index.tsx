@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Table, Progress, message } from "antd";
-import { nanoid } from "nanoid";
 import AppSelectFile from "@renderer/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
 import { formatTime } from "@renderer/utils/formatTime";
@@ -9,6 +8,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@renderer/router/ROUTERS";
 import DeleteModal from "@renderer/components/DeleteModal";
+import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
+import platformUtil from "@renderer/utils/platformUtil";
+import { openFile, openFolder, separator } from "@renderer/utils/fileHelper";
+import {
+  tableOriginFile,
+  tableProgress,
+  tableCreateTime,
+} from "@renderer/utils/tableHelper";
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
@@ -29,32 +36,6 @@ export default function Transcode() {
       setFilePath(e.file.path);
       setShowTypeModal(true);
     }
-  };
-
-  // 打开文件夹
-  const openFolder = (path) => {
-    window.electron.ipcRenderer
-      .invoke("WIN_OPEN_FILE", {
-        path,
-      })
-      .then((res) => {
-        if (!res) {
-          message.error(t("commonText.openFolderError"));
-        }
-      });
-  };
-
-  // 打开文件
-  const openFile = (path) => {
-    window.electron.ipcRenderer
-      .invoke("WIN_OPEN_FILE", {
-        path,
-      })
-      .then((res) => {
-        if (!res) {
-          message.error(t("commonText.openFileError"));
-        }
-      });
   };
 
   // 删除记录
@@ -112,37 +93,22 @@ export default function Transcode() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const oldFileName = filePath.split("\\").pop().split(".").shift();
-    const outputFileName = `${oldFileName}-${new Date().getTime()}.${outputType}`;
-    const outputFloaderPath = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "defaultOutPath",
-    );
-    const taskId = nanoid(16);
+    const baseInfo = await getTaskBaseInfo(filePath, outputType);
     const params = {
-      command: [
-        "-i",
-        filePath,
-        "-c:v",
-        "h264",
-        "-c:a",
-        "aac",
-        "-strict",
-        "experimental",
-      ],
-      taskId,
-      inputFilePath: filePath,
-      outputFloaderPath,
-      outputFileName,
-      outputType,
-      createTime: new Date().getTime(),
-      progress: 0,
+      command: ffmpegObj2List({
+        "-i": filePath,
+        "-c:v": platformUtil.isMac ? "h264_videotoolbox" : "h264",
+        "-c:a": "aac",
+        "-strict": "experimental",
+      }),
+      ...baseInfo,
       code: "transcode",
     };
     changeTranscodeList([params, ...(transcodeListRef.current || [])]);
     window.electron.ipcRenderer.send("FFMPEG_COMMAND", params);
-    window.electron.ipcRenderer.on(`FFMPEG_PROGRESS_${taskId}`, (e, data) =>
-      onProgressChange(e, data, taskId),
+    window.electron.ipcRenderer.on(
+      `FFMPEG_PROGRESS_${baseInfo.taskId}`,
+      (e, data) => onProgressChange(e, data, baseInfo.taskId),
     );
   };
 
@@ -164,44 +130,27 @@ export default function Transcode() {
   };
 
   const columns = [
-    {
-      title: t("commonText.text"),
-      dataIndex: "inputFilePath",
-      key: "inputFilePath",
-      width: 200,
-    },
+    tableOriginFile,
     {
       title: t("pages.transcode.transcodeType"),
       dataIndex: "outputType",
       key: "outputType",
-      width: 100,
+      width: 160,
     },
-    {
-      title: t("commonText.progress"),
-      dataIndex: "progress",
-      key: "progress",
-      width: 100,
-      render: (progress) => <Progress percent={progress} />,
-    },
-    {
-      title: t("commonText.createTime"),
-      dataIndex: "createTime",
-      key: "createTime",
-      width: 100,
-      render: (createTime: number) => formatTime(createTime),
-    },
+    tableProgress,
+    tableCreateTime,
     {
       title: t("commonText.action"),
       dataIndex: "action",
       key: "action",
-      width: 160,
+      width: 200,
       render: (_, record) => {
         return (
           <>
             <Button
               onClick={() =>
                 openFile(
-                  `${record.outputFloaderPath}\\${record.outputFileName}`,
+                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
                 )
               }
               type="link"
@@ -221,7 +170,7 @@ export default function Transcode() {
               className="common-table-link-btn"
               onClick={() => {
                 openDeleteFileModal(
-                  `${record.outputFloaderPath}\\${record.outputFileName}`,
+                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
                   record,
                 );
               }}
@@ -248,10 +197,10 @@ export default function Transcode() {
     }
   }, [pathname]);
   return (
-    <div styleName="transcode">
+    <div styleName="transcode" className="common-content">
       <AppSelectFile onSelectFile={selectFile} />
       <Table
-        styleName="transcode-table"
+        styleName="table"
         columns={columns}
         dataSource={transcodeList}
         rowKey={"taskId"}

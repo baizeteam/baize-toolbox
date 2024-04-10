@@ -15,6 +15,7 @@
     "size": "Size",
     "type": "Type",
     "path": "Path",
+    "originFile": "Origin file",
     "select": "Select",
     "change": "Change",
     "generate": "Generate",
@@ -72,8 +73,14 @@
     },
     "transcode": {
       "transcodeType": "Transcode Type",
-      "transcodeTypeModal": {
+      "typeModal": {
         "title": "Please select the conversion format"
+      }
+    },
+    "extract": {
+      "extractType": "Extract Type",
+      "typeModal": {
+        "title": "Please select the extraction format"
       }
     }
   }

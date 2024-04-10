@@ -8,6 +8,7 @@ import AudioPlay from "@renderer/components/AudioPlay";
 import { formatTime } from "@renderer/utils/formatTime";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
+import { tableText, tableCreateTime } from "@renderer/utils/tableHelper";
 
 enum EStatus {
   pending = "pending",
@@ -71,12 +72,7 @@ export default function TTS() {
   };
 
   const columns = [
-    {
-      title: t("commonText.text"),
-      dataIndex: "text",
-      key: "text",
-      width: 200,
-    },
+    tableText,
     {
       title: t("commonText.audio"),
       dataIndex: "url",
@@ -90,21 +86,14 @@ export default function TTS() {
       title: t("commonText.vocalLine"),
       dataIndex: "voice",
       key: "voice",
-      width: 100,
+      width: 160,
       render: (voice: string) => EdgeSpeechTTS.voiceName[voice],
     },
-    {
-      title: t("commonText.createTime"),
-      dataIndex: "createTime",
-      key: "createTime",
-      width: 100,
-      render: (createTime: number) => formatTime(createTime),
-    },
+    tableCreateTime,
     {
       title: t("commonText.action"),
       dataIndex: "action",
       key: "action",
-      width: 100,
       render: (_, record) => {
         return (
           <Button
@@ -160,7 +149,7 @@ export default function TTS() {
   };
 
   return (
-    <div styleName="tts">
+    <div styleName="tts" className="common-content">
       <Input.TextArea
         placeholder="请输入文本（最多200个字符）"
         value={value}

@@ -15,6 +15,7 @@
     "size": "大小",
     "type": "类型",
     "path": "路径",
+    "originFile": "原文件",
     "select": "选择",
     "change": "修改",
     "generate": "生成",
@@ -72,8 +73,14 @@
     },
     "transcode": {
       "transcodeType": "转换类型",
-      "transcodeTypeModal": {
+      "typeModal": {
         "title": "请选择转换格式"
+      }
+    },
+    "extract": {
+      "extractType": "提取类型",
+      "typeModal": {
+        "title": "请选择提取类型"
       }
     }
   }

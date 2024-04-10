@@ -7,7 +7,7 @@ import "./index.module.less";
 
 export default function Setting() {
   return (
-    <div styleName="setting">
+    <div styleName="setting" className="common-content">
       <Language />
       <Theme />
       <DefaultOutPath />
