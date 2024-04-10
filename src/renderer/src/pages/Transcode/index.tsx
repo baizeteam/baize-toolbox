@@ -10,12 +10,21 @@ import { ROUTERS } from "@renderer/router/ROUTERS";
 import DeleteModal from "@renderer/components/DeleteModal";
 import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
 import platformUtil from "@renderer/utils/platformUtil";
-import { openFile, openFolder, separator } from "@renderer/utils/fileHelper";
+import {
+  openFile,
+  openFolder,
+  separator,
+  fileSelectAccetps,
+} from "@renderer/utils/fileHelper";
 import {
   tableOriginFile,
   tableProgress,
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
+
+const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].join(
+  ",",
+);
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
@@ -198,7 +207,7 @@ export default function Transcode() {
   }, [pathname]);
   return (
     <div styleName="transcode" className="common-content">
-      <AppSelectFile onSelectFile={selectFile} />
+      <AppSelectFile onSelectFile={selectFile} accept={accept} />
       <Table
         styleName="table"
         columns={columns}
