@@ -107,6 +107,7 @@ export default function Transcode() {
       command: ffmpegObj2List({
         "-i": filePath,
         "-c:v": platformUtil.isMac ? "h264_videotoolbox" : "h264",
+        "-preset": "fast",
         "-c:a": "aac",
         "-strict": "experimental",
       }),
