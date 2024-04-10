@@ -47,6 +47,21 @@ export default defineConfig({
     build: {
       minify: "terser",
       cssMinify: "esbuild",
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            base: [
+              "react",
+              "react-dom",
+              "react-router-dom",
+              "mobx",
+              "mobx-react",
+            ],
+            tools: ["ahooks", "lodash", "nanoid"],
+            // antd: ["antd"],
+          },
+        },
+      },
     },
   },
 });
