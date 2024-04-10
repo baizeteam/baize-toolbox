@@ -3,6 +3,7 @@ import { Button, Radio, Select } from "antd";
 import Theme from "./components/Theme";
 import DefaultOutPath from "./components/DefaultOutPath";
 import Language from "./components/Language";
+import Restore from "./components/Restore";
 import "./index.module.less";
 
 export default function Setting() {
@@ -11,6 +12,7 @@ export default function Setting() {
       <Language />
       <Theme />
       <DefaultOutPath />
+      <Restore />
     </div>
   );
 }

@@ -69,6 +69,20 @@
         "light": "Light",
         "dark": "Dark",
         "system": "Follow system"
+      },
+      "restore": {
+        "successText": "Restore success",
+        "errorText": "Restore failed",
+        "config": {
+          "btn": "Restore configuration",
+          "title": "Confirm restore configuration?",
+          "content": "Restoring configuration includes export path, theme, and language. Do you want to continue?"
+        },
+        "all": {
+          "btn": "Restore all",
+          "title": "Confirm restore all?",
+          "content": "Restoring all includes configuration and history. Do you want to continue?"
+        }
       }
     },
     "transcode": {

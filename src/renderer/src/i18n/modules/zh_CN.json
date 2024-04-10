@@ -69,6 +69,20 @@
         "light": "浅色模式",
         "dark": "深色模式",
         "system": "跟随系统"
+      },
+      "restore": {
+        "successText": "还原成功",
+        "errorText": "还原失败",
+        "config": {
+          "btn": "还原配置",
+          "title": "确认还原配置？",
+          "content": "还原配置包括导出路径、主题、语言，是否继续？"
+        },
+        "all": {
+          "btn": "还原全部",
+          "title": "确认还原全部？",
+          "content": "还原全部包括配置、历史记录，是否继续？"
+        }
       }
     },
     "transcode": {

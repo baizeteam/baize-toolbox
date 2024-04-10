@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, MenuItem } from 'electron';
+import { BrowserWindow, Menu, MenuItem } from "electron";
 
 export class MenuManger {
   public menuMap: Map<string, MenuItem>;
@@ -15,7 +15,7 @@ export class MenuManger {
     if (!this.menuMap.has(menuName)) {
       this.menuMap.set(menuName, menuItem);
     } else {
-      throw Error(menuName + '已注册');
+      throw Error(menuName + "已注册");
     }
     return this.menuMap.get(menuName);
   }
@@ -33,7 +33,7 @@ export class MenuManger {
       if (this.menuMap.has(item)) {
         contextMenu.append(this.menuMap.get(item)!);
       } else {
-        throw Error(item + '未注册');
+        throw Error(item + "未注册");
       }
     });
     return contextMenu;
@@ -42,40 +42,41 @@ export class MenuManger {
 
 const menuObj = {
   destory: new MenuItem({
-    label: '销毁',
+    label: "销毁",
     click: (menuItem, browserWindow, event) => {
       browserWindow?.destroy();
     },
   }),
   reload: new MenuItem({
-    label: '刷新',
+    label: "刷新",
     click: (menuItem, browserWindow, event) => {
-      if(browserWindow){
-        console.log(browserWindow.webContents.getURL())
+      if (browserWindow) {
+        console.log(browserWindow.webContents.getURL());
         browserWindow.reload();
-        showCustomMenu(browserWindow)
+        showCustomMenu(browserWindow);
       }
-      
     },
   }),
   devTools: new MenuItem({
-    label: '开发者工具',
+    label: "开发者工具",
     click: (menuItem, browserWindow, event) => {
       browserWindow?.webContents?.openDevTools();
     },
   }),
 };
 
-const DEFAULT_MENU_LIST = ['destory', 'reload', 'devTools'];
+const DEFAULT_MENU_LIST = ["destory", "reload", "devTools"];
 
 export const showCustomMenu = (
   win: BrowserWindow,
-  menuList: string[] = DEFAULT_MENU_LIST
+  menuList: string[] = DEFAULT_MENU_LIST,
 ) => {
-  win.webContents.on('context-menu', (e, params) => {
-    const menu = menuManger.getMenu(menuList);
-    menu.popup({ x: params.x, y: params.y });
-  });
+  if (process.env.NODE_ENV === "development") {
+    win.webContents.on("context-menu", (e, params) => {
+      const menu = menuManger.getMenu(menuList);
+      menu.popup({ x: params.x, y: params.y });
+    });
+  }
 };
 
 export const menuManger = new MenuManger({ menuObj });

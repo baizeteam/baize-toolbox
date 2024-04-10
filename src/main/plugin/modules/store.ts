@@ -1,6 +1,7 @@
 import ElectronStore from "electron-store";
 import { app, ipcMain, BrowserWindow } from "electron";
 import { queueStoreDelete } from "../../utils/storeHelper";
+import { electronReload } from "../../utils/reload";
 
 export const store = new ElectronStore();
 const configIgnoreKeys = ["ttsList", "transcodeList", "extractList"];
@@ -30,29 +31,24 @@ ipcMain.handle("QUEUE_STORE_DELETE", (_, params) => {
 });
 
 // 恢复默认设置
-ipcMain.handle("STORE_RESOTRE_CONFIG", () => {
+ipcMain.handle("STORE_RESTORE_CONFIG", () => {
   Object.keys(store.store).forEach((key) => {
     if (!configIgnoreKeys.includes(key)) {
       store.set(key, defaultStore[key]);
     }
   });
-  electronRestart();
+  electronReload();
 });
 
 // 恢复所有设置
-ipcMain.handle("STORE_RESOTRE_ALL", () => {
+ipcMain.handle("STORE_RESTORE_ALL", () => {
   Object.keys(store.store).forEach((key) => {
     store.set(key, defaultStore[key]);
   });
-  electronRestart();
+  electronReload();
 });
 
 const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output";
-
-const electronRestart = () => {
-  app.relaunch();
-  app.quit();
-};
 
 // 默认设置
 const defaultStore = {
@@ -66,22 +62,16 @@ const defaultStore = {
 };
 
 const init = () => {
-  const allWindows = BrowserWindow.getAllWindows();
-  const sendChange = (key) => {
-    allWindows.forEach((window) => {
-      window.webContents.send(key);
-    });
-  };
-  const changeObj = {
-    theme: "STORE_THEME_CHANGE",
-    i18n: "STORE_I18N_CHANGE",
-  };
+  let reloadTag = false;
   Object.keys(defaultStore).forEach((key) => {
     if (store.get(key) === undefined) {
       store.set(key, defaultStore[key]);
-      changeObj[key] && sendChange(changeObj[key]);
+      reloadTag = true;
     }
   });
+  if (reloadTag) {
+    electronReload();
+  }
 };
 
 init();
