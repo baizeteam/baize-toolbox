@@ -20,9 +20,9 @@ import {
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
 
-const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].join(
-  ",",
-);
+const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
+  .map((item) => `.${item}`)
+  .join(",");
 
 export default function Extract() {
   const [filePath, setFilePath] = useState(null);

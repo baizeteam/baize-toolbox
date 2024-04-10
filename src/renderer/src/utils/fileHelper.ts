@@ -4,30 +4,20 @@ import platformUtil from "@renderer/utils/platformUtil";
 
 // 允许选择的文件类型
 export const fileSelectAccetps = {
-  video: [
-    ".mp4",
-    ".avi",
-    ".mkv",
-    ".rmvb",
-    ".wmv",
-    ".mov",
-    ".flv",
-    ".3gp",
-    ".webm",
-  ],
-  image: [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"],
-  audio: [".mp3", ".wav", ".flac", ".aac", ".m4a", ".amr"],
+  video: ["mp4", "avi", "mkv", "rmvb", "wmv", "mov", "flv", "3gp", "webm"],
+  image: ["jpg", "jpeg", "png", "gif", "svg", "webp"],
+  audio: ["mp3", "wav", "flac", "aac", "m4a", "amr"],
   document: [
-    ".doc",
-    ".docx",
-    ".xls",
-    ".xlsx",
-    ".ppt",
-    ".pptx",
-    ".pdf",
-    ".txt",
-    ".md",
-    ".epub",
+    "doc",
+    "docx",
+    "xls",
+    "xlsx",
+    "ppt",
+    "pptx",
+    "pdf",
+    "txt",
+    "md",
+    "epub",
   ],
 };
 
