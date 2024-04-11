@@ -13,8 +13,9 @@ import {
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import appIcon from "@renderer/assets/images/icon.ico";
 import "./index.module.less";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -42,7 +43,7 @@ const Nav: React.FC = () => {
   const { t } = useTranslation();
 
   const items: MenuItem[] = [
-    getItem(t("siteMain.components.nav.home"), ROUTERS.HOME, <HomeOutlined />),
+    // getItem(t("siteMain.components.nav.home"), ROUTERS.HOME, <HomeOutlined />),
     getItem(
       t("siteMain.components.nav.transcode"),
       ROUTERS.TRANSCODE,
@@ -76,6 +77,16 @@ const Nav: React.FC = () => {
     ),
   ];
 
+  // 点击菜单项后，路由跳转
+  const handleMenuClick = (e: any) => {
+    navigate(e.key);
+  };
+
+  // 更新menu样式
+  const handleCollapse = () => {
+    setCollapsed(window.innerWidth < 1000);
+  };
+
   useEffect(() => {
     if (location.hash === "") {
       setSelectKey(["/"]);
@@ -84,13 +95,25 @@ const Nav: React.FC = () => {
     }
   }, [location.hash]);
 
-  const handleMenuClick = (e: any) => {
-    navigate(e.key);
-  };
+  useEffect(() => {
+    handleCollapse();
+    window.addEventListener("resize", handleCollapse);
+    return () => {
+      window.removeEventListener("resize", handleCollapse);
+    };
+  }, []);
 
   return (
-    <div styleName="nav">
+    <div styleName="nav" className="site-main-nav">
+      <div styleName="logo">
+        <img
+          styleName="img"
+          onClick={() => navigate(ROUTERS.HOME)}
+          src={appIcon}
+        />
+      </div>
       <Menu
+        styleName="menu"
         selectedKeys={selectKey}
         mode="inline"
         // theme="dark"

@@ -55,7 +55,11 @@ export default function App(props) {
       }}
       locale={antdLocale[i18nCur]}
     >
-      <div styleName={`app${isDark ? " is-dark" : " is-light"}`} {...rest}>
+      <div
+        styleName="app"
+        className={`${isDark ? "is-dark" : "is-light"}`}
+        {...rest}
+      >
         {children}
       </div>
     </ConfigProvider>
