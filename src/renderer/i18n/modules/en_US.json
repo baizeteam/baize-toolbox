@@ -1,0 +1,132 @@
+{
+  "commonText": {
+    "text": "Text",
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "file": "File",
+    "folder": "Folder",
+    "action": "Action",
+    "progress": "Progress",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "name": "Name",
+    "size": "Size",
+    "type": "Type",
+    "path": "Path",
+    "originFile": "Origin file",
+    "select": "Select",
+    "change": "Change",
+    "generate": "Generate",
+    "create": "Create",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "copy": "Copy",
+    "delete": "Delete",
+    "download": "Download",
+    "downloadSuccess": "Download success",
+    "downloadError": "Download failed",
+    "createTime": "CreateTime",
+    "updateTime": "UpdateTime",
+    "vocalLine": "Vocal line",
+    "openFolder": "Open folder",
+    "openFolderError": "Folder does not exist",
+    "openFile": "Open",
+    "openFileError": "File does not exist"
+  },
+  "components": {
+    "nav": {
+      "home": "Home",
+      "transcode": "Transocde",
+      "extract": "Extract",
+      "TTS": "TTS",
+      "screenRecord": "Screen Record",
+      "screenShot": "Screen Shot",
+      "compress": "Compress",
+      "setting": "Setting"
+    },
+    "appSelectFile": {
+      "title": "Select or drag files to this area"
+    },
+    "deleteModal": {
+      "content": "Confirm to delete?",
+      "deleteFileText": "Delete files simultaneously?"
+    },
+    "appFunctionDev": {
+      "title": "In development, stay tuned for updates!"
+    }
+  },
+  "siteMain": {
+    "pages": {
+      "home": {
+        "title": "Baize Toolbox",
+        "desc": "The Baize Toolbox is a powerful multimedia processing tool that can help users quickly and efficiently convert between different multimedia formats. Whether it's images, audio, or videos, this tool can easily handle them, making it more convenient and efficient for users to process multimedia files."
+      },
+      "setting": {
+        "outputPath": "Default output path",
+        "theme": "Theme",
+        "language": "Language",
+        "change": "Change",
+        "themeOptions": {
+          "light": "Light",
+          "dark": "Dark",
+          "system": "Follow system"
+        },
+        "restore": {
+          "successText": "Restore success",
+          "errorText": "Restore failed",
+          "config": {
+            "btn": "Restore configuration",
+            "title": "Confirm restore configuration?",
+            "content": "Restoring configuration includes export path, theme, and language. Do you want to continue?"
+          },
+          "all": {
+            "btn": "Restore all",
+            "title": "Confirm restore all?",
+            "content": "Restoring all includes configuration and history. Do you want to continue?"
+          }
+        }
+      },
+      "transcode": {
+        "transcodeType": "Transcode Type",
+        "typeModal": {
+          "title": "Please select the conversion format"
+        }
+      },
+      "extract": {
+        "extractType": "Extract Type",
+        "typeModal": {
+          "title": "Please select the extraction format"
+        }
+      }
+    },
+    "components": {
+      "nav": {
+        "home": "Home",
+        "transcode": "Transocde",
+        "extract": "Extract",
+        "TTS": "TTS",
+        "screenRecord": "Screen Record",
+        "screenShot": "Screen Shot",
+        "compress": "Compress",
+        "setting": "Setting"
+      },
+      "appSelectFile": {
+        "title": "Select or drag files to this area"
+      },
+      "deleteModal": {
+        "content": "Confirm to delete?",
+        "deleteFileText": "Delete files simultaneously?"
+      },
+      "appFunctionDev": {
+        "title": "In development, stay tuned for updates!"
+      }
+    }
+  },
+  "siteElectronLoading": {
+    "tip": "Baize toolbox is starting..."
+  }
+}

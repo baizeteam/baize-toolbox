@@ -1,4 +1,4 @@
-import "./modules/Escape";
+import "./modules/keyboard";
 import "./modules/baseConfig";
 import "./modules/ipcFile";
 import "./modules/ipcWin";

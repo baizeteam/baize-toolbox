@@ -11,14 +11,64 @@ import { showCustomMenu } from "./plugin/modules/MenuManger";
 import { InjectData } from "./utils/inject";
 import { getSystemInfo } from "./utils/systemHelper";
 
-// 加载的url
-const initWinUrl = (win: BrowserWindow) => {
-  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}`);
-  } else {
-    win.loadFile(join(__dirname, `../renderer/index.html`));
-  }
+let mainWindow: BrowserWindow;
+let loadingWin: BrowserWindow;
+export enum START_STATUS {
+  pedding = "pedding",
+  success = "success",
+  fail = "fail",
+}
+const mainWinStart = {
+  web: START_STATUS.pedding,
+  ffmpeg: START_STATUS.pedding,
 };
+const handler = {
+  set(target, p, value) {
+    Reflect.set(target, p, value);
+    onMainWinStartChange();
+    return true;
+  },
+};
+export const mainWinStartProxy = new Proxy(mainWinStart, handler);
+export function onMainWinStartChange() {
+  let tag = true;
+  Object.keys(mainWinStart).forEach((key) => {
+    if (mainWinStart[key] !== START_STATUS.success) {
+      tag = false;
+    }
+  });
+  if (tag) {
+    mainWindow.show();
+    loadingWin.hide();
+  }
+}
+
+export function createloadingWin() {
+  loadingWin = new BrowserWindow({
+    width: 300,
+    height: 100,
+    frame: false, // 隐藏窗口边框
+    transparent: true, // 设置窗口背景透明
+    alwaysOnTop: true, // 置顶显示
+    hasShadow: false, // 隐藏窗口阴影
+    webPreferences: {
+      nodeIntegration: true,
+      webSecurity: false,
+      preload: join(__dirname, "../preload/index.js"),
+    },
+  });
+
+  initWinUrl(loadingWin, "/siteElectronLoading/index.html");
+}
+
+// 加载的url
+export function initWinUrl(win: BrowserWindow, url: string) {
+  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+    win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}${url}`);
+  } else {
+    win.loadFile(join(__dirname, `../renderer${url}`));
+  }
+}
 
 interface ICreateWin {
   config: BrowserWindowConstructorOptions;
@@ -46,14 +96,13 @@ export async function createWin({
       ...injectData,
     },
   });
-  showCustomMenu(win);
-  initWinUrl(win);
+  initWinUrl(win, url);
   return win;
 }
 
 export async function createMainWin(): Promise<void> {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 720,
     show: false,
@@ -72,20 +121,33 @@ export async function createMainWin(): Promise<void> {
   });
   mainWindow["customId"] = "main";
   mainWindow.on("ready-to-show", () => {
-    mainWindow.show();
     showCustomMenu(mainWindow);
   });
-
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
     return { action: "deny" };
   });
-  initWinUrl(mainWindow);
+  mainWindow.webContents.on("did-start-loading", () => {
+    if (!loadingWin) {
+      createloadingWin();
+    }
+    if (mainWinStartProxy.web === START_STATUS.pedding) {
+      loadingWin.show();
+    }
+  });
+  mainWindow.webContents.on("did-stop-loading", () => {
+    if (loadingWin && mainWinStart.web !== START_STATUS.success) {
+      setTimeout(() => {
+        mainWinStartProxy.web = START_STATUS.success;
+      }, 200);
+    }
+  });
+  initWinUrl(mainWindow, "/siteMain/index.html");
 }
 
-export const mainLogSend = (data) => {
+export function mainLogSend(data) {
   const allWindows = BrowserWindow.getAllWindows();
   allWindows.forEach((window) => {
     window.webContents.send("MAIN_LOG", data);
   });
-};
+}

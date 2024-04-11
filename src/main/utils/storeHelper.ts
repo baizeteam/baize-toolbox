@@ -1,6 +1,6 @@
 import { store } from "../plugin/modules/store";
 
-const DEFAULT_LENGTH = 10;
+const DEFAULT_LENGTH = 30;
 
 // 队列存储(新增)
 export const queueStoreAdd = ({ params, key }) => {

@@ -10,7 +10,9 @@ app.whenReady().then(() => {
   });
   createMainWin();
   app.on("activate", function () {
-    if (BrowserWindow.getAllWindows().length === 0) createMainWin();
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createMainWin();
+    }
   });
 });
 

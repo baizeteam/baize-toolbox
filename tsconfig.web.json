@@ -1,9 +1,9 @@
 {
   "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
   "include": [
-    "src/renderer/src/env.d.ts",
-    "src/renderer/src/**/*",
-    "src/renderer/src/**/*.tsx",
+    "src/renderer/*.d.ts",
+    "src/renderer/**/*",
+    "src/renderer/**/*.tsx",
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {
@@ -15,7 +15,16 @@
     "baseUrl": ".",
     "paths": {
       "@renderer/*": [
-        "src/renderer/src/*"
+        "src/renderer/*"
+      ],
+      "@siteMain/*": [
+        "src/renderer/siteMain/src/*"
+      ],
+      "@siteAssist/*": [
+        "src/renderer/siteAssist/src/*"
+      ],
+      "@siteElectronLoading/*": [
+        "src/renderer/siteElectronLoading/src"
       ],
     }
   }

@@ -17,7 +17,10 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        "@renderer": resolve("src/renderer/src"),
+        "@renderer": resolve("src/renderer"),
+        "@siteMain": resolve("src/renderer/siteMain/src"),
+        "@siteAssist": resolve("src/renderer/siteAssist/src"),
+        "@siteElectronLoading": resolve("src/renderer/siteElectronLoading/src"),
       },
     },
     plugins: [
@@ -40,6 +43,7 @@ export default defineConfig({
       },
       preprocessorOptions: {
         less: {
+          additionalData: `@import '@renderer/assets/styles/theme.less';`,
           javascriptEnabled: true,
         },
       },
@@ -48,15 +52,18 @@ export default defineConfig({
       minify: "terser",
       cssMinify: "esbuild",
       rollupOptions: {
+        input: {
+          siteMain: resolve(__dirname, "src/renderer/siteMain/index.html"),
+          siteAssist: resolve(__dirname, "src/renderer/siteAssist/index.html"),
+          siteElectronLoading: resolve(
+            __dirname,
+            "src/renderer/siteElectronLoading/index.html",
+          ),
+        },
         output: {
           manualChunks: {
-            base: [
-              "react",
-              "react-dom",
-              "react-router-dom",
-              "mobx",
-              "mobx-react",
-            ],
+            reactBase: ["react", "react-dom"],
+            reactEcology: ["react-router-dom", "mobx", "mobx-react"],
             tools: ["ahooks", "lodash", "nanoid"],
             // antd: ["antd"],
           },
