@@ -1,6 +1,6 @@
-import EllipsisTextControl from "@siteMain/components/EllipsisTextControl";
+import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import { Trans } from "react-i18next";
-import { formatTime } from "@siteMain/utils/formatTime";
+import { formatTime } from "@renderer/utils/formatTime";
 import { Progress } from "antd";
 
 // 文本

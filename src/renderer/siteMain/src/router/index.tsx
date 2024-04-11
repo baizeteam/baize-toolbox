@@ -5,7 +5,7 @@ import AppLoading from "@renderer/components/AppLoading";
 import { ROUTERS } from "./ROUTERS";
 import Nav from "@siteMain/components/Nav";
 import AppHeader from "../components/AppHeader";
-import KeepAlive from "@siteMain/components/KeepAlive";
+import KeepAlive from "@renderer/components/KeepAlive";
 import "./index.module.less";
 import Home from "@siteMain/pages/Home";
 import Transcode from "@siteMain/pages/Transcode";

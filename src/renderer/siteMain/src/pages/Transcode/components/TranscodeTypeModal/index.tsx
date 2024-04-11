@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, ModalProps, Radio } from "antd";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
-import { fileSelectAccetps } from "@siteMain/utils/fileHelper";
+import { fileSelectAccetps } from "@renderer/utils/fileHelper";
 
 const options = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map(
   (item) => ({ label: item.toUpperCase(), value: item }),
