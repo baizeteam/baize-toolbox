@@ -3,8 +3,8 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import AppLoading from "@renderer/components/AppLoading";
 import { ROUTERS } from "./ROUTERS";
-import { Spin } from "antd";
 import Nav from "@siteMain/components/Nav";
+import AppHeader from "../components/AppHeader";
 import KeepAlive from "@siteMain/components/KeepAlive";
 import "./index.module.less";
 import Home from "@siteMain/pages/Home";
@@ -30,20 +30,23 @@ export default function BaseRouter() {
     <HashRouter>
       <Nav />
       <div styleName="container">
-        <Routes>
-          <Route path={"/"} element={<KeepAlive />}>
-            <Route path={ROUTERS.HOME} element={<Home />} />
-            <Route path={ROUTERS.TRANSCODE} element={<Transcode />} />
-            <Route path={ROUTERS.EXTRACT} element={<Extract />} />
-            <Route path={ROUTERS.TTS} element={<TTS />} />
-            <Route path={ROUTERS.SCREEN_RECORD} element={<ScreenRecord />} />
-            <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
-            <Route path={ROUTERS.SETTING} element={<Setting />} />
-            <Route path={ROUTERS.COMPRESS} element={<Compress />} />
-          </Route>
-          {/* 通配符路由处理不匹配的情况 */}
-          <Route path="*" element={<Navigate to={ROUTERS.HOME} replace />} />
-        </Routes>
+        <AppHeader />
+        <div styleName="content">
+          <Routes>
+            <Route path={"/"} element={<KeepAlive />}>
+              <Route path={ROUTERS.HOME} element={<Home />} />
+              <Route path={ROUTERS.TRANSCODE} element={<Transcode />} />
+              <Route path={ROUTERS.EXTRACT} element={<Extract />} />
+              <Route path={ROUTERS.TTS} element={<TTS />} />
+              <Route path={ROUTERS.SCREEN_RECORD} element={<ScreenRecord />} />
+              <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
+              <Route path={ROUTERS.SETTING} element={<Setting />} />
+              <Route path={ROUTERS.COMPRESS} element={<Compress />} />
+            </Route>
+            {/* 通配符路由处理不匹配的情况 */}
+            <Route path="*" element={<Navigate to={ROUTERS.HOME} replace />} />
+          </Routes>
+        </div>
       </div>
       {/* <Suspense fallback={<AppLoading />}>
         <div styleName="container">

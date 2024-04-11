@@ -12,20 +12,33 @@ app.on("ready", () => {
     BrowserWindow.fromWebContents(e.sender)?.hide();
   });
 
-  // 窗口拖拽
-  ipcMain.on("WIN_DRAG", (e, data) => {
-    if (e?.sender && !isNaN(data.x) && !isNaN(data.y)) {
-      BrowserWindow.fromWebContents(e.sender)?.setPosition(data.x, data.y);
-    }
-  });
-
   // 获取窗口位置
   ipcMain.handle("WIN_GET_POSITION", (e, data) => {
     return BrowserWindow.fromWebContents(e.sender)?.getPosition();
   });
 
+  // 获取窗口状态
+  ipcMain.handle("WIN_GET_MAXIMIZED_STATE", (e, data) => {
+    return BrowserWindow.fromWebContents(e.sender)?.isMaximized();
+  });
+
+  // 最小化窗口
+  ipcMain.on("WIN_MINIMIZE", (e, data) => {
+    BrowserWindow.fromWebContents(e.sender)?.minimize();
+  });
+
+  // 最大化和还原窗口
+  ipcMain.handle("WIN_MAXIMIZE", (e, data) => {
+    console.log(BrowserWindow.fromWebContents(e.sender)?.isMaximized());
+    return BrowserWindow.fromWebContents(e.sender)?.isMaximized()
+      ? BrowserWindow.fromWebContents(e.sender)?.restore()
+      : BrowserWindow.fromWebContents(e.sender)?.maximize();
+  });
+
   // 关闭窗口
   ipcMain.on("WIN_CLOSE", (e, data) => {
     BrowserWindow.fromWebContents(e.sender)?.close();
+    // 退出应用
+    app.quit();
   });
 });
