@@ -107,6 +107,7 @@ export async function createMainWin(): Promise<void> {
     height: 720,
     show: false,
     autoHideMenuBar: true,
+    frame: false,
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       nodeIntegration: true,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import { useTranslation } from "react-i18next";
-import EllipsisTextControl from "@siteMain/components/EllipsisTextControl";
+import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import "./index.module.less";
 
 export default function DefaultOutPath() {

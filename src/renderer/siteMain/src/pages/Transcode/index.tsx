@@ -2,25 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Table, Progress, message } from "antd";
 import AppSelectFile from "@siteMain/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
-import { formatTime } from "@siteMain/utils/formatTime";
+import { formatTime } from "@renderer/utils/formatTime";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
 import DeleteModal from "@siteMain/components/DeleteModal";
-import { ffmpegObj2List, getTaskBaseInfo } from "@siteMain/utils/ffmpegHelper";
-import platformUtil from "@siteMain/utils/platformUtil";
+import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
+import platformUtil from "@renderer/utils/platformUtil";
 import {
   openFile,
   openFolder,
   separator,
   fileSelectAccetps,
-} from "@siteMain/utils/fileHelper";
+} from "@renderer/utils/fileHelper";
 import {
   tableOriginFile,
   tableProgress,
   tableCreateTime,
-} from "@siteMain/utils/tableHelper";
+} from "@renderer/utils/tableHelper";
 
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)

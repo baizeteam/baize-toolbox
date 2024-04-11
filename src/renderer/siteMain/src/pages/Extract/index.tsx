@@ -7,18 +7,18 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
 import DeleteModal from "@siteMain/components/DeleteModal";
-import { ffmpegObj2List, getTaskBaseInfo } from "@siteMain/utils/ffmpegHelper";
+import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
 import {
   openFile,
   openFolder,
   separator,
   fileSelectAccetps,
-} from "@siteMain/utils/fileHelper";
+} from "@renderer/utils/fileHelper";
 import {
   tableOriginFile,
   tableProgress,
   tableCreateTime,
-} from "@siteMain/utils/tableHelper";
+} from "@renderer/utils/tableHelper";
 
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)

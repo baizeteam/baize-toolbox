@@ -1,6 +1,6 @@
 import i18n from "@renderer/i18n";
 import { message } from "antd";
-import platformUtil from "@siteMain/utils/platformUtil";
+import platformUtil from "@renderer/utils/platformUtil";
 
 // 允许选择的文件类型
 export const fileSelectAccetps = {

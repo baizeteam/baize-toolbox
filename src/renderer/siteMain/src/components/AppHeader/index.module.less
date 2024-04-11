@@ -1,0 +1,19 @@
+.app-header {
+  -webkit-app-region: drag;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  :global {
+    .app-icon {
+      -webkit-app-region: no-drag;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 10px;
+      fill: #888;
+      &:hover {
+        fill: #555;
+      }
+    }
+  }
+}

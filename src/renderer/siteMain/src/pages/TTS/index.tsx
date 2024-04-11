@@ -4,11 +4,11 @@ import { Button, Input, Table, Cascader, message } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
-import AudioPlay from "@siteMain/components/AudioPlay";
-import { formatTime } from "@siteMain/utils/formatTime";
+import AudioPlay from "@renderer/components/AudioPlay";
+import { formatTime } from "@renderer/utils/formatTime";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { tableText, tableCreateTime } from "@siteMain/utils/tableHelper";
+import { tableText, tableCreateTime } from "@renderer/utils/tableHelper";
 
 enum EStatus {
   pending = "pending",

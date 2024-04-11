@@ -1,4 +1,4 @@
-import { separator } from "@siteMain/utils/fileHelper";
+import { separator } from "@renderer/utils/fileHelper";
 import { nanoid } from "nanoid";
 
 // ffmpeg 命令对象转数组
