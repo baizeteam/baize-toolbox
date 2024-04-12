@@ -5,7 +5,7 @@ import "./app.module.less";
 import i18n, { antdLocale } from "@renderer/i18n";
 
 export default function App(props) {
-  const { children, ...rest } = props;
+  const { children, showBgColor, ...rest } = props;
   const [isDark, setIsDark] = React.useState(false);
   const [i18nCur, setI18nCur] = React.useState("");
 
@@ -58,6 +58,7 @@ export default function App(props) {
       <div
         styleName="app"
         className={`${isDark ? "is-dark" : "is-light"}`}
+        style={{ background: isDark && showBgColor && "rgba(0,0,0)" }}
         {...rest}
       >
         {children}

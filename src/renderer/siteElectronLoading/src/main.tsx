@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const App = () => {
   const { t } = useTranslation();
   return (
-    <BaseApp style={{ background: "rgba(0,0,0,0)" }}>
+    <BaseApp>
       <div styleName="electron-loading">
         <Spin size="large" />
         <div styleName="tip">{t("siteElectronLoading.tip")}</div>
