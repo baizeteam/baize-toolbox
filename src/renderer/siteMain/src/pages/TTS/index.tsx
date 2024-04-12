@@ -55,14 +55,17 @@ export default function TTS() {
   // 下载语音
   const downLoadTTS = async (record) => {
     console.log(record);
-    const res = await window.electron.ipcRenderer.invoke("WIN_DOWNLOAD_FILE", {
-      base64: record.url,
-      fileName: `${record.createTime}-${nanoid(8)}.mp3`,
-      filePath: await window.electron.ipcRenderer.invoke(
-        "GET_STORE",
-        "defaultOutPath",
-      ),
-    });
+    const res = await window.electron.ipcRenderer.invoke(
+      "WIN_DOWNLOAD_BASE64",
+      {
+        base64: record.url,
+        fileName: `${record.createTime}-${nanoid(8)}.mp3`,
+        filePath: await window.electron.ipcRenderer.invoke(
+          "GET_STORE",
+          "defaultOutPath",
+        ),
+      },
+    );
     if (res === true) {
       message.success(t("commonText.downloadSuccess"));
     } else {

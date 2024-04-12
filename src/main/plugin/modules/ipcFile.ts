@@ -1,4 +1,5 @@
 import { app, ipcMain, dialog } from "electron";
+import { promisify } from "node:util";
 import { openFile, deleteFile } from "../../utils/fileHelper";
 import fs from "fs";
 import path from "path";
@@ -44,8 +45,8 @@ app.on("ready", () => {
     return deleteFile(data.path);
   });
 
-  // 下载文件
-  ipcMain.handle("WIN_DOWNLOAD_FILE", async (e, data) => {
+  // 下载base64文件
+  ipcMain.handle("WIN_DOWNLOAD_BASE64", async (e, data) => {
     return new Promise((resolve) => {
       const { base64, fileName, filePath } = data;
       const buffer = Buffer.from(base64, "base64");
@@ -59,5 +60,18 @@ app.on("ready", () => {
         }
       });
     });
+  });
+
+  ipcMain.handle("WIN_DOWNLOAD_FILE", async (event, data) => {
+    console.log(data);
+    const { path, file } = data;
+    const writeFile = promisify(fs.writeFile);
+    try {
+      await writeFile(path, file);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   });
 });
