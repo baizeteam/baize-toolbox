@@ -1,3 +1,3 @@
 export const ROUTERS = {
-  ElectronLoading: "/electron-loading",
+  RECODE_WIN: "/record-win",
 };

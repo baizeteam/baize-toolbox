@@ -1,0 +1,19 @@
+.record-win {
+  outline: 6px solid @primary-color;
+  border-radius: 4px;
+  overflow: hidden;
+  width: calc(~"100vw - 12px");
+  height: calc(~"100vh - 12px");
+  margin: 6px;
+  box-sizing: content-box;
+  -webkit-app-region: drag;
+  display: flex;
+  flex-direction: column;
+  // background-color: @primary-color;
+  .content {
+    flex: 1;
+  }
+  .footer {
+    -webkit-app-region: no-drag;
+  }
+}

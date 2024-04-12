@@ -5,25 +5,18 @@ import { ROUTERS } from "./ROUTERS";
 import { Spin } from "antd";
 import "./index.module.less";
 
-const ElectronLoading = lazy(() => import("@siteAssist/pages/ElectronLoading"));
+const RecordWin = lazy(() => import("../pages/RecordWin"));
 
 export default function BaseRouter() {
   return (
-    <div style={{ width: 100, height: 100, background: "red" }}>
-      <Spin />
-    </div>
-
-    // <HashRouter>
-    //   <Suspense fallback={<Spin />}>
-    //     <Routes>
-    //       <Route path={"/"}>
-    //         <Route
-    //           path={ROUTERS.ElectronLoading}
-    //           element={<ElectronLoading />}
-    //         />
-    //       </Route>
-    //     </Routes>
-    //   </Suspense>
-    // </HashRouter>
+    <HashRouter>
+      <Suspense fallback={<></>}>
+        <Routes>
+          <Route path={"/"}>
+            <Route path={ROUTERS.RECODE_WIN} element={<RecordWin />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </HashRouter>
   );
 }
