@@ -1,40 +1,32 @@
-import {
-  app,
-  BrowserWindow,
-  dialog,
-  desktopCapturer,
-  ipcMain,
-  screen,
-} from "electron";
-import { writeFile } from "fs";
-import { execFile, spawn } from "child_process";
-import path, { resolve } from "path";
-import { checkFolderExists } from "../../utils/fileHelper";
-import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
-import { mainWinStartProxy, START_STATUS } from "../../helper";
+import { BrowserWindow, ipcMain, screen } from "electron";
+import { spawn } from "child_process";
 import { getFfmpegPath } from "./ffmpeg";
 
 let ffmpegProcess = null;
-let isRecordingPaused = false;
 
 ipcMain.handle("SCREEN_GET_CURRENT_INFO", async (e, data) => {
-  // return screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
-  return BrowserWindow.fromWebContents(e.sender).getBounds();
+  const cur = BrowserWindow.fromWebContents(e.sender);
+  const bounds = cur.getBounds();
+  const currentDisplay = screen.getDisplayNearestPoint({
+    x: bounds.x,
+    y: bounds.y,
+  });
+  const scaleFactor = currentDisplay.scaleFactor;
+  const windowX =
+    currentDisplay.nativeOrigin.x - currentDisplay.bounds.x + bounds.x;
+  const windowY =
+    currentDisplay.nativeOrigin.y - currentDisplay.bounds.y + bounds.y;
+  bounds.x = windowX * scaleFactor;
+  bounds.y = windowY * scaleFactor;
+  bounds.width *= scaleFactor;
+  bounds.height *= scaleFactor;
+  return bounds;
 });
 
 // 开始录屏
 ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   const { ffmpegPath } = getFfmpegPath();
-  // const captureProcess = spawn("screencapture", [
-  //   "-x",
-  //   "-R0,0,1280,720",
-  //   "-t",
-  //   "mov",
-  //   "-r",
-  //   "30",
-  //   "-",
-  // ]);
-  // captureProcess.stdout.pipe(ffmpegProcess.stdin);
+  console.log(params.command);
   ffmpegProcess = spawn(ffmpegPath, params.command);
   ffmpegProcess.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`);
@@ -47,36 +39,10 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   });
 });
 
-// 暂停录屏
-ipcMain.handle("SCREEN_RECORD_PAUSE", async (e, data) => {
-  isRecordingPaused = true;
-  ffmpegProcess.kill("SIGSTOP");
-  return isRecordingPaused;
-});
-
-// 恢复录屏
-ipcMain.handle("SCREEN_RECORD_RESUME", async (e, data) => {
-  isRecordingPaused = false;
-  ffmpegProcess.kill("SIGCONT");
-  return isRecordingPaused;
-});
-
 // 结束录屏
 ipcMain.handle("SCREEN_RECORD_STOP", async (e, data) => {
-  ffmpegProcess.kill("SIGINT");
-  ffmpegProcess = null;
+  ffmpegProcess.on("exit", (code, signal) => {
+    console.log(`FFmpeg进程退出，退出码：${code}，信号：${signal}`);
+  });
+  ffmpegProcess.stdin.write("q\n");
 });
-
-// ipcMain.handle("SCREEN_RECORD_START", async (e, data) => {
-//   return await startRecording();
-// });
-
-// async function startRecording() {
-//   const currentScreen = screen.getDisplayNearestPoint(
-//     screen.getCursorScreenPoint(),
-//   );
-//   const sources = await desktopCapturer.getSources({ types: ["screen"] });
-//   return sources.find(
-//     (source) => source.display_id === String(currentScreen.id),
-//   );
-// }

@@ -63,22 +63,4 @@ app.on("ready", async () => {
     }
     recordWin.show();
   });
-
-  if (!recordWin) {
-    recordWin = await createWin({
-      config: {
-        width: 800,
-        height: 600,
-        // frame: false,
-        // resizable: false,
-        // transparent: true,
-        alwaysOnTop: true,
-      },
-      url: "/siteAssist/index.html#/record-win",
-    });
-    recordWin.on("ready-to-show", () => {
-      showCustomMenu(recordWin);
-    });
-  }
-  recordWin.show();
 });
