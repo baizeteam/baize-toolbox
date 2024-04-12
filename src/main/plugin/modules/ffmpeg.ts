@@ -6,33 +6,30 @@ import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 import { mainWinStartProxy, START_STATUS } from "../../helper";
 // import { mainLogSend } from "../../helper";
 
-app.on("ready", () => {
-  // 获取 ffmpeg 路径
-  const getFfmpegPath = () => {
-    const basePath = app.isPackaged
-      ? path.join(process.resourcesPath, "app.asar.unpacked/resources")
-      : path.join(__dirname, "../../resources");
-    const platformObj = {
-      win32: "win",
-      darwin: "mac",
-      linux: "linux",
-      freebsd: "linux",
-      netbsd: "linux",
-      openbsd: "linux",
-      sunos: "linux",
-    };
-    return {
-      ffmpegPath: path.join(
-        basePath,
-        `${platformObj[process.platform]}/ffmpeg`,
-      ),
-      ffprobePath: path.join(
-        basePath,
-        `${platformObj[process.platform]}/ffprobe`,
-      ),
-    };
+// 获取 ffmpeg 路径
+export const getFfmpegPath = () => {
+  const basePath = app.isPackaged
+    ? path.join(process.resourcesPath, "app.asar.unpacked/resources")
+    : path.join(__dirname, "../../resources");
+  const platformObj = {
+    win32: "win",
+    darwin: "mac",
+    linux: "linux",
+    freebsd: "linux",
+    netbsd: "linux",
+    openbsd: "linux",
+    sunos: "linux",
   };
+  return {
+    ffmpegPath: path.join(basePath, `${platformObj[process.platform]}/ffmpeg`),
+    ffprobePath: path.join(
+      basePath,
+      `${platformObj[process.platform]}/ffprobe`,
+    ),
+  };
+};
 
+app.on("ready", () => {
   const { ffmpegPath, ffprobePath } = getFfmpegPath();
   // 检查 ffmpeg 是否存在
   execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {

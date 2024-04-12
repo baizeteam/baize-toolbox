@@ -82,12 +82,15 @@ export async function createWin({
   injectData,
 }: ICreateWin): Promise<BrowserWindow> {
   const win = new BrowserWindow({
-    ...config,
     webPreferences: {
       nodeIntegration: true,
+      sandbox: false,
       webSecurity: false,
       preload: join(__dirname, "../preload/index.js"),
+      experimentalFeatures: true,
+      enableBlinkFeatures: "MediaStreamTrack.getDisplayMedia",
     },
+    ...config,
   });
   InjectData({
     webContents: win.webContents,
@@ -101,24 +104,18 @@ export async function createWin({
 }
 
 export async function createMainWin(): Promise<void> {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 720,
-    show: false,
-    autoHideMenuBar: true,
-    frame: false,
-    ...(process.platform === "linux" ? { icon } : {}),
-    webPreferences: {
-      nodeIntegration: true,
-      preload: join(__dirname, "../preload/index.js"),
-      sandbox: false,
-      webSecurity: false,
+  mainWindow = await createWin({
+    config: {
+      width: 1200,
+      height: 720,
+      show: false,
+      minWidth: 800,
+      minHeight: 600,
+      autoHideMenuBar: true,
+      frame: false,
+      ...(process.platform === "linux" ? { icon } : {}),
     },
-  });
-  InjectData({
-    webContents: mainWindow.webContents,
-    data: { system: await getSystemInfo() },
+    url: "/siteMain/index.html",
   });
   mainWindow["customId"] = "main";
   mainWindow.on("ready-to-show", () => {
@@ -143,7 +140,7 @@ export async function createMainWin(): Promise<void> {
       }, 200);
     }
   });
-  initWinUrl(mainWindow, "/siteMain/index.html");
+  // initWinUrl(mainWindow, "/siteMain/index.html");
 }
 
 export function mainLogSend(data) {

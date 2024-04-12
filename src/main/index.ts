@@ -8,12 +8,12 @@ app.whenReady().then(() => {
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
-  createMainWin();
-  app.on("activate", function () {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createMainWin();
-    }
-  });
+  // createMainWin();
+  // app.on("activate", function () {
+  //   if (BrowserWindow.getAllWindows().length === 0) {
+  //     createMainWin();
+  //   }
+  // });
 });
 
 app.on("window-all-closed", () => {

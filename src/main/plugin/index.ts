@@ -2,6 +2,7 @@ import "./modules/keyboard";
 import "./modules/baseConfig";
 import "./modules/ipcFile";
 import "./modules/ipcWin";
+import "./modules/ipcScreen";
 import "./modules/MenuManger";
 import "./modules/store";
 import "./modules/ffmpeg";
