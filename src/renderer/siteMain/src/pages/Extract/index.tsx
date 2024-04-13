@@ -20,6 +20,8 @@ import {
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
 
+const SUB_FLODER_NAME = "extract";
+
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)
   .join(",");
@@ -100,7 +102,11 @@ export default function Extract() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const baseInfo = await getTaskBaseInfo(filePath, outputType);
+    const baseInfo = await getTaskBaseInfo(
+      filePath,
+      outputType,
+      SUB_FLODER_NAME,
+    );
     const commandObj = {
       "-i": filePath,
     };

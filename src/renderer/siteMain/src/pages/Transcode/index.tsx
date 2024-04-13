@@ -22,6 +22,7 @@ import {
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
 
+const SUB_FLODER_NAME = "transcode";
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)
   .join(",");
@@ -102,7 +103,11 @@ export default function Transcode() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const baseInfo = await getTaskBaseInfo(filePath, outputType);
+    const baseInfo = await getTaskBaseInfo(
+      filePath,
+      outputType,
+      SUB_FLODER_NAME,
+    );
     const params = {
       command: ffmpegObj2List({
         "-i": filePath,
