@@ -9,13 +9,10 @@ import { ROUTERS } from "@siteMain/router/ROUTERS";
 import DeleteModal from "@siteMain/components/DeleteModal";
 import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
 import platformUtil from "@renderer/utils/platformUtil";
+import { separator, fileSelectAccetps } from "@renderer/utils/fileHelper";
 import {
-  openFile,
-  openFolder,
-  separator,
-  fileSelectAccetps,
-} from "@renderer/utils/fileHelper";
-import {
+  OpenFileBtn,
+  OpenFolderBtn,
   tableOriginFile,
   tableProgress,
   tableCreateTime,
@@ -162,24 +159,8 @@ export default function Transcode() {
       render: (_, record) => {
         return (
           <>
-            <Button
-              onClick={() =>
-                openFile(
-                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-                )
-              }
-              type="link"
-              className="common-table-link-btn"
-            >
-              {t("commonText.openFile")}
-            </Button>
-            <Button
-              onClick={() => openFolder(record.outputFloaderPath)}
-              type="link"
-              className="common-table-link-btn"
-            >
-              {t("commonText.openFolder")}
-            </Button>
+            <OpenFileBtn record={record} />
+            <OpenFolderBtn record={record} />
             <Button
               type="link"
               className="common-table-link-btn"

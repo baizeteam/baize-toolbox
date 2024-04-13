@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import AppFunctionDev from "@siteMain/components/AppFuctionDev";
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
-import { tableCreateTime } from "@renderer/utils/tableHelper";
+import {
+  tableFile,
+  tableCreateTime,
+  OpenFileBtn,
+  OpenFolderBtn,
+} from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
 import { VideoCameraOutlined } from "@ant-design/icons";
 import "./index.module.less";
@@ -15,55 +20,40 @@ export default function ScreenRecord() {
   };
 
   const columns = [
-    tableCreateTime,
+    tableFile,
     {
       title: t("siteMain.pages.screenRecord.createType"),
       dataIndex: "type",
       key: "type",
       width: 160,
     },
-    // {
-    //   title: t("commonText.action"),
-    //   dataIndex: "action",
-    //   key: "action",
-    //   width: 200,
-    //   render: (_, record) => {
-    //     return (
-    //       <>
-    //         <Button
-    //           onClick={() =>
-    //             openFile(
-    //               `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-    //             )
-    //           }
-    //           type="link"
-    //           className="common-table-link-btn"
-    //         >
-    //           {t("commonText.openFile")}
-    //         </Button>
-    //         <Button
-    //           onClick={() => openFolder(record.outputFloaderPath)}
-    //           type="link"
-    //           className="common-table-link-btn"
-    //         >
-    //           {t("commonText.openFolder")}
-    //         </Button>
-    //         <Button
-    //           type="link"
-    //           className="common-table-link-btn"
-    //           onClick={() => {
-    //             openDeleteFileModal(
-    //               `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-    //               record,
-    //             );
-    //           }}
-    //         >
-    //           {t("commonText.delete")}
-    //         </Button>
-    //       </>
-    //     );
-    //   },
-    // },
+    tableCreateTime,
+    {
+      title: t("commonText.action"),
+      dataIndex: "action",
+      key: "action",
+      width: 200,
+      render: (_, record) => {
+        return (
+          <>
+            <OpenFileBtn record={record} />
+            <OpenFolderBtn record={record} />
+            {/* <Button
+              type="link"
+              className="common-table-link-btn"
+              onClick={() => {
+                openDeleteFileModal(
+                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
+                  record,
+                );
+              }}
+            >
+              {t("commonText.delete")}
+            </Button> */}
+          </>
+        );
+      },
+    },
   ];
   return (
     <div styleName="screen-record" className="common-content">
