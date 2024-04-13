@@ -1,0 +1,25 @@
+.screen-record {
+  .screen-record-btn {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px dashed @commonBorderColor;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    height: 180px;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .icon {
+      font-size: 42px;
+      fill: @primary-color;
+      color: @primary-color;
+      margin-top: 20px;
+    }
+    &:hover {
+      border-color: @primary-color;
+    }
+  }
+}

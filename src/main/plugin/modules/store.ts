@@ -66,6 +66,9 @@ const defaultStore = {
   ttsList: [],
   transcodeList: [],
   extractList: [],
+  screenRecordList: [],
+  screenShotList: [],
+  compressList: [],
 };
 
 const init = () => {

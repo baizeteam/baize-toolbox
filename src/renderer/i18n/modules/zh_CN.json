@@ -108,6 +108,11 @@
       },
       "TTS": {
         "tableTitle": "TTS记录"
+      },
+      "screenRecord": {
+        "createType": "录屏类型",
+        "tableTitle": "录屏记录",
+        "createBtn": "开始录屏"
       }
     }
   },

@@ -2,6 +2,7 @@ import { BrowserWindow, ipcMain, screen } from "electron";
 import { spawn } from "child_process";
 import { getFfmpegPath } from "./ffmpeg";
 import { checkFolderExists } from "../../utils/fileHelper";
+import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 
 let ffmpegProcess = null;
 
@@ -29,8 +30,19 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   win.setResizable(false);
   win.setMovable(false);
   const { ffmpegPath } = getFfmpegPath();
-  console.log(params.command);
   checkFolderExists(params.outputFloaderPath);
+  queueStoreAdd({
+    params: { ...params },
+    key: `${params.code}List`,
+  });
+
+  const allWindows = BrowserWindow.getAllWindows();
+  allWindows.forEach((window) => {
+    if (window["customId"] === "main") {
+      window.webContents.send("SCREEN_RECORD_DATA_CHANGE");
+    }
+  });
+
   ffmpegProcess = spawn(ffmpegPath, params.command);
   ffmpegProcess.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`);
