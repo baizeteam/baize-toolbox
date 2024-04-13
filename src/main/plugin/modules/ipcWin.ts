@@ -75,27 +75,27 @@ app.on("ready", async () => {
     recordWin.show();
   });
 
-  if (!recordWin) {
-    recordWin = await createWin({
-      config: {
-        width: 800,
-        height: 600,
-        minWidth: 200,
-        minHeight: 200,
-        frame: false,
-        // resizable: false,
-        transparent: true,
-        alwaysOnTop: true,
-      },
-      url: "/siteAssist/index.html#/record-win",
-    });
-    recordWin.on("ready-to-show", () => {
-      showCustomMenu(recordWin);
-    });
-    recordWin.webContents.on("context-menu", (e) => {
-      console.log("context-menu", e);
-      e.preventDefault();
-    });
-  }
-  recordWin.show();
+  // if (!recordWin) {
+  //   recordWin = await createWin({
+  //     config: {
+  //       width: 800,
+  //       height: 600,
+  //       minWidth: 200,
+  //       minHeight: 200,
+  //       frame: false,
+  //       // resizable: false,
+  //       transparent: true,
+  //       alwaysOnTop: true,
+  //     },
+  //     url: "/siteAssist/index.html#/record-win",
+  //   });
+  //   recordWin.on("ready-to-show", () => {
+  //     showCustomMenu(recordWin);
+  //   });
+  //   recordWin.webContents.on("context-menu", (e) => {
+  //     console.log("context-menu", e);
+  //     e.preventDefault();
+  //   });
+  // }
+  // recordWin.show();
 });
