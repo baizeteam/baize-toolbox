@@ -1,6 +1,7 @@
 import { BrowserWindow, ipcMain, screen } from "electron";
 import { spawn } from "child_process";
 import { getFfmpegPath } from "./ffmpeg";
+import { checkFolderExists } from "../../utils/fileHelper";
 
 let ffmpegProcess = null;
 
@@ -16,17 +17,20 @@ ipcMain.handle("SCREEN_GET_CURRENT_INFO", async (e, data) => {
     currentDisplay.nativeOrigin.x - currentDisplay.bounds.x + bounds.x;
   const windowY =
     currentDisplay.nativeOrigin.y - currentDisplay.bounds.y + bounds.y;
-  bounds.x = windowX * scaleFactor;
-  bounds.y = windowY * scaleFactor;
-  bounds.width *= scaleFactor;
-  bounds.height *= scaleFactor;
+  bounds.x = windowX;
+  bounds.y = windowY;
+  bounds["scaleFactor"] = scaleFactor;
   return bounds;
 });
 
 // 开始录屏
 ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
+  const win = BrowserWindow.fromWebContents(e.sender);
+  win.setResizable(false);
+  win.setMovable(false);
   const { ffmpegPath } = getFfmpegPath();
   console.log(params.command);
+  checkFolderExists(params.outputFloaderPath);
   ffmpegProcess = spawn(ffmpegPath, params.command);
   ffmpegProcess.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`);
@@ -41,6 +45,9 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
 
 // 结束录屏
 ipcMain.handle("SCREEN_RECORD_STOP", async (e, data) => {
+  const win = BrowserWindow.fromWebContents(e.sender);
+  win.setResizable(true);
+  win.setMovable(true);
   ffmpegProcess.on("exit", (code, signal) => {
     console.log(`FFmpeg进程退出，退出码：${code}，信号：${signal}`);
   });

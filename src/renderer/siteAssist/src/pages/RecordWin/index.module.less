@@ -1,19 +1,71 @@
 .record-win {
-  outline: 6px solid @primary-color;
+  outline: 4px solid var(--common-bg-color);
   border-radius: 4px;
   overflow: hidden;
-  width: calc(~"100vw - 12px");
-  height: calc(~"100vh - 12px");
-  margin: 6px;
+  width: calc(~"100vw - 16px");
+  height: calc(~"100vh - 16px");
+  margin: 8px;
   box-sizing: content-box;
   -webkit-app-region: drag;
   display: flex;
   flex-direction: column;
-  // background-color: @primary-color;
+  box-shadow: 0 0 8px rgba(#999, 1);
+
+  .header {
+    background-color: var(--common-bg-color);
+    height: 24px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px 4px 8px;
+    .title {
+      font-size: 14px;
+      line-height: 24px;
+    }
+    .close-btn {
+      -webkit-app-region: no-drag;
+      cursor: pointer;
+      fill: #888;
+      &:hover {
+        fill: #555;
+      }
+    }
+  }
   .content {
     flex: 1;
+    pointer-events: none;
+    -webkit-app-region: no-drag;
+    border: rgba(#999, 0.2) solid 1px;
   }
   .footer {
+    // -webkit-app-region: no-drag;
+    background-color: var(--common-bg-color);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px 0 8px;
+    display: flex;
+    justify-content: space-between;
     -webkit-app-region: no-drag;
+    .left {
+    }
+    .right {
+    }
+  }
+  .not-drag {
+    -webkit-app-region: no-drag;
+  }
+  .record-btn {
+    font-size: 32px;
+    cursor: pointer;
+  }
+}
+
+:global {
+  .record-format-select {
+    .rc-virtual-list-holder {
+      max-height: 100px !important;
+    }
   }
 }

@@ -1,6 +1,10 @@
 import { app, ipcMain, dialog } from "electron";
 import { promisify } from "node:util";
-import { openFile, deleteFile } from "../../utils/fileHelper";
+import {
+  openFile,
+  deleteFile,
+  checkFolderExists,
+} from "../../utils/fileHelper";
 import fs from "fs";
 import path from "path";
 
@@ -49,6 +53,7 @@ app.on("ready", () => {
   ipcMain.handle("WIN_DOWNLOAD_BASE64", async (e, data) => {
     return new Promise((resolve) => {
       const { base64, fileName, filePath } = data;
+      checkFolderExists(filePath);
       const buffer = Buffer.from(base64, "base64");
       const downloadPath = path.join(filePath, fileName);
       fs.writeFile(downloadPath, buffer, (err) => {

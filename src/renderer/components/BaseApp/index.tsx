@@ -25,18 +25,23 @@ export default function App(props) {
       "theme",
     );
     if (themeRes === "dark") {
-      setIsDark(true);
+      changeIsDark(true);
     } else if (themeRes === "light") {
-      setIsDark(false);
+      changeIsDark(false);
     } else {
       if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
         // 检测到暗色主题
-        setIsDark(true);
+        changeIsDark(true);
       } else {
         // 检测到亮色主题
-        setIsDark(false);
+        changeIsDark(false);
       }
     }
+  };
+
+  const changeIsDark = (isDark) => {
+    setIsDark(isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 
   // 初始化国际化

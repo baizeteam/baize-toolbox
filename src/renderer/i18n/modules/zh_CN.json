@@ -104,6 +104,13 @@
       }
     }
   },
+  "siteAssist": {
+    "pages": {
+      "recordWin": {
+        "title": "录屏助手"
+      }
+    }
+  },
   "siteElectronLoading": {
     "tip": "白泽工具箱启动中..."
   }

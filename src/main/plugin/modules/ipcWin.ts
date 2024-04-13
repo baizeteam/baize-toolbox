@@ -37,6 +37,11 @@ app.on("ready", async () => {
   });
 
   // 关闭窗口
+  ipcMain.on("WIN_HIDE", (e, data) => {
+    BrowserWindow.fromWebContents(e.sender)?.hide();
+  });
+
+  // 关闭窗口
   ipcMain.on("WIN_CLOSE", (e, data) => {
     BrowserWindow.fromWebContents(e.sender)?.close();
     // 退出应用
@@ -51,6 +56,8 @@ app.on("ready", async () => {
           width: 800,
           height: 600,
           frame: false,
+          minWidth: 200,
+          minHeight: 200,
           // resizable: false,
           transparent: true,
           alwaysOnTop: true,
@@ -60,7 +67,35 @@ app.on("ready", async () => {
       recordWin.on("ready-to-show", () => {
         showCustomMenu(recordWin);
       });
+      recordWin.webContents.on("context-menu", (e) => {
+        console.log("context-menu", e);
+        e.preventDefault();
+      });
     }
     recordWin.show();
   });
+
+  if (!recordWin) {
+    recordWin = await createWin({
+      config: {
+        width: 800,
+        height: 600,
+        minWidth: 200,
+        minHeight: 200,
+        frame: false,
+        // resizable: false,
+        transparent: true,
+        alwaysOnTop: true,
+      },
+      url: "/siteAssist/index.html#/record-win",
+    });
+    recordWin.on("ready-to-show", () => {
+      showCustomMenu(recordWin);
+    });
+    recordWin.webContents.on("context-menu", (e) => {
+      console.log("context-menu", e);
+      e.preventDefault();
+    });
+  }
+  recordWin.show();
 });

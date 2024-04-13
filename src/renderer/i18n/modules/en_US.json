@@ -126,6 +126,13 @@
       }
     }
   },
+  "siteAssist": {
+    "pages": {
+      "recordWin": {
+        "title": "Recording Screen Assistant"
+      }
+    }
+  },
   "siteElectronLoading": {
     "tip": "Baize toolbox is starting..."
   }
