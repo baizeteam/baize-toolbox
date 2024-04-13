@@ -1,0 +1,35 @@
+.app-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 16px 0;
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .delete-btn {
+    color: @commonIconColor;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    .text {
+      font-weight: bold;
+    }
+    &:hover {
+      color: @commonIconHoverColor;
+      :global {
+        .app-icon {
+          fill: @commonIconHoverColor;
+        }
+      }
+    }
+    :global {
+      .app-icon {
+        -webkit-app-region: no-drag;
+        font-size: 18px;
+        fill: @commonIconColor;
+      }
+    }
+  }
+}

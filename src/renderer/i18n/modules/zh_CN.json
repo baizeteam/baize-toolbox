@@ -1,5 +1,6 @@
 {
   "commonText": {
+    "interval": "",
     "text": "文本",
     "image": "图片",
     "video": "视频",
@@ -26,6 +27,7 @@
     "close": "关闭",
     "copy": "复制",
     "delete": "删除",
+    "clean": "清空",
     "download": "下载",
     "downloadSuccess": "下载成功",
     "downloadError": "下载失败",
@@ -94,13 +96,25 @@
         "transcodeType": "转换类型",
         "typeModal": {
           "title": "请选择转换格式"
-        }
+        },
+        "tableTitle": "转码记录"
       },
       "extract": {
         "extractType": "提取类型",
         "typeModal": {
           "title": "请选择提取类型"
-        }
+        },
+        "tableTitle": "提取记录"
+      },
+      "TTS": {
+        "tableTitle": "TTS记录"
+      }
+    }
+  },
+  "siteAssist": {
+    "pages": {
+      "recordWin": {
+        "title": "录屏助手"
       }
     }
   },

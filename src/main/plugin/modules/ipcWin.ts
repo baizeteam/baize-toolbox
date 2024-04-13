@@ -1,7 +1,9 @@
 import { app, ipcMain, BrowserWindow } from "electron";
 import { createWin } from "../../helper";
+import { showCustomMenu } from "./MenuManger";
 
-app.on("ready", () => {
+app.on("ready", async () => {
+  let recordWin: BrowserWindow | null = null;
   // 创建窗口
   ipcMain.on("WIN_CREATE", (e, data) => {
     createWin(data);
@@ -29,10 +31,14 @@ app.on("ready", () => {
 
   // 最大化和还原窗口
   ipcMain.handle("WIN_MAXIMIZE", (e, data) => {
-    console.log(BrowserWindow.fromWebContents(e.sender)?.isMaximized());
     return BrowserWindow.fromWebContents(e.sender)?.isMaximized()
-      ? BrowserWindow.fromWebContents(e.sender)?.restore()
+      ? BrowserWindow.fromWebContents(e.sender)?.unmaximize()
       : BrowserWindow.fromWebContents(e.sender)?.maximize();
+  });
+
+  // 关闭窗口
+  ipcMain.on("WIN_HIDE", (e, data) => {
+    BrowserWindow.fromWebContents(e.sender)?.hide();
   });
 
   // 关闭窗口
@@ -41,4 +47,55 @@ app.on("ready", () => {
     // 退出应用
     app.quit();
   });
+
+  // 打开录制窗口
+  ipcMain.on("OPEN_RECORD_WIN", async (e, data) => {
+    if (!recordWin) {
+      recordWin = await createWin({
+        config: {
+          width: 800,
+          height: 600,
+          frame: false,
+          minWidth: 200,
+          minHeight: 200,
+          // resizable: false,
+          transparent: true,
+          alwaysOnTop: true,
+        },
+        url: "/siteAssist/index.html#/record-win",
+      });
+      recordWin.on("ready-to-show", () => {
+        showCustomMenu(recordWin);
+      });
+      recordWin.webContents.on("context-menu", (e) => {
+        console.log("context-menu", e);
+        e.preventDefault();
+      });
+    }
+    recordWin.show();
+  });
+
+  // if (!recordWin) {
+  //   recordWin = await createWin({
+  //     config: {
+  //       width: 800,
+  //       height: 600,
+  //       minWidth: 200,
+  //       minHeight: 200,
+  //       frame: false,
+  //       // resizable: false,
+  //       transparent: true,
+  //       alwaysOnTop: true,
+  //     },
+  //     url: "/siteAssist/index.html#/record-win",
+  //   });
+  //   recordWin.on("ready-to-show", () => {
+  //     showCustomMenu(recordWin);
+  //   });
+  //   recordWin.webContents.on("context-menu", (e) => {
+  //     console.log("context-menu", e);
+  //     e.preventDefault();
+  //   });
+  // }
+  // recordWin.show();
 });

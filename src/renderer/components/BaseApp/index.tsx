@@ -5,7 +5,7 @@ import "./app.module.less";
 import i18n, { antdLocale } from "@renderer/i18n";
 
 export default function App(props) {
-  const { children, ...rest } = props;
+  const { children, showBgColor, ...rest } = props;
   const [isDark, setIsDark] = React.useState(false);
   const [i18nCur, setI18nCur] = React.useState("");
 
@@ -25,18 +25,23 @@ export default function App(props) {
       "theme",
     );
     if (themeRes === "dark") {
-      setIsDark(true);
+      changeIsDark(true);
     } else if (themeRes === "light") {
-      setIsDark(false);
+      changeIsDark(false);
     } else {
       if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
         // 检测到暗色主题
-        setIsDark(true);
+        changeIsDark(true);
       } else {
         // 检测到亮色主题
-        setIsDark(false);
+        changeIsDark(false);
       }
     }
+  };
+
+  const changeIsDark = (isDark) => {
+    setIsDark(isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 
   // 初始化国际化
@@ -58,6 +63,7 @@ export default function App(props) {
       <div
         styleName="app"
         className={`${isDark ? "is-dark" : "is-light"}`}
+        style={{ background: isDark && showBgColor && "rgba(0,0,0)" }}
         {...rest}
       >
         {children}

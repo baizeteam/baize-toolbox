@@ -1,15 +1,12 @@
 class PlatformUtil {
   get isMac() {
-    // return window.injectData.system.patform === "darwin";
-    return navigator.userAgent.match(/Macintosh/i);
+    return window.electron.process.platform === "darwin";
   }
   get isWin() {
-    // return window.injectData.system.patform === "win32";
-    return navigator.userAgent.match(/Windows/i);
+    return window.electron.process.platform === "win32";
   }
   get isLinux() {
-    return navigator.userAgent.match(/Linux/i);
-    // return window.injectData.system.patform === "linux";
+    return window.electron.process.platform === "linux";
   }
 }
 

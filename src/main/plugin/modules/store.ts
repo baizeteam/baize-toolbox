@@ -31,6 +31,12 @@ ipcMain.handle("QUEUE_STORE_DELETE", (_, params) => {
   return queueStoreDelete(params);
 });
 
+// 重置store某个字段
+ipcMain.handle("RESET_STORE_BY_KEY", (_, key) => {
+  store.set(key, defaultStore[key]);
+  return;
+});
+
 // 恢复默认设置
 ipcMain.handle("STORE_RESTORE_CONFIG", () => {
   Object.keys(store.store).forEach((key) => {

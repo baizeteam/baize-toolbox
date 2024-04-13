@@ -5,7 +5,7 @@ import BaseApp from "@renderer/components/BaseApp";
 import BaseRouter from "@siteMain/router";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <BaseApp>
+  <BaseApp showBgColor>
     <BaseRouter />
   </BaseApp>,
 );

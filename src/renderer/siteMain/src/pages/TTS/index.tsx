@@ -1,20 +1,23 @@
 import React, { useState, useMemo, useEffect } from "react";
 import "./index.module.less";
-import { Button, Input, Table, Cascader, message } from "antd";
+import { Button, Input, Table, Cascader, message, Divider } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
-import { formatTime } from "@renderer/utils/formatTime";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { tableText, tableCreateTime } from "@renderer/utils/tableHelper";
+import { separator } from "@renderer/utils/fileHelper";
+import AppTableHeader from "@siteMain/components/AppTableHeader";
 
 enum EStatus {
   pending = "pending",
   success = "success",
   error = "error",
 }
+
+const SUB_FLODER_NAME = "tts";
 
 interface IAudioItem {
   id: string;
@@ -55,14 +58,19 @@ export default function TTS() {
   // 下载语音
   const downLoadTTS = async (record) => {
     console.log(record);
-    const res = await window.electron.ipcRenderer.invoke("WIN_DOWNLOAD_FILE", {
-      base64: record.url,
-      fileName: `${record.createTime}-${nanoid(8)}.mp3`,
-      filePath: await window.electron.ipcRenderer.invoke(
-        "GET_STORE",
-        "defaultOutPath",
-      ),
-    });
+    const outputPath = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "defaultOutPath",
+    );
+    const filePath = `${outputPath}${separator}${SUB_FLODER_NAME}`;
+    const res = await window.electron.ipcRenderer.invoke(
+      "WIN_DOWNLOAD_BASE64",
+      {
+        base64: record.url,
+        fileName: `${record.createTime}-${nanoid(8)}.mp3`,
+        filePath,
+      },
+    );
     if (res === true) {
       message.success(t("commonText.downloadSuccess"));
     } else {
@@ -179,8 +187,13 @@ export default function TTS() {
           {t("commonText.generate")}
         </Button>
       </div>
-
+      <Divider />
       <div>
+        <AppTableHeader
+          title={"siteMain.pages.TTS.tableTitle"}
+          valueKey="ttsList"
+          onClean={() => setAudioList([])}
+        />
         <Table
           columns={columns}
           dataSource={audioList}

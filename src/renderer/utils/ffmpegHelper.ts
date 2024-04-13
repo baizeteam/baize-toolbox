@@ -14,7 +14,11 @@ export const ffmpegObj2List = (ffmpegObj) => {
 };
 
 // 获取任务基本信息
-export const getTaskBaseInfo = async (filePath: string, outputType: string) => {
+export const getTaskBaseInfo = async (
+  filePath: string,
+  outputType: string,
+  subFloder?: string,
+) => {
   const oldFileName = filePath.split(separator).pop().split(".").shift();
   const outputFileName = `${oldFileName}-${new Date().getTime()}.${outputType}`;
   const outputFloaderPath = await window.electron.ipcRenderer.invoke(
@@ -25,7 +29,9 @@ export const getTaskBaseInfo = async (filePath: string, outputType: string) => {
   return {
     taskId,
     inputFilePath: filePath,
-    outputFloaderPath,
+    outputFloaderPath: subFloder
+      ? `${outputFloaderPath}${separator}${subFloder}`
+      : outputFloaderPath,
     outputFileName,
     outputType,
     createTime: new Date().getTime(),

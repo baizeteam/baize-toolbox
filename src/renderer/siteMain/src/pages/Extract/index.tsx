@@ -19,6 +19,9 @@ import {
   tableProgress,
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
+import AppTableHeader from "@siteMain/components/AppTableHeader";
+
+const SUB_FLODER_NAME = "extract";
 
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)
@@ -100,7 +103,11 @@ export default function Extract() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const baseInfo = await getTaskBaseInfo(filePath, outputType);
+    const baseInfo = await getTaskBaseInfo(
+      filePath,
+      outputType,
+      SUB_FLODER_NAME,
+    );
     const commandObj = {
       "-i": filePath,
     };
@@ -209,6 +216,11 @@ export default function Extract() {
   return (
     <div styleName="extract" className="common-content">
       <AppSelectFile onSelectFile={selectFile} accept={accept} />
+      <AppTableHeader
+        title={"siteMain.pages.extract.tableTitle"}
+        valueKey="extractList"
+        onClean={() => setExtractList([])}
+      />
       <Table
         styleName="table"
         columns={columns}
