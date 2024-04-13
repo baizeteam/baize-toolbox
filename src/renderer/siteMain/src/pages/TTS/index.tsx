@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import "./index.module.less";
-import { Button, Input, Table, Cascader, message } from "antd";
+import { Button, Input, Table, Cascader, message, Divider } from "antd";
 import type { TableProps } from "antd";
 import { nanoid } from "nanoid";
 import { EdgeSpeechTTS } from "@lobehub/tts";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { tableText, tableCreateTime } from "@renderer/utils/tableHelper";
 import { separator } from "@renderer/utils/fileHelper";
+import AppTableHeader from "@siteMain/components/AppTableHeader";
 
 enum EStatus {
   pending = "pending",
@@ -186,8 +187,13 @@ export default function TTS() {
           {t("commonText.generate")}
         </Button>
       </div>
-
+      <Divider />
       <div>
+        <AppTableHeader
+          title={"siteMain.pages.TTS.tableTitle"}
+          valueKey="ttsList"
+          onClean={() => setAudioList([])}
+        />
         <Table
           columns={columns}
           dataSource={audioList}

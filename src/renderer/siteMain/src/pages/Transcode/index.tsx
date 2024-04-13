@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Table, Progress, message } from "antd";
+import { Button, Table, message } from "antd";
 import AppSelectFile from "@siteMain/components/AppSelectFile";
 import TranscodeTypeModal from "./components/TranscodeTypeModal";
-import { formatTime } from "@renderer/utils/formatTime";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -21,6 +20,7 @@ import {
   tableProgress,
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
+import AppTableHeader from "@siteMain/components/AppTableHeader";
 
 const SUB_FLODER_NAME = "transcode";
 const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
@@ -214,6 +214,11 @@ export default function Transcode() {
   return (
     <div styleName="transcode" className="common-content">
       <AppSelectFile onSelectFile={selectFile} accept={accept} />
+      <AppTableHeader
+        title={"siteMain.pages.transcode.tableTitle"}
+        valueKey="transcodeList"
+        onClean={() => setTranscodeList([])}
+      />
       <Table
         styleName="table"
         columns={columns}

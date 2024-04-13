@@ -1,5 +1,6 @@
 {
   "commonText": {
+    "interval": " ",
     "text": "Text",
     "image": "Image",
     "video": "Video",
@@ -26,6 +27,7 @@
     "close": "Close",
     "copy": "Copy",
     "delete": "Delete",
+    "clean": "Clean",
     "download": "Download",
     "downloadSuccess": "Download success",
     "downloadError": "Download failed",
@@ -94,13 +96,18 @@
         "transcodeType": "Transcode Type",
         "typeModal": {
           "title": "Please select the conversion format"
-        }
+        },
+        "tableTitle": "Transcode History"
       },
       "extract": {
         "extractType": "Extract Type",
         "typeModal": {
           "title": "Please select the extraction format"
-        }
+        },
+        "tableTitle": "Extract History"
+      },
+      "TTS": {
+        "tableTitle": "TTS History"
       }
     },
     "components": {

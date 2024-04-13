@@ -19,6 +19,7 @@ import {
   tableProgress,
   tableCreateTime,
 } from "@renderer/utils/tableHelper";
+import AppTableHeader from "@siteMain/components/AppTableHeader";
 
 const SUB_FLODER_NAME = "extract";
 
@@ -215,6 +216,11 @@ export default function Extract() {
   return (
     <div styleName="extract" className="common-content">
       <AppSelectFile onSelectFile={selectFile} accept={accept} />
+      <AppTableHeader
+        title={"siteMain.pages.extract.tableTitle"}
+        valueKey="extractList"
+        onClean={() => setExtractList([])}
+      />
       <Table
         styleName="table"
         columns={columns}

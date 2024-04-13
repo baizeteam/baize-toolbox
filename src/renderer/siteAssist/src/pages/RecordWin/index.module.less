@@ -1,5 +1,5 @@
 .record-win {
-  outline: 4px solid var(--common-bg-color);
+  outline: 4px solid @commonBgColor;
   border-radius: 4px;
   overflow: hidden;
   width: calc(~"100vw - 16px");
@@ -12,7 +12,7 @@
   box-shadow: 0 0 8px rgba(#999, 1);
 
   .header {
-    background-color: var(--common-bg-color);
+    background-color: @commonBgColor;
     height: 24px;
     user-select: none;
     display: flex;
@@ -26,9 +26,9 @@
     .close-btn {
       -webkit-app-region: no-drag;
       cursor: pointer;
-      fill: #888;
+      fill: @commonIconColor;
       &:hover {
-        fill: #555;
+        fill: @commonIconHoverColor;
       }
     }
   }
@@ -40,7 +40,7 @@
   }
   .footer {
     // -webkit-app-region: no-drag;
-    background-color: var(--common-bg-color);
+    background-color: @commonBgColor;
     height: 40px;
     display: flex;
     align-items: center;

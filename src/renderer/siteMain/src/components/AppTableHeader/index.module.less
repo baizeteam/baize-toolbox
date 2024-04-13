@@ -1,8 +1,12 @@
 .app-table-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  align-items: flex-end;
+  margin: 16px 0;
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+  }
   .delete-btn {
     color: @commonIconColor;
     display: flex;
@@ -10,7 +14,7 @@
     cursor: pointer;
     user-select: none;
     .text {
-      margin-right: 4px;
+      font-weight: bold;
     }
     &:hover {
       color: @commonIconHoverColor;
