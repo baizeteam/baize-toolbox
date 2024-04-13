@@ -6,6 +6,7 @@ import { fileSelectAccetps } from "@renderer/utils/fileHelper";
 import { Select } from "antd";
 import { separator } from "@renderer/utils/fileHelper";
 import { useTranslation } from "react-i18next";
+import { nanoid } from "nanoid";
 
 const CONTENT_MARGIN_TOP = 36;
 const CONTENT_MARGIN_LEFT = 8;
@@ -76,10 +77,14 @@ export default function RecordWin() {
     //   ["/Users/xiaoyu/Documents/output/" + fileName]: null,
     // };
     const command = ffmpegObj2List(commandObj);
+    const taskId = nanoid(16);
     window.electron.ipcRenderer.invoke("SCREEN_RECORD_START", {
       command,
+      code: "screenRecord",
+      taskId,
       outputFloaderPath: subOutputFloaderPath,
-      fileName,
+      outputFileName: fileName,
+      createType: value,
     });
   };
 

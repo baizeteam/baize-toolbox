@@ -18,8 +18,8 @@ export const tableText = {
 // 文本
 export const tableFile = {
   title: <Trans i18nKey="commonText.file" />,
-  dataIndex: "filePath",
-  key: "filePath",
+  dataIndex: "outputFileName",
+  key: "outputFileName",
   width: 400,
   render: (text) => (
     <EllipsisTextControl content={text} width={360} type="single" />

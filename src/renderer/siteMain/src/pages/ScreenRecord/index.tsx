@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppFunctionDev from "@siteMain/components/AppFuctionDev";
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
@@ -23,8 +23,8 @@ export default function ScreenRecord() {
     tableFile,
     {
       title: t("siteMain.pages.screenRecord.createType"),
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "createType",
+      key: "createType",
       width: 160,
     },
     tableCreateTime,
@@ -55,6 +55,25 @@ export default function ScreenRecord() {
       },
     },
   ];
+
+  const init = async () => {
+    const res = await window.electron.ipcRenderer.invoke(
+      "GET_STORE",
+      "screenRecordList",
+    );
+    console.log(res);
+    setScreenRecordList(res);
+  };
+
+  useEffect(() => {
+    init();
+    window.electron.ipcRenderer.on("SCREEN_RECORD_DATA_CHANGE", init);
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners(
+        "SCREEN_RECORD_DATA_CHANGE",
+      );
+    };
+  }, []);
   return (
     <div styleName="screen-record" className="common-content">
       {/* <AppFunctionDev /> */}
