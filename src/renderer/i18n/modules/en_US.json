@@ -108,6 +108,11 @@
       },
       "TTS": {
         "tableTitle": "TTS History"
+      },
+      "screenRecord": {
+        "createType": "Create Type",
+        "tableTitle": "Screen Record History",
+        "createBtn": "Start Recording"
       }
     },
     "components": {
