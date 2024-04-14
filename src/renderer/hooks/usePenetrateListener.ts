@@ -18,5 +18,6 @@ export const usePenetrateListener = (ref) => {
         ref.current.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
+    return () => {};
   }, [ref.current]);
 };
