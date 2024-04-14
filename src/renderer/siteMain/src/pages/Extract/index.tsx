@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Table, message } from "antd";
+import { Table } from "antd";
 import AppSelectFile from "@siteMain/components/AppSelectFile";
 import TypeModal from "./components/TypeModal";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
-import DeleteModal from "@siteMain/components/DeleteModal";
 import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
-import { separator, fileSelectAccetps } from "@renderer/utils/fileHelper";
+import { fileSelectAccetps } from "@renderer/utils/fileHelper";
 import {
   tableOriginFile,
   tableProgress,
@@ -28,11 +27,6 @@ const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
 export default function Extract() {
   const [filePath, setFilePath] = useState(null);
   const [showTypeModal, setShowTypeModal] = useState(false);
-  const [deleteModalData, setDeleteModalData] = useState({
-    visible: false,
-    path: "",
-    params: null,
-  });
   const [extractList, setExtractList] = useState([]);
   const extractListRef = useRef(extractList);
   const { t } = useTranslation();
@@ -44,32 +38,6 @@ export default function Extract() {
       setFilePath(e.file.path);
       setShowTypeModal(true);
     }
-  };
-
-  // 删除记录
-  const deleteData = async ({ record, isDeleteFile }) => {
-    const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
-    const recordDeleteRes = window.electron.ipcRenderer.invoke(
-      "QUEUE_STORE_DELETE",
-      {
-        key: "extractList",
-        idKey: "taskId",
-        id: record.taskId,
-      },
-    );
-    if (isDeleteFile) {
-      const res = await window.electron.ipcRenderer.invoke("WIN_DELETE_FILE", {
-        path,
-      });
-      res
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
-    } else {
-      recordDeleteRes
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
-    }
-    init();
   };
 
   // 更新转码列表
@@ -144,7 +112,7 @@ export default function Extract() {
           <>
             <OpenFileBtn record={record} />
             <OpenFolderBtn record={record} />
-            <DeleteRecordBtn record={record} hasFile onOk={deleteData} />
+            <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         );
       },
