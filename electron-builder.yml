@@ -1,25 +1,25 @@
 appId: com.baize.box.app
-productName: baize-box
+productName: baize-toolbox
 directories:
   buildResources: build
 files:
-  - '!**/.vscode/*'
-  - '!src/*'
-  - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
-  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-  - '!resources/win/*'
-  - '!resources/mac/*'
+  - "!**/.vscode/*"
+  - "!src/*"
+  - "!electron.vite.config.{js,ts,mjs,cjs}"
+  - "!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
+  - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+  - "!resources/win/*"
+  - "!resources/mac/*"
 asarUnpack:
   - resources/**
 win:
-  executableName: baize-box
+  executableName: baize-toolbox
   files:
-    - from: 'resources/win'
-      to: 'resources/win'
+    - from: "resources/win"
+      to: "resources/win"
       filter:
-        - '**/*'
+        - "**/*"
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -39,10 +39,10 @@ mac:
         - arm64
   notarize: false
   files:
-    - from: 'resources/mac'
-      to: 'resources/mac'
+    - from: "resources/mac"
+      to: "resources/mac"
       filter:
-        - '**/*'
+        - "**/*"
 dmg:
   format: ULFO
   artifactName: ${name}-${version}-${arch}.${ext}
