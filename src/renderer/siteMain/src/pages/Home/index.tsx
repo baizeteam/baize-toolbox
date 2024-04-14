@@ -9,7 +9,7 @@ function App() {
     <div styleName="home">
       <img
         styleName="img"
-        onClick={() => window.open("https://github.com/sulgweb/baize-box")}
+        onClick={() => window.open("https://github.com/sulgweb/baize-toolbox")}
         src={appIcon}
       />
 
