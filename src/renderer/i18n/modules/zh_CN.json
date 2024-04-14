@@ -117,7 +117,7 @@
       }
     }
   },
-  "siteAssist": {
+  "siteAssistTransprent": {
     "pages": {
       "recordWin": {
         "title": "录屏助手"

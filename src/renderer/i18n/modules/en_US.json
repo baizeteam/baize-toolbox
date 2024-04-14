@@ -139,7 +139,7 @@
       }
     }
   },
-  "siteAssist": {
+  "siteAssistTransprent": {
     "pages": {
       "recordWin": {
         "title": "Recording Screen Assistant"

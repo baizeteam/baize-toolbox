@@ -62,7 +62,7 @@ app.on("ready", async () => {
           transparent: true,
           alwaysOnTop: true,
         },
-        url: "/siteAssist/index.html#/record-win",
+        url: "/siteAssistTransprent/index.html#/record-win",
       });
       recordWin.on("ready-to-show", () => {
         showCustomMenu(recordWin);
@@ -87,7 +87,7 @@ app.on("ready", async () => {
   //       transparent: true,
   //       alwaysOnTop: true,
   //     },
-  //     url: "/siteAssist/index.html#/record-win",
+  //     url: "/siteAssistTransprent/index.html#/record-win",
   //   });
   //   recordWin.on("ready-to-show", () => {
   //     showCustomMenu(recordWin);

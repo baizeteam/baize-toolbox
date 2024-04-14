@@ -19,7 +19,10 @@ export default defineConfig({
       alias: {
         "@renderer": resolve("src/renderer"),
         "@siteMain": resolve("src/renderer/siteMain/src"),
-        "@siteAssist": resolve("src/renderer/siteAssist/src"),
+        "@siteAssistOpaque": resolve("src/renderer/siteAssistOpaque/src"),
+        "@siteAssistTransprent": resolve(
+          "src/renderer/siteAssistTransprent/src",
+        ),
         "@siteElectronLoading": resolve("src/renderer/siteElectronLoading/src"),
       },
     },
@@ -54,7 +57,14 @@ export default defineConfig({
       rollupOptions: {
         input: {
           siteMain: resolve(__dirname, "src/renderer/siteMain/index.html"),
-          siteAssist: resolve(__dirname, "src/renderer/siteAssist/index.html"),
+          siteAssistTransprent: resolve(
+            __dirname,
+            "src/renderer/siteAssistTransprent/index.html",
+          ),
+          siteAssistOpaque: resolve(
+            __dirname,
+            "src/renderer/siteAssistOpaque/index.html",
+          ),
           siteElectronLoading: resolve(
             __dirname,
             "src/renderer/siteElectronLoading/index.html",

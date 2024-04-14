@@ -119,7 +119,9 @@ export default function RecordWin() {
   return (
     <div styleName="record-win">
       <div styleName="header">
-        <div styleName="title">{t("siteAssist.pages.recordWin.title")}</div>
+        <div styleName="title">
+          {t("siteAssistTransprent.pages.recordWin.title")}
+        </div>
         <AppIcon
           styleName="close-btn"
           icon="#baize-guanbi"
