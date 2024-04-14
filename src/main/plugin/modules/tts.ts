@@ -25,7 +25,7 @@ app.on("ready", () => {
       url: base64Data,
       status: "success",
     };
-    queueStoreUpdate({ params, key: "ttsList", idKey: "id" });
+    queueStoreUpdate({ params, key: "ttsList", idKey: "taskId" });
     return;
   });
 });
