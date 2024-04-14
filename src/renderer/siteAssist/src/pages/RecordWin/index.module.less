@@ -51,6 +51,19 @@
     .left {
     }
     .right {
+      display: flex;
+      align-items: center;
+      .record-select {
+        display: flex;
+        align-items: center;
+        margin-right: 16px;
+        .label {
+          margin-right: 8px;
+        }
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
     }
   }
   .not-drag {
@@ -63,7 +76,7 @@
 }
 
 :global {
-  .record-format-select {
+  .record-select-popup {
     .rc-virtual-list-holder {
       max-height: 100px !important;
     }

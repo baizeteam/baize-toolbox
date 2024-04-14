@@ -1,6 +1,13 @@
 import { separator } from "@renderer/utils/fileHelper";
 import { nanoid } from "nanoid";
 
+// 不同平台的 ffmpeg 采集类型
+export const COLLECT_TYPE = {
+  win32: "gdigrab",
+  darwin: "avfoundation",
+  linux: "x11grab",
+};
+
 // ffmpeg 命令对象转数组
 export const ffmpegObj2List = (ffmpegObj) => {
   const list = [];

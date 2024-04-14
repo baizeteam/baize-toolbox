@@ -7,6 +7,7 @@
     "audio": "Audio",
     "file": "File",
     "folder": "Folder",
+    "fps": "FPS",
     "action": "Action",
     "progress": "Progress",
     "loading": "Loading...",

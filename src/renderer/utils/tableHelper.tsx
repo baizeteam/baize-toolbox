@@ -15,7 +15,7 @@ export const tableText = {
   ),
 };
 
-// 文本
+// 文件
 export const tableFile = {
   title: <Trans i18nKey="commonText.file" />,
   dataIndex: "outputFileName",
@@ -35,6 +35,14 @@ export const tableOriginFile = {
   render: (inputFilePath) => (
     <EllipsisTextControl content={inputFilePath} width={200} type="single" />
   ),
+};
+
+//
+export const tableFps = {
+  title: <Trans i18nKey="commonText.fps" />,
+  dataIndex: "fps",
+  key: "fps",
+  width: 60,
 };
 
 // 进度
