@@ -1,7 +1,8 @@
+import React, { useRef, useState } from "react";
 import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import { Trans, useTranslation } from "react-i18next";
 import { formatTime } from "@renderer/utils/formatTime";
-import { Progress, Button } from "antd";
+import { Progress, Button, Modal, Checkbox } from "antd";
 import { openFile, openFolder, separator } from "@renderer/utils/fileHelper";
 
 // 文本
@@ -92,6 +93,41 @@ export const OpenFolderBtn = (props) => {
       className="common-table-link-btn"
     >
       {t("commonText.openFolder")}
+    </Button>
+  );
+};
+
+// 删除按钮
+export const DeleteRecordBtn = (props) => {
+  const { record, hasFile, onOk } = props;
+  const isCheckRef = useRef(true);
+
+  const { t } = useTranslation();
+
+  // 选择是否删除文件
+  const onCheckBoxChnage = (e) => {
+    isCheckRef.current = e.target.checked;
+  };
+  const onDelete = (record) => {
+    Modal.confirm({
+      title: t("siteMain.components.deleteModal.content"),
+      content: hasFile ? (
+        <Checkbox defaultChecked onChange={onCheckBoxChnage}>
+          {t("siteMain.components.deleteModal.deleteFileText")}
+        </Checkbox>
+      ) : null,
+      onOk: () => {
+        onOk({ record, isDeleteFile: isCheckRef.current });
+      },
+    });
+  };
+  return (
+    <Button
+      onClick={() => onDelete(record)}
+      type="link"
+      className="common-table-link-btn"
+    >
+      {t("commonText.delete")}
     </Button>
   );
 };

@@ -11,11 +11,12 @@ import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
 import platformUtil from "@renderer/utils/platformUtil";
 import { separator, fileSelectAccetps } from "@renderer/utils/fileHelper";
 import {
-  OpenFileBtn,
-  OpenFolderBtn,
   tableOriginFile,
   tableProgress,
   tableCreateTime,
+  OpenFileBtn,
+  OpenFolderBtn,
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
 
@@ -46,16 +47,14 @@ export default function Transcode() {
   };
 
   // 删除记录
-  const deleteData = async ({ path, isDeleteFile }) => {
-    console.log(path, isDeleteFile);
-    console.log(deleteModalData.params.taskId);
-    closeDeleteFileModal();
+  const deleteData = async ({ record, isDeleteFile }) => {
+    const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
     const recordDeleteRes = window.electron.ipcRenderer.invoke(
       "QUEUE_STORE_DELETE",
       {
         key: "transcodeList",
         idKey: "taskId",
-        id: deleteModalData.params.taskId,
+        id: record.taskId,
       },
     );
     if (isDeleteFile) {
@@ -71,24 +70,6 @@ export default function Transcode() {
         : message.error(t("commonText.error"));
     }
     init();
-  };
-
-  // 打开删除文件弹窗
-  const openDeleteFileModal = (path, record) => {
-    setDeleteModalData({
-      visible: true,
-      path,
-      params: record,
-    });
-  };
-
-  // 关闭删除文件弹窗
-  const closeDeleteFileModal = () => {
-    setDeleteModalData({
-      visible: false,
-      path: "",
-      params: null,
-    });
   };
 
   // 更新转码列表
@@ -161,18 +142,7 @@ export default function Transcode() {
           <>
             <OpenFileBtn record={record} />
             <OpenFolderBtn record={record} />
-            <Button
-              type="link"
-              className="common-table-link-btn"
-              onClick={() => {
-                openDeleteFileModal(
-                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-                  record,
-                );
-              }}
-            >
-              {t("commonText.delete")}
-            </Button>
+            <DeleteRecordBtn record={record} hasFile onOk={deleteData} />
           </>
         );
       },
@@ -211,12 +181,6 @@ export default function Transcode() {
         open={showTypeModal}
         onCancel={() => setShowTypeModal(false)}
         onOk={handleFile}
-      />
-      <DeleteModal
-        open={deleteModalData.visible}
-        path={deleteModalData.path}
-        onCancel={closeDeleteFileModal}
-        onOk={deleteData}
       />
     </div>
   );
