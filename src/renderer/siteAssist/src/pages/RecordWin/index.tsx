@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./index.module.less";
 import { ffmpegObj2List } from "@renderer/utils/ffmpegHelper";
 import AppIcon from "@renderer/components/AppIcon";
@@ -7,6 +7,7 @@ import { Select } from "antd";
 import { separator } from "@renderer/utils/fileHelper";
 import { useTranslation } from "react-i18next";
 import { nanoid } from "nanoid";
+import { usePenetrateListener } from "@renderer/hooks/usePenetrateListener";
 
 const CONTENT_MARGIN_TOP = 36;
 const CONTENT_MARGIN_LEFT = 8;
@@ -27,6 +28,7 @@ export default function RecordWin() {
     localStorage.getItem("recordFormatValue") || options[0].value,
   );
   const contentRef = useRef<HTMLDivElement>(null);
+  usePenetrateListener(contentRef);
 
   const { t } = useTranslation();
 
@@ -130,7 +132,7 @@ export default function RecordWin() {
             virtual={false}
             size="small"
             popupClassName="record-format-select"
-            style={{ width: 100 }}
+            style={{ minWidth: 86 }}
             value={value}
             styleName="not-drag"
             placement="topRight"

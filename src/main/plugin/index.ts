@@ -1,5 +1,6 @@
 import "./modules/keyboard";
 import "./modules/baseConfig";
+import "./modules/ipcPenetrate";
 import "./modules/ipcFile";
 import "./modules/ipcWin";
 import "./modules/ipcScreen";
