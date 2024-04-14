@@ -20,8 +20,11 @@
       "@siteMain/*": [
         "src/renderer/siteMain/src/*"
       ],
-      "@siteAssist/*": [
-        "src/renderer/siteAssist/src/*"
+      "@siteAssistOpaque/*": [
+        "src/renderer/siteAssistOpaque/src/*"
+      ],
+      "@siteAssistTransprent/*": [
+        "src/renderer/siteAssistTransprent/src/*"
       ],
       "@siteElectronLoading/*": [
         "src/renderer/siteElectronLoading/src"

@@ -6,16 +6,16 @@ import "./index.module.less";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
-import DeleteModal from "@siteMain/components/DeleteModal";
 import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
 import platformUtil from "@renderer/utils/platformUtil";
-import { separator, fileSelectAccetps } from "@renderer/utils/fileHelper";
+import { fileSelectAccetps } from "@renderer/utils/fileHelper";
 import {
-  OpenFileBtn,
-  OpenFolderBtn,
   tableOriginFile,
   tableProgress,
   tableCreateTime,
+  OpenFileBtn,
+  OpenFolderBtn,
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
 
@@ -27,11 +27,6 @@ const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null);
   const [showTypeModal, setShowTypeModal] = useState(false);
-  const [deleteModalData, setDeleteModalData] = useState({
-    visible: false,
-    path: "",
-    params: null,
-  });
   const [transcodeList, setTranscodeList] = useState([]);
   const transcodeListRef = useRef(transcodeList);
   const { t } = useTranslation();
@@ -43,52 +38,6 @@ export default function Transcode() {
       setFilePath(e.file.path);
       setShowTypeModal(true);
     }
-  };
-
-  // 删除记录
-  const deleteData = async ({ path, isDeleteFile }) => {
-    console.log(path, isDeleteFile);
-    console.log(deleteModalData.params.taskId);
-    closeDeleteFileModal();
-    const recordDeleteRes = window.electron.ipcRenderer.invoke(
-      "QUEUE_STORE_DELETE",
-      {
-        key: "transcodeList",
-        idKey: "taskId",
-        id: deleteModalData.params.taskId,
-      },
-    );
-    if (isDeleteFile) {
-      const res = await window.electron.ipcRenderer.invoke("WIN_DELETE_FILE", {
-        path,
-      });
-      res
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
-    } else {
-      recordDeleteRes
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
-    }
-    init();
-  };
-
-  // 打开删除文件弹窗
-  const openDeleteFileModal = (path, record) => {
-    setDeleteModalData({
-      visible: true,
-      path,
-      params: record,
-    });
-  };
-
-  // 关闭删除文件弹窗
-  const closeDeleteFileModal = () => {
-    setDeleteModalData({
-      visible: false,
-      path: "",
-      params: null,
-    });
   };
 
   // 更新转码列表
@@ -161,18 +110,7 @@ export default function Transcode() {
           <>
             <OpenFileBtn record={record} />
             <OpenFolderBtn record={record} />
-            <Button
-              type="link"
-              className="common-table-link-btn"
-              onClick={() => {
-                openDeleteFileModal(
-                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-                  record,
-                );
-              }}
-            >
-              {t("commonText.delete")}
-            </Button>
+            <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         );
       },
@@ -211,12 +149,6 @@ export default function Transcode() {
         open={showTypeModal}
         onCancel={() => setShowTypeModal(false)}
         onOk={handleFile}
-      />
-      <DeleteModal
-        open={deleteModalData.visible}
-        path={deleteModalData.path}
-        onCancel={closeDeleteFileModal}
-        onOk={deleteData}
       />
     </div>
   );

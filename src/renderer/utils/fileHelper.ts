@@ -21,6 +21,9 @@ export const fileSelectAccetps = {
   ],
 };
 
+// fps 列表
+export const fpsList = [24, 25, 30, 50, 60];
+
 // 分隔符
 export const separator = platformUtil.isWin ? "\\" : "/";
 

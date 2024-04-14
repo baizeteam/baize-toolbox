@@ -7,6 +7,7 @@
     "audio": "音频",
     "file": "文件",
     "folder": "文件夹",
+    "fps": "帧率",
     "action": "操作",
     "progress": "进度",
     "loading": "加载中...",
@@ -116,7 +117,7 @@
       }
     }
   },
-  "siteAssist": {
+  "siteAssistTransprent": {
     "pages": {
       "recordWin": {
         "title": "录屏助手"

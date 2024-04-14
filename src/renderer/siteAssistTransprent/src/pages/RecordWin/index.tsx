@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.module.less";
-import { ffmpegObj2List } from "@renderer/utils/ffmpegHelper";
+import { ffmpegObj2List, COLLECT_TYPE } from "@renderer/utils/ffmpegHelper";
 import AppIcon from "@renderer/components/AppIcon";
-import { fileSelectAccetps } from "@renderer/utils/fileHelper";
+import {
+  fileSelectAccetps,
+  separator,
+  fpsList,
+} from "@renderer/utils/fileHelper";
 import { Select } from "antd";
-import { separator } from "@renderer/utils/fileHelper";
 import { useTranslation } from "react-i18next";
 import { nanoid } from "nanoid";
 import { usePenetrateListener } from "@renderer/hooks/usePenetrateListener";
@@ -12,11 +15,18 @@ import { usePenetrateListener } from "@renderer/hooks/usePenetrateListener";
 const CONTENT_MARGIN_TOP = 36;
 const CONTENT_MARGIN_LEFT = 8;
 const SUB_FLODER_NAME = "record";
-const options = [...fileSelectAccetps.video, "gif"].map((item) => ({
+// 文件格式选项
+const fileTypeOptions = [...fileSelectAccetps.video, "gif"].map((item) => ({
   label: item.toUpperCase(),
   value: item,
 }));
+// 帧率选项
+const fpsOptions = fpsList.map((item) => ({
+  label: item,
+  value: item,
+}));
 
+// 取偶数值，防止录屏区域不整
 function roundDownEven(num) {
   const _num = Math.floor(num);
   return _num % 2 === 0 ? _num : _num - 1;
@@ -24,18 +34,29 @@ function roundDownEven(num) {
 
 export default function RecordWin() {
   const [isRecording, setIsRecording] = useState(false);
-  const [value, setValue] = useState(
-    localStorage.getItem("recordFormatValue") || options[0].value,
+  const [fileType, setFileType] = useState(
+    localStorage.getItem("recordFormatValue") || fileTypeOptions[0].value,
+  );
+  const [fps, setFps] = useState(
+    localStorage.getItem("recordFpsValue") || fpsOptions[0].value,
   );
   const contentRef = useRef<HTMLDivElement>(null);
-  usePenetrateListener(contentRef);
 
+  usePenetrateListener(contentRef);
   const { t } = useTranslation();
+
+  const isGif = fileType === "gif";
 
   // 格式选择
   const handleFormatChange = (value) => {
     localStorage.setItem("recordFormatValue", value);
-    setValue(value);
+    setFileType(value);
+  };
+
+  // 帧率选择
+  const handleFpsChange = (value) => {
+    localStorage.setItem("recordFpsValue", value);
+    setFps(value);
   };
 
   // 开始录屏
@@ -47,20 +68,16 @@ export default function RecordWin() {
     const contentBounds = contentRef.current.getBoundingClientRect();
     const screenArea = `${roundDownEven(contentBounds.width * bounds.scaleFactor)}x${roundDownEven(contentBounds.height * bounds.scaleFactor)}`;
     // const offset = `+${bounds.x},${bounds.y}`;
-    const fileName = `${Date.now()}.${value}`;
-    const formatObj = {
-      win32: "gdigrab",
-      darwin: "avfoundation",
-      linux: "x11grab",
-    };
+    const fileName = `${Date.now()}.${fileType}`;
+
     const outputFloaderPath = await window.electron.ipcRenderer.invoke(
       "GET_STORE",
       "defaultOutPath",
     );
     const subOutputFloaderPath = `${outputFloaderPath}${separator}${SUB_FLODER_NAME}`;
     const commandObj = {
-      "-f": formatObj[window.electron.process.platform],
-      "-framerate": "30",
+      "-f": COLLECT_TYPE[window.electron.process.platform],
+      "-framerate": isGif ? "10" : String(fps),
       "-offset_x": (bounds.x + CONTENT_MARGIN_LEFT) * bounds.scaleFactor + "",
       "-offset_y": (bounds.y + CONTENT_MARGIN_TOP) * bounds.scaleFactor + "",
       "-video_size": screenArea,
@@ -86,7 +103,8 @@ export default function RecordWin() {
       taskId,
       outputFloaderPath: subOutputFloaderPath,
       outputFileName: fileName,
-      createType: value,
+      createType: fileType,
+      fps,
     });
   };
 
@@ -101,7 +119,9 @@ export default function RecordWin() {
   return (
     <div styleName="record-win">
       <div styleName="header">
-        <div styleName="title">{t("siteAssist.pages.recordWin.title")}</div>
+        <div styleName="title">
+          {t("siteAssistTransprent.pages.recordWin.title")}
+        </div>
         <AppIcon
           styleName="close-btn"
           icon="#baize-guanbi"
@@ -128,17 +148,37 @@ export default function RecordWin() {
           )}
         </div>
         <div styleName="right">
-          <Select
-            virtual={false}
-            size="small"
-            popupClassName="record-format-select"
-            style={{ minWidth: 86 }}
-            value={value}
-            styleName="not-drag"
-            placement="topRight"
-            options={options}
-            onChange={handleFormatChange}
-          />
+          {!isGif && (
+            <div styleName="record-select">
+              <div styleName="label">{t("commonText.fps")}</div>
+              <Select
+                virtual={false}
+                size="small"
+                popupClassName="record-select-popup"
+                style={{ width: 56 }}
+                value={fps}
+                styleName="not-drag"
+                placement="topRight"
+                options={fpsOptions}
+                onChange={handleFpsChange}
+              />
+            </div>
+          )}
+
+          <div styleName="record-select">
+            <div styleName="label">格式</div>
+            <Select
+              virtual={false}
+              size="small"
+              popupClassName="record-select-popup"
+              style={{ width: 86 }}
+              value={fileType}
+              styleName="not-drag"
+              placement="topRight"
+              options={fileTypeOptions}
+              onChange={handleFormatChange}
+            />
+          </div>
         </div>
       </div>
     </div>

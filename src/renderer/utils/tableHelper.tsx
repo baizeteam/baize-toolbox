@@ -1,7 +1,8 @@
+import React, { useRef, useState } from "react";
 import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
 import { Trans, useTranslation } from "react-i18next";
 import { formatTime } from "@renderer/utils/formatTime";
-import { Progress, Button } from "antd";
+import { Progress, Button, Modal, Checkbox, message } from "antd";
 import { openFile, openFolder, separator } from "@renderer/utils/fileHelper";
 
 // 文本
@@ -15,7 +16,7 @@ export const tableText = {
   ),
 };
 
-// 文本
+// 文件
 export const tableFile = {
   title: <Trans i18nKey="commonText.file" />,
   dataIndex: "outputFileName",
@@ -37,6 +38,14 @@ export const tableOriginFile = {
   ),
 };
 
+//
+export const tableFps = {
+  title: <Trans i18nKey="commonText.fps" />,
+  dataIndex: "fps",
+  key: "fps",
+  width: 60,
+};
+
 // 进度
 export const tableProgress = {
   title: <Trans i18nKey="commonText.progress" />,
@@ -54,8 +63,14 @@ export const tableCreateTime = {
   render: (createTime: number) => formatTime(createTime),
 };
 
+interface ITableBtnProps {
+  record: any;
+  hasFile?: boolean;
+  callback?: () => void;
+}
+
 // 打开文件按钮
-export const OpenFileBtn = (props) => {
+export const OpenFileBtn = (props: ITableBtnProps) => {
   const { record } = props;
   const { t } = useTranslation();
   return (
@@ -74,7 +89,7 @@ export const OpenFileBtn = (props) => {
 };
 
 // 打开文件夹按钮
-export const OpenFolderBtn = (props) => {
+export const OpenFolderBtn = (props: ITableBtnProps) => {
   const { record } = props;
   const { t } = useTranslation();
   return (
@@ -84,6 +99,69 @@ export const OpenFolderBtn = (props) => {
       className="common-table-link-btn"
     >
       {t("commonText.openFolder")}
+    </Button>
+  );
+};
+
+// 删除按钮
+export const DeleteRecordBtn = (props: ITableBtnProps) => {
+  const { record, hasFile, callback } = props;
+  const isCheckRef = useRef(true);
+
+  const { t } = useTranslation();
+
+  // 选择是否删除文件
+  const onCheckBoxChnage = (e) => {
+    isCheckRef.current = e.target.checked;
+  };
+
+  // 删除记录
+  const deleteData = async ({ record, isDeleteFile }) => {
+    const recordDeleteRes = window.electron.ipcRenderer.invoke(
+      "QUEUE_STORE_DELETE",
+      {
+        key: `${record.code}List`,
+        idKey: "taskId",
+        id: record.taskId,
+      },
+    );
+    if (isDeleteFile && hasFile) {
+      const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
+      const res = await window.electron.ipcRenderer.invoke("WIN_DELETE_FILE", {
+        path,
+      });
+      res
+        ? message.success(t("commonText.success"))
+        : message.error(t("commonText.error"));
+    } else {
+      recordDeleteRes
+        ? message.success(t("commonText.success"))
+        : message.error(t("commonText.error"));
+    }
+    callback();
+  };
+
+  // 删除按钮点击事件, 弹出确认框
+  const onDelete = (record) => {
+    Modal.confirm({
+      title: t("siteMain.components.deleteModal.content"),
+      content: hasFile ? (
+        <Checkbox defaultChecked onChange={onCheckBoxChnage}>
+          {t("siteMain.components.deleteModal.deleteFileText")}
+        </Checkbox>
+      ) : null,
+      onOk: () => {
+        deleteData({ record, isDeleteFile: isCheckRef.current });
+      },
+    });
+  };
+  return (
+    <Button
+      onClick={() => onDelete(record)}
+      type="link"
+      className="common-table-link-btn"
+    >
+      {t("commonText.delete")}
     </Button>
   );
 };

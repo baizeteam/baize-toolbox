@@ -7,7 +7,11 @@ import { EdgeSpeechTTS } from "@lobehub/tts";
 import AudioPlay from "@renderer/components/AudioPlay";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { tableText, tableCreateTime } from "@renderer/utils/tableHelper";
+import {
+  tableText,
+  tableCreateTime,
+  DeleteRecordBtn,
+} from "@renderer/utils/tableHelper";
 import { separator } from "@renderer/utils/fileHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
 
@@ -20,7 +24,7 @@ enum EStatus {
 const SUB_FLODER_NAME = "tts";
 
 interface IAudioItem {
-  id: string;
+  taskId: string;
   voice: string;
   text: string;
   url: string;
@@ -48,12 +52,6 @@ export default function TTS() {
   const [audioList, setAudioList] = useState<IAudioItem[]>([]);
   const { t } = useTranslation();
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
-      setAudioList(res);
-    });
-  }, [pathname]);
 
   // 下载语音
   const downLoadTTS = async (record) => {
@@ -104,13 +102,17 @@ export default function TTS() {
       key: "action",
       render: (_, record) => {
         return (
-          <Button
-            onClick={() => downLoadTTS(record)}
-            type="link"
-            style={{ padding: 0 }}
-          >
-            {t("commonText.download")}
-          </Button>
+          <>
+            <Button
+              onClick={() => downLoadTTS(record)}
+              type="link"
+              className="common-table-link-btn"
+              style={{ padding: 0 }}
+            >
+              {t("commonText.download")}
+            </Button>
+            <DeleteRecordBtn record={record} callback={init} />
+          </>
         );
       },
     },
@@ -136,14 +138,15 @@ export default function TTS() {
       message.error("请输入文本");
       return;
     }
-    const id = nanoid(16);
+    const taskId = nanoid(16);
     const params = {
-      id,
+      taskId,
       text: value,
       voice: voiceSelect[1],
       url: null,
       createTime: Date.now(),
       status: EStatus.pending,
+      code: "tts",
     };
     setAudioList((res) => {
       return [params, ...res];
@@ -155,6 +158,16 @@ export default function TTS() {
     );
     setAudioList(ttsList);
   };
+
+  const init = () => {
+    window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
+      setAudioList(res);
+    });
+  };
+
+  useEffect(() => {
+    init();
+  }, [pathname]);
 
   return (
     <div styleName="tts" className="common-content">

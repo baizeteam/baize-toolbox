@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AppFunctionDev from "@siteMain/components/AppFuctionDev";
 import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 import {
@@ -7,6 +6,7 @@ import {
   tableCreateTime,
   OpenFileBtn,
   OpenFolderBtn,
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
 import { VideoCameraOutlined } from "@ant-design/icons";
@@ -38,18 +38,7 @@ export default function ScreenRecord() {
           <>
             <OpenFileBtn record={record} />
             <OpenFolderBtn record={record} />
-            {/* <Button
-              type="link"
-              className="common-table-link-btn"
-              onClick={() => {
-                openDeleteFileModal(
-                  `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-                  record,
-                );
-              }}
-            >
-              {t("commonText.delete")}
-            </Button> */}
+            <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         );
       },
