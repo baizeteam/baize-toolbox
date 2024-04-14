@@ -125,7 +125,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
         id: record.taskId,
       },
     );
-    if (isDeleteFile) {
+    if (isDeleteFile && hasFile) {
       const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
       const res = await window.electron.ipcRenderer.invoke("WIN_DELETE_FILE", {
         path,
