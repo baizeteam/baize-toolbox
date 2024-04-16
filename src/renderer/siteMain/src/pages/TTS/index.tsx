@@ -108,6 +108,7 @@ export default function TTS() {
               type="link"
               className="common-table-link-btn"
               style={{ padding: 0 }}
+              disabled={record.status === EStatus.pending}
             >
               {t("commonText.download")}
             </Button>
