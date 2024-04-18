@@ -34,8 +34,8 @@ export default function Transcode() {
 
   // 选择文件
   const selectFile = async (e) => {
-    if (e.file.path) {
-      setFilePath(e.file.path);
+    if (e.file.originFileObj.path) {
+      setFilePath(e.file.originFileObj.path);
       setShowTypeModal(true);
     }
   };
@@ -132,7 +132,7 @@ export default function Transcode() {
   }, [pathname]);
   return (
     <div styleName="transcode" className="common-content">
-      <AppSelectFile onSelectFile={selectFile} accept={accept} />
+      <AppSelectFile onChange={selectFile} accept={accept} />
       <AppTableHeader
         title={"siteMain.pages.transcode.tableTitle"}
         valueKey="transcodeList"

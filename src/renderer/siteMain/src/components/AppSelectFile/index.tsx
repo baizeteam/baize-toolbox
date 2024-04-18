@@ -6,16 +6,15 @@ import "./index.module.less";
 
 const { Dragger } = Upload;
 
-interface IAppSelectFileProps extends UploadProps {
-  onSelectFile: (value: any) => void;
-}
+// interface IAppSelectFileProps extends UploadProps {
+//   onSelectFile: (value: any) => void;
+// }
 
-export default function AppSelectFile(props: IAppSelectFileProps) {
-  const { onSelectFile } = props;
+export default function AppSelectFile(props: UploadProps) {
   const { t } = useTranslation();
   return (
     <div styleName="app-select-file">
-      <Dragger {...props} customRequest={onSelectFile} showUploadList={false}>
+      <Dragger {...props} showUploadList={false}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>

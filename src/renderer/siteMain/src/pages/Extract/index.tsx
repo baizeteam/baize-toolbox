@@ -34,8 +34,8 @@ export default function Extract() {
 
   // 选择文件
   const selectFile = async (e) => {
-    if (e.file.path) {
-      setFilePath(e.file.path);
+    if (e.file.originFileObj.path) {
+      setFilePath(e.file.originFileObj.path);
       setShowTypeModal(true);
     }
   };
@@ -134,7 +134,7 @@ export default function Extract() {
   }, [pathname]);
   return (
     <div styleName="extract" className="common-content">
-      <AppSelectFile onSelectFile={selectFile} accept={accept} />
+      <AppSelectFile onChange={selectFile} accept={accept} />
       <AppTableHeader
         title={"siteMain.pages.extract.tableTitle"}
         valueKey="extractList"
