@@ -30,7 +30,7 @@ export const getFfmpegPath = () => {
 };
 
 app.on("ready", () => {
-  const { ffmpegPath, ffprobePath } = getFfmpegPath();
+  const { ffmpegPath } = getFfmpegPath();
   // 检查 ffmpeg 是否存在
   execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
     if (error) {
@@ -44,7 +44,9 @@ app.on("ready", () => {
   // 执行ffmpeg 命令
   ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
     console.log("FFMPEG_COMMAND", params);
-    const videoDuration = await getFileTime(params.inputFilePath);
+    const videoInfo = await getVideoInfo(params.inputFilePath);
+    console.log("videoInfo", videoInfo);
+    const videoDuration = videoInfo.duration;
     checkFolderExists(params.outputFloaderPath);
     const outputFilePath = path.join(
       params.outputFloaderPath,
@@ -98,38 +100,77 @@ app.on("ready", () => {
     });
   });
 
-  // 获取视频时长
-  const getFileTime = async (videoFilePath): Promise<number> => {
+  ipcMain.handle("FFMPEG_GET_VIDEO_INFO", async (e, params) => {
+    return await getVideoInfo(params.filePath);
+  });
+
+  interface VideoInfo {
+    duration?: number;
+    bitrate?: number;
+    codec?: string;
+    resolution?: {
+      width: number;
+      height: number;
+    };
+    frameRate?: number;
+  }
+
+  // 获取视频信息
+  const getVideoInfo = async (filePath): Promise<VideoInfo> => {
     return new Promise((resolve, reject) => {
-      execFile(
-        ffprobePath,
-        [
-          "-v",
-          "error",
-          "-show_entries",
-          "format=duration",
-          "-of",
-          "default=noprint_wrappers=1:nokey=1",
-          videoFilePath,
-        ],
-        (error, stdout, stderr) => {
-          if (error) {
-            console.error(`执行出错: ${error.message}`);
-            reject(error);
-            return;
-          }
-          if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-          }
-          // 解析 ffprobe 的输出，得到视频时长（以秒为单位）
-          const duration = parseFloat(stdout);
-          console.log(`视频时长: ${duration} 秒`);
-          resolve(duration);
-        },
-      );
+      const command = ["-i", filePath, "-f", null, "-"];
+      console.log(command);
+      const ffmpegProcess = spawn(ffmpegPath, command);
+      let output = "";
+
+      ffmpegProcess.stderr.on("data", (data) => {
+        output += data.toString();
+      });
+
+      ffmpegProcess.on("close", (code) => {
+        if (code === 0) {
+          const info = parseVideoInfo(output);
+          resolve(info);
+        } else {
+          reject(new Error(`FFmpeg process exited with code ${code}`));
+        }
+      });
     });
   };
+
+  // 解析 ffmpeg 的输出信息
+  function parseVideoInfo(info) {
+    const lines = info.split("\n");
+    const videoInfo: VideoInfo = {};
+    lines.forEach((line) => {
+      const durationMatch = line.match(/Duration: (\d{2}):(\d{2}):(\d{2})/);
+      const bitrateMatch = line.match(/bitrate: (\d+) kb\/s/);
+      const codecMatch = line.match(/Stream.*Video: ([^,]+)/);
+      const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/);
+      const frameRateMatch = line.match(/(\d+\.?\d*) fps/);
+      if (durationMatch) {
+        videoInfo.duration = convertTimeToSeconds(
+          `${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`,
+        );
+      }
+      if (bitrateMatch) {
+        videoInfo.bitrate = parseInt(bitrateMatch[1]);
+      }
+      if (codecMatch) {
+        videoInfo.codec = codecMatch[1].trim();
+      }
+      if (resolutionMatch) {
+        videoInfo.resolution = {
+          width: parseInt(resolutionMatch[1]),
+          height: parseInt(resolutionMatch[2]),
+        };
+      }
+      if (frameRateMatch) {
+        videoInfo.frameRate = parseFloat(frameRateMatch[1]);
+      }
+    });
+    return videoInfo;
+  }
 
   // 将时间字符串转换为秒数
   function convertTimeToSeconds(timeStr) {
