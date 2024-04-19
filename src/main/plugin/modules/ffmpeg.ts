@@ -165,7 +165,7 @@ app.on("ready", () => {
           height: parseInt(resolutionMatch[2]),
         };
       }
-      if (frameRateMatch) {
+      if (frameRateMatch && !videoInfo.frameRate) {
         videoInfo.frameRate = parseFloat(frameRateMatch[1]);
       }
     });
