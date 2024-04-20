@@ -8,6 +8,9 @@
     "file": "File",
     "folder": "Folder",
     "fps": "FPS",
+    "bitrate": "Bitrate",
+    "duration": "Duration",
+    "resolution": "Resolution",
     "action": "Action",
     "progress": "Progress",
     "loading": "Loading...",
@@ -114,6 +117,17 @@
         "createType": "Create Type",
         "tableTitle": "Screen Record History",
         "createBtn": "Start Recording"
+      },
+      "compress": {
+        "tableTitle": "Compress History",
+        "originFileSize": "Origin Size",
+        "compressFileSize": "Compress Size",
+        "compressRate": "Compress Rate",
+        "typeModal": {
+          "title": "Please select compression settings",
+          "infoTitle": "File Info",
+          "compressSetting": "Compression Setting"
+        }
       }
     },
     "components": {

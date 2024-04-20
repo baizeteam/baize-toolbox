@@ -35,3 +35,9 @@ export const deleteFile = (filePath: string) => {
     });
   });
 };
+
+// 获取文件大小
+export function getFileSize(filePath) {
+  const stats = fs.statSync(filePath);
+  return stats.size;
+}

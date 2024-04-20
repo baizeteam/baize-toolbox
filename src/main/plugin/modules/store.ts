@@ -4,7 +4,12 @@ import { queueStoreDelete } from "../../utils/storeHelper";
 import { electronReload, electronRestart } from "../../utils/reload";
 
 export const store = new ElectronStore();
-const configIgnoreKeys = ["ttsList", "transcodeList", "extractList"];
+const configIgnoreKeys = [
+  "ttsList",
+  "transcodeList",
+  "extractList",
+  "compressList",
+];
 
 // 设置 store
 ipcMain.handle("SET_STORE", (_, key, value) => {
