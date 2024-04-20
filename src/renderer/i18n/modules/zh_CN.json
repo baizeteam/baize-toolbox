@@ -8,6 +8,9 @@
     "file": "文件",
     "folder": "文件夹",
     "fps": "帧率",
+    "bitrate": "比特率",
+    "duration": "时长",
+    "resolution": "分辨率",
     "action": "操作",
     "progress": "进度",
     "loading": "加载中...",
@@ -114,6 +117,17 @@
         "createType": "录屏类型",
         "tableTitle": "录屏记录",
         "createBtn": "开始录屏"
+      },
+      "compress": {
+        "tableTitle": "压缩记录",
+        "originFileSize": "原文件大小",
+        "compressFileSize": "压缩后大小",
+        "compressRate": "压缩率",
+        "typeModal": {
+          "title": "请选择压缩设置",
+          "infoTitle": "文件信息",
+          "compressSetting": "压缩参数设置"
+        }
       }
     }
   },
