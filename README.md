@@ -18,11 +18,11 @@ $ pnpm install
 
 ### 加载资源
 
-百度网盘链接：https://pan.baidu.com/s/1r5NRUZOyqUkTIYDnp_lt5A?pwd=p7h7
+百度网盘链接：https://pan.baidu.com/s/1NlVTe_elkZtjT9gJIc0k3w?pwd=m7t9
 
 阿里网盘链接：https://www.alipan.com/s/WRjhfS4T2p7
 
-谷歌网盘链接 https://drive.google.com/file/d/1tgy_-SJcAIPOUvEc6MzD5aqJ10Gq0kTb/view?usp=sharing
+谷歌网盘链接 https://drive.google.com/file/d/1gHq5uYQ7cfBRzMiT4leZmRMXSlNXxloo/view?usp=sharing
 
 将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
 
