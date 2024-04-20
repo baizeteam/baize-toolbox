@@ -34,7 +34,7 @@ export const getTaskBaseInfo = async ({
   const fileOutputType =
     outputType || filePath.split("/").pop().split(".").pop();
   const outputFileName = `${oldFileName}-${new Date().getTime()}.${fileOutputType}`;
-  const outputFloaderPath = await window.electron.ipcRenderer.invoke(
+  const outputFloaderPath = await window.ipcInvoke(
     "GET_STORE",
     "defaultOutPath",
   );

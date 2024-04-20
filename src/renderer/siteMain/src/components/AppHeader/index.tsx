@@ -7,14 +7,12 @@ export default function AppHeader() {
 
   // 变更窗口最大化状态
   const handleWinMaximize = async () => {
-    await window.electron.ipcRenderer.invoke("WIN_MAXIMIZE");
+    await window.ipcInvoke("WIN_MAXIMIZE");
     setIsMaximized((pre) => !pre);
   };
   // 初始化
   const init = async () => {
-    const res = await window.electron.ipcRenderer.invoke(
-      "WIN_GET_MAXIMIZED_STATE",
-    );
+    const res = await window.ipcInvoke("WIN_GET_MAXIMIZED_STATE");
     setIsMaximized(res);
   };
   useEffect(() => {
@@ -25,7 +23,7 @@ export default function AppHeader() {
       <AppIcon
         icon="#baize-zuixiaohua"
         onClick={() => {
-          window.electron.ipcRenderer.send("WIN_MINIMIZE");
+          window.ipcSend("WIN_MINIMIZE");
         }}
       />
       <AppIcon
@@ -35,7 +33,7 @@ export default function AppHeader() {
       <AppIcon
         icon="#baize-guanbi"
         onClick={() => {
-          window.electron.ipcRenderer.send("WIN_CLOSE");
+          window.ipcSend("WIN_CLOSE");
         }}
       />
     </div>

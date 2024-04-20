@@ -20,10 +20,7 @@ export default function App(props) {
 
   // 初始化主题
   const initTheme = async () => {
-    const themeRes = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "theme",
-    );
+    const themeRes = await window.ipcInvoke("GET_STORE", "theme");
     if (themeRes === "dark") {
       changeIsDark(true);
     } else if (themeRes === "light") {
@@ -46,10 +43,7 @@ export default function App(props) {
 
   // 初始化国际化
   const initI18n = async () => {
-    const i18nRes = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "i18n",
-    );
+    const i18nRes = await window.ipcInvoke("GET_STORE", "i18n");
     i18n.changeLanguage(i18nRes);
     setI18nCur(i18nRes);
   };

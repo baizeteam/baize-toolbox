@@ -117,17 +117,14 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
 
   // 删除记录
   const deleteData = async ({ record, isDeleteFile }) => {
-    const recordDeleteRes = window.electron.ipcRenderer.invoke(
-      "QUEUE_STORE_DELETE",
-      {
-        key: `${record.code}List`,
-        idKey: "taskId",
-        id: record.taskId,
-      },
-    );
+    const recordDeleteRes = window.ipcInvoke("QUEUE_STORE_DELETE", {
+      key: `${record.code}List`,
+      idKey: "taskId",
+      id: record.taskId,
+    });
     if (isDeleteFile && hasFile) {
       const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
-      const res = await window.electron.ipcRenderer.invoke("WIN_DELETE_FILE", {
+      const res = await window.ipcInvoke("WIN_DELETE_FILE", {
         path,
       });
       res
