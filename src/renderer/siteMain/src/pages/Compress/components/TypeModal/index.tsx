@@ -28,10 +28,7 @@ export default function TypeModal(props: ITypeModalProps) {
   const init = async () => {
     if (filePath && open) {
       setLoading(true);
-      const res = await window.electron.ipcRenderer.invoke(
-        "FFMPEG_GET_VIDEO_INFO",
-        { filePath },
-      );
+      const res = await window.ipcInvoke("FFMPEG_GET_VIDEO_INFO", { filePath });
       console.log(res);
       setFileInfo(res);
       changeSettingInfo({ frameRate: res.frameRate, bitrate: res.bitrate });

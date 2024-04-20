@@ -17,17 +17,13 @@ export default function DefaultOutPath() {
 
   // 修改默认存储路径
   const onChangeDefaultOutPath = async () => {
-    const res = await window.electron.ipcRenderer.invoke("WIN_SELECT_FOLDER");
+    const res = await window.ipcInvoke("WIN_SELECT_FOLDER");
     if (!res) {
       return;
     }
     const path = res[0];
     setDefaultOutPath(path);
-    await window.electron.ipcRenderer.invoke(
-      "SET_STORE",
-      "defaultOutPath",
-      path,
-    );
+    await window.ipcInvoke("SET_STORE", "defaultOutPath", path);
   };
   return (
     <div styleName="default-out-path">

@@ -13,7 +13,7 @@ export default function Restore() {
       title: t("siteMain.pages.setting.restore.config.title"),
       content: t("siteMain.pages.setting.restore.config.content"),
       onOk() {
-        window.electron.ipcRenderer.invoke("STORE_RESTORE_CONFIG");
+        window.ipcInvoke("STORE_RESTORE_CONFIG");
       },
     });
   };
@@ -24,7 +24,7 @@ export default function Restore() {
       title: t("siteMain.pages.setting.restore.all.title"),
       content: t("siteMain.pages.setting.restore.all.content"),
       onOk() {
-        window.electron.ipcRenderer.invoke("STORE_RESTORE_ALL");
+        window.ipcInvoke("STORE_RESTORE_ALL");
       },
     });
   };

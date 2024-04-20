@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 
 export const usePenetrateListener = (ref) => {
   const handleMouseEnter = () => {
-    window.electron.ipcRenderer.invoke("WIN_PENTRATE_OPEN");
+    window.ipcInvoke("WIN_PENTRATE_OPEN");
   };
 
   const handleMouseLeave = () => {
-    window.electron.ipcRenderer.invoke("WIN_PENTRATE_CLOSE");
+    window.ipcInvoke("WIN_PENTRATE_CLOSE");
   };
 
   useEffect(() => {

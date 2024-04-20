@@ -10,14 +10,14 @@ export default function Theme() {
   // 主题切换
   const onThemeChange = async (e) => {
     setTheme(e.target.value);
-    await window.electron.ipcRenderer.invoke("SET_STORE_RELOAD", {
+    await window.ipcInvoke("SET_STORE_RELOAD", {
       key: "theme",
       value: e.target.value,
       code: "THEME",
     });
   };
   useEffect(() => {
-    window.electron.ipcRenderer.invoke("GET_STORE", "theme").then((res) => {
+    window.ipcInvoke("GET_STORE", "theme").then((res) => {
       setTheme(res);
     });
   }, []);
