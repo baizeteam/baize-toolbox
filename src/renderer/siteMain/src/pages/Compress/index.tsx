@@ -17,11 +17,10 @@ import {
   DeleteRecordBtn,
 } from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
-import { render } from "react-dom";
 
 const SUB_FLODER_NAME = "compress";
 
-const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
+const accept = [...fileSelectAccetps.video] // [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
   .map((item) => `.${item}`)
   .join(",");
 
