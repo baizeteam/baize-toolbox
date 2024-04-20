@@ -49,11 +49,11 @@ export default function Transcode() {
   // 转码
   const handleFile = async (outputType) => {
     setShowTypeModal(false);
-    const baseInfo = await getTaskBaseInfo(
+    const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,
-      SUB_FLODER_NAME,
-    );
+      subFloder: SUB_FLODER_NAME,
+    });
     const params = {
       command: ffmpegObj2List({
         "-i": filePath,
@@ -66,10 +66,9 @@ export default function Transcode() {
       code: "transcode",
     };
     changeTranscodeList([params, ...(transcodeListRef.current || [])]);
-    window.electron.ipcRenderer.send("FFMPEG_COMMAND", params);
-    window.electron.ipcRenderer.on(
-      `FFMPEG_PROGRESS_${baseInfo.taskId}`,
-      (e, data) => onProgressChange(e, data, baseInfo.taskId),
+    window.ipcSend("FFMPEG_COMMAND", params);
+    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) =>
+      onProgressChange(e, data, baseInfo.taskId),
     );
   };
 

@@ -7,6 +7,12 @@ import { electronAPI } from "@electron-toolkit/preload";
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
+    contextBridge.exposeInMainWorld("ipcSend", electronAPI.ipcRenderer.send);
+    contextBridge.exposeInMainWorld("ipcOn", electronAPI.ipcRenderer.on);
+    contextBridge.exposeInMainWorld(
+      "ipcInvoke",
+      electronAPI.ipcRenderer.invoke,
+    );
     // contextBridge.exposeInMainWorld("api", api);
   } catch (error) {
     console.error(error);
@@ -15,5 +21,9 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.electron = electronAPI;
   // @ts-ignore (define in dts)
-  window.api = api;
+  window.ipcSend = electronAPI.ipcRenderer.send;
+  // @ts-ignore (define in dts)
+  window.ipcOn = electronAPI.ipcRenderer.on;
+  // @ts-ignore (define in dts)
+  window.ipcInvoke = electronAPI.ipcRenderer.invoke;
 }

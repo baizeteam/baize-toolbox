@@ -11,6 +11,7 @@ files:
   - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
   - "!resources/win/*"
   - "!resources/mac/*"
+  - "!resources/linux/*"
 asarUnpack:
   - resources/**
 win:
@@ -51,6 +52,11 @@ linux:
     - AppImage
     - snap
     - deb
+  files:
+    - from: "resources/linux"
+      to: "resources/linux"
+      filter:
+        - "**/*"
   maintainer: electronjs.org
   category: Utility
 appImage:

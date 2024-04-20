@@ -1,7 +1,7 @@
 import { execFile, spawn } from "child_process";
 import { app, ipcMain, BrowserWindow, dialog } from "electron";
 import path, { resolve } from "path";
-import { checkFolderExists } from "../../utils/fileHelper";
+import { checkFolderExists, getFileSize } from "../../utils/fileHelper";
 import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 import { mainWinStartProxy, START_STATUS } from "../../helper";
 // import { mainLogSend } from "../../helper";
@@ -45,7 +45,6 @@ app.on("ready", () => {
   ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
     console.log("FFMPEG_COMMAND", params);
     const videoInfo = await getVideoInfo(params.inputFilePath);
-    console.log("videoInfo", videoInfo);
     const videoDuration = videoInfo.duration;
     checkFolderExists(params.outputFloaderPath);
     const outputFilePath = path.join(
@@ -93,7 +92,9 @@ app.on("ready", () => {
         });
       } else {
         console.log("FFmpeg 进程正常关闭");
+        const outputFileSize = getFileSize(outputFilePath);
         sendFunc({
+          outputFileSize,
           progress: 100,
         });
       }
@@ -119,7 +120,6 @@ app.on("ready", () => {
   const getVideoInfo = async (filePath): Promise<VideoInfo> => {
     return new Promise((resolve, reject) => {
       const command = ["-i", filePath, "-f", null, "-"];
-      console.log(command);
       const ffmpegProcess = spawn(ffmpegPath, command);
       let output = "";
 
@@ -142,33 +142,41 @@ app.on("ready", () => {
   function parseVideoInfo(info) {
     const lines = info.split("\n");
     const videoInfo: VideoInfo = {};
+    // console.log(lines);
     lines.forEach((line) => {
+      if (line.indexOf("Video") !== -1) {
+        console.log(line);
+
+        const bitrateMatch = line.match(/(\d+\.?\d*) kb/);
+        const codecMatch = line.match(/Stream.*Video: ([^,]+)/);
+        const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/);
+        const frameRateMatch = line.match(/(\d+\.?\d*) fps/);
+
+        if (bitrateMatch && !videoInfo.bitrate) {
+          console;
+          videoInfo.bitrate = parseInt(bitrateMatch[1]);
+        }
+        if (codecMatch) {
+          videoInfo.codec = codecMatch[1].trim();
+        }
+        if (resolutionMatch) {
+          videoInfo.resolution = {
+            width: parseInt(resolutionMatch[1]),
+            height: parseInt(resolutionMatch[2]),
+          };
+        }
+        if (frameRateMatch && !videoInfo.frameRate) {
+          videoInfo.frameRate = parseFloat(frameRateMatch[1]);
+        }
+      }
       const durationMatch = line.match(/Duration: (\d{2}):(\d{2}):(\d{2})/);
-      const bitrateMatch = line.match(/bitrate: (\d+) kb\/s/);
-      const codecMatch = line.match(/Stream.*Video: ([^,]+)/);
-      const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/);
-      const frameRateMatch = line.match(/(\d+\.?\d*) fps/);
       if (durationMatch) {
         videoInfo.duration = convertTimeToSeconds(
           `${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`,
         );
       }
-      if (bitrateMatch) {
-        videoInfo.bitrate = parseInt(bitrateMatch[1]);
-      }
-      if (codecMatch) {
-        videoInfo.codec = codecMatch[1].trim();
-      }
-      if (resolutionMatch) {
-        videoInfo.resolution = {
-          width: parseInt(resolutionMatch[1]),
-          height: parseInt(resolutionMatch[2]),
-        };
-      }
-      if (frameRateMatch) {
-        videoInfo.frameRate = parseFloat(frameRateMatch[1]);
-      }
     });
+
     return videoInfo;
   }
 

@@ -16,7 +16,7 @@ export default function ScreenRecord() {
   const [screenRecordList, setScreenRecordList] = useState([]);
   const { t } = useTranslation();
   const openScreenRecordWin = () => {
-    window.electron.ipcRenderer.send("OPEN_RECORD_WIN");
+    window.ipcSend("OPEN_RECORD_WIN");
   };
 
   const columns = [
@@ -46,17 +46,14 @@ export default function ScreenRecord() {
   ];
 
   const init = async () => {
-    const res = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "screenRecordList",
-    );
+    const res = await window.ipcInvoke("GET_STORE", "screenRecordList");
     console.log(res);
     setScreenRecordList(res);
   };
 
   useEffect(() => {
     init();
-    window.electron.ipcRenderer.on("SCREEN_RECORD_DATA_CHANGE", init);
+    window.ipcOn("SCREEN_RECORD_DATA_CHANGE", init);
     return () => {
       window.electron.ipcRenderer.removeAllListeners(
         "SCREEN_RECORD_DATA_CHANGE",

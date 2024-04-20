@@ -61,16 +61,14 @@ export default function RecordWin() {
 
   // 开始录屏
   const handleRecordStart = async () => {
-    const bounds = await window.electron.ipcRenderer.invoke(
-      "SCREEN_GET_CURRENT_INFO",
-    );
+    const bounds = await window.ipcInvoke("SCREEN_GET_CURRENT_INFO");
     setIsRecording(true);
     const contentBounds = contentRef.current.getBoundingClientRect();
     const screenArea = `${roundDownEven(contentBounds.width * bounds.scaleFactor)}x${roundDownEven(contentBounds.height * bounds.scaleFactor)}`;
     // const offset = `+${bounds.x},${bounds.y}`;
     const fileName = `${Date.now()}.${fileType}`;
 
-    const outputFloaderPath = await window.electron.ipcRenderer.invoke(
+    const outputFloaderPath = await window.ipcInvoke(
       "GET_STORE",
       "defaultOutPath",
     );
@@ -97,7 +95,7 @@ export default function RecordWin() {
     // };
     const command = ffmpegObj2List(commandObj);
     const taskId = nanoid(16);
-    window.electron.ipcRenderer.invoke("SCREEN_RECORD_START", {
+    window.ipcInvoke("SCREEN_RECORD_START", {
       command,
       code: "screenRecord",
       taskId,
@@ -111,7 +109,7 @@ export default function RecordWin() {
   // 停止录屏
   const handleRecordStop = async () => {
     setIsRecording(false);
-    window.electron.ipcRenderer.invoke("SCREEN_RECORD_STOP").then((res) => {
+    window.ipcInvoke("SCREEN_RECORD_STOP").then((res) => {
       console.log(res);
     });
   };
@@ -126,7 +124,7 @@ export default function RecordWin() {
           styleName="close-btn"
           icon="#baize-guanbi"
           onClick={() => {
-            window.electron.ipcRenderer.send("WIN_HIDE");
+            window.ipcSend("WIN_HIDE");
           }}
         />
       </div>

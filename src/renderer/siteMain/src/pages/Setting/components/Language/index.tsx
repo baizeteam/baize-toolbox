@@ -13,7 +13,7 @@ export default function Language() {
   const { t } = useTranslation();
   const onChange = async (e) => {
     setLanguage(e);
-    await window.electron.ipcRenderer.invoke("SET_STORE_RELOAD", {
+    await window.ipcInvoke("SET_STORE_RELOAD", {
       key: "i18n",
       value: e,
       code: "I18N",
@@ -21,7 +21,7 @@ export default function Language() {
   };
 
   useEffect(() => {
-    window.electron.ipcRenderer.invoke("GET_STORE", "i18n").then((res) => {
+    window.ipcInvoke("GET_STORE", "i18n").then((res) => {
       setLanguage(res);
     });
   }, []);

@@ -56,19 +56,13 @@ export default function TTS() {
   // 下载语音
   const downLoadTTS = async (record) => {
     console.log(record);
-    const outputPath = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "defaultOutPath",
-    );
+    const outputPath = await window.ipcInvoke("GET_STORE", "defaultOutPath");
     const filePath = `${outputPath}${separator}${SUB_FLODER_NAME}`;
-    const res = await window.electron.ipcRenderer.invoke(
-      "WIN_DOWNLOAD_BASE64",
-      {
-        base64: record.url,
-        fileName: `${record.createTime}-${nanoid(8)}.mp3`,
-        filePath,
-      },
-    );
+    const res = await window.ipcInvoke("WIN_DOWNLOAD_BASE64", {
+      base64: record.url,
+      fileName: `${record.createTime}-${nanoid(8)}.mp3`,
+      filePath,
+    });
     if (res === true) {
       message.success(t("commonText.downloadSuccess"));
     } else {
@@ -152,16 +146,13 @@ export default function TTS() {
     setAudioList((res) => {
       return [params, ...res];
     });
-    await window.electron.ipcRenderer.invoke("TTS_CREATE", params);
-    const ttsList = await window.electron.ipcRenderer.invoke(
-      "GET_STORE",
-      "ttsList",
-    );
+    await window.ipcInvoke("TTS_CREATE", params);
+    const ttsList = await window.ipcInvoke("GET_STORE", "ttsList");
     setAudioList(ttsList);
   };
 
   const init = () => {
-    window.electron.ipcRenderer.invoke("GET_STORE", "ttsList").then((res) => {
+    window.ipcInvoke("GET_STORE", "ttsList").then((res) => {
       setAudioList(res);
     });
   };

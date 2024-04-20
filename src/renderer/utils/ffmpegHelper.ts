@@ -21,14 +21,20 @@ export const ffmpegObj2List = (ffmpegObj) => {
 };
 
 // 获取任务基本信息
-export const getTaskBaseInfo = async (
-  filePath: string,
-  outputType: string,
-  subFloder?: string,
-) => {
+export const getTaskBaseInfo = async ({
+  filePath,
+  outputType,
+  subFloder,
+}: {
+  filePath: string;
+  outputType?: string;
+  subFloder?: string;
+}) => {
   const oldFileName = filePath.split(separator).pop().split(".").shift();
-  const outputFileName = `${oldFileName}-${new Date().getTime()}.${outputType}`;
-  const outputFloaderPath = await window.electron.ipcRenderer.invoke(
+  const fileOutputType =
+    outputType || filePath.split("/").pop().split(".").pop();
+  const outputFileName = `${oldFileName}-${new Date().getTime()}.${fileOutputType}`;
+  const outputFloaderPath = await window.ipcInvoke(
     "GET_STORE",
     "defaultOutPath",
   );
@@ -40,7 +46,7 @@ export const getTaskBaseInfo = async (
       ? `${outputFloaderPath}${separator}${subFloder}`
       : outputFloaderPath,
     outputFileName,
-    outputType,
+    outputType: fileOutputType,
     createTime: new Date().getTime(),
     progress: 0,
   };
