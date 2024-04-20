@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ROUTERS } from "@siteMain/router/ROUTERS";
 import { ffmpegObj2List, getTaskBaseInfo } from "@renderer/utils/ffmpegHelper";
-import { fileSelectAccetps } from "@renderer/utils/fileHelper";
+import { fileSelectAccetps, formatFileSize } from "@renderer/utils/fileHelper";
 import {
   tableOriginFile,
   tableProgress,
@@ -17,6 +17,7 @@ import {
   DeleteRecordBtn,
 } from "@renderer/utils/tableHelper";
 import AppTableHeader from "@siteMain/components/AppTableHeader";
+import { render } from "react-dom";
 
 const SUB_FLODER_NAME = "compress";
 
@@ -26,6 +27,7 @@ const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
 
 export default function Compress() {
   const [filePath, setFilePath] = useState(null);
+  const [fileSize, setFileSize] = useState(null);
   const [showTypeModal, setShowTypeModal] = useState(false);
   const [compressList, setCompressList] = useState([]);
   const compressListRef = useRef(compressList);
@@ -36,6 +38,7 @@ export default function Compress() {
   const selectFile = async (e) => {
     if (e.file.originFileObj.path) {
       setFilePath(e.file.originFileObj.path);
+      setFileSize(e.file.originFileObj.size);
       setShowTypeModal(true);
     }
   };
@@ -47,24 +50,25 @@ export default function Compress() {
   };
 
   // 转码
-  const handleFile = async (outputType) => {
+  const handleFile = async (configData) => {
     setShowTypeModal(false);
-    const baseInfo = await getTaskBaseInfo(
+    console.log(configData);
+    const baseInfo = await getTaskBaseInfo({
       filePath,
-      outputType,
-      SUB_FLODER_NAME,
-    );
+      subFloder: SUB_FLODER_NAME,
+    });
+    console.log(baseInfo);
     const commandObj = {
       "-i": filePath,
+      "-b:v": configData.bitrate + "k",
+      // "-b:a": configData.audioBitrate,
+      "-r": configData.frameRate,
     };
-    if (outputType === "mp4") {
-      commandObj["-an"] = "-vcodec";
-      commandObj["copy"] = null;
-    }
     const command = ffmpegObj2List(commandObj);
     const params = {
       command: [...command],
       ...baseInfo,
+      originFileSize: fileSize,
       code: "compress",
     };
     changeCompressList([params, ...(compressListRef.current || [])]);
@@ -75,12 +79,16 @@ export default function Compress() {
     );
   };
 
-  // 转码进度
+  // 进度
   const onProgressChange = (e, data, taskId) => {
     changeCompressList([
       ...compressListRef.current?.map((item) => {
         if (item?.taskId === taskId) {
-          item.progress = data.progress;
+          item = {
+            ...item,
+            progress: data.progress,
+            outputFileSize: data.outputFileSize,
+          };
         }
         return item;
       }),
@@ -95,10 +103,18 @@ export default function Compress() {
   const columns = [
     tableOriginFile,
     {
-      title: t("siteMain.pages.compress.compressType"),
-      dataIndex: "outputType",
-      key: "outputType",
+      title: t("siteMain.pages.compress.originFileSize"),
+      dataIndex: "originFileSize",
+      key: "originFileSize",
       width: 160,
+      render: (text) => formatFileSize(text),
+    },
+    {
+      title: t("siteMain.pages.compress.compressFileSize"),
+      dataIndex: "outputFileSize",
+      key: "outputFileSize",
+      width: 160,
+      render: (text) => (text ? formatFileSize(text) : "-"),
     },
     tableProgress,
     tableCreateTime,
@@ -123,12 +139,13 @@ export default function Compress() {
     window.electron.ipcRenderer
       .invoke("GET_STORE", "compressList")
       .then((res) => {
+        console.log(res);
         changeCompressList(res);
       });
   };
 
   useEffect(() => {
-    if (pathname === ROUTERS.EXTRACT) {
+    if (pathname === ROUTERS.COMPRESS) {
       init();
     }
   }, [pathname]);

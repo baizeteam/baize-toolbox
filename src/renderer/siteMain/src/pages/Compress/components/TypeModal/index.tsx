@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalProps, Radio } from "antd";
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, ModalProps, Radio, Select, Slider } from "antd";
 import "./index.module.less";
 import { useTranslation } from "react-i18next";
+import { fileSelectAccetps, fpsList } from "@renderer/utils/fileHelper";
 import AppLoading from "@renderer/components/AppLoading";
-
-const options = [
-  { label: "提取视频", value: "mp4" },
-  { label: "提取音频", value: "mp3" },
-];
 
 interface ITypeModalProps extends Omit<ModalProps, "onOk"> {
   filePath: string;
@@ -16,15 +12,19 @@ interface ITypeModalProps extends Omit<ModalProps, "onOk"> {
 
 export default function TypeModal(props: ITypeModalProps) {
   const { filePath, onOk, open } = props;
-  const [value, setValue] = useState<string>(options[0].value);
   const [loading, setLoading] = useState<boolean>(false);
   const [fileInfo, setFileInfo] = useState<any>();
+  const [settingInfo, setSettingInfo] = useState<any>();
+
+  const settingInfoRef = useRef(settingInfo);
+
   const { t } = useTranslation();
 
   useEffect(() => {
     init();
   }, [open]);
 
+  // 初始化，获取视频信息
   const init = async () => {
     if (filePath && open) {
       setLoading(true);
@@ -34,37 +34,108 @@ export default function TypeModal(props: ITypeModalProps) {
       );
       console.log(res);
       setFileInfo(res);
+      changeSettingInfo({ frameRate: res.frameRate, bitrate: res.bitrate });
       setLoading(false);
     }
   };
 
-  const _handleChange = (e: any) => {
-    setValue(e.target.value);
+  // 改变设置信息
+  const changeSettingInfo = (obj) => {
+    const params = { ...settingInfoRef.current, ...obj };
+    settingInfoRef.current = params;
+    setSettingInfo(params);
   };
 
   // 确定
   const _handleOk = () => {
-    onOk(value);
+    onOk(settingInfo);
   };
+
+  const fpsOptions = fpsList.map((item) => {
+    return {
+      label: item + "fps",
+      value: item,
+      disabled: item > fileInfo?.frameRate,
+    };
+  });
 
   return (
     <Modal
       title={t("siteMain.pages.compress.typeModal.title")}
       {...props}
       onOk={_handleOk}
+      okButtonProps={{ disabled: loading || !settingInfo }}
     >
       <div>
         {loading ? (
           <AppLoading />
         ) : (
-          <div>
-            <div>比特率:{fileInfo?.bitrate}</div>
-            <div>时长:{fileInfo?.duration}</div>
-            <div>
-              视频尺寸:{fileInfo?.resolution?.width}x
-              {fileInfo?.resolution?.height}
-            </div>
-          </div>
+          <>
+            {fileSelectAccetps?.video.includes(filePath?.split(".").pop()) && (
+              <div styleName="video-info">
+                <div styleName="info">
+                  <div styleName="title">
+                    {t("siteMain.pages.compress.typeModal.infoTitle")}
+                  </div>
+                  <div styleName="content">
+                    <div>
+                      {t("commonText.bitrate")}:{fileInfo?.bitrate}
+                    </div>
+                    <div>
+                      {t("commonText.duration")}:{fileInfo?.duration}
+                    </div>
+                    <div>
+                      {t("commonText.fps")}:{fileInfo?.frameRate}
+                    </div>
+                    <div>
+                      {t("commonText.resolution")}:{fileInfo?.resolution?.width}
+                      x{fileInfo?.resolution?.height}
+                    </div>
+                  </div>
+                </div>
+
+                <div styleName="setting">
+                  <div styleName="title">
+                    {t("siteMain.pages.compress.typeModal.compressSetting")}
+                  </div>
+                  <div styleName="content">
+                    <div>
+                      {t("commonText.fps")}:
+                      <Select
+                        options={fpsOptions}
+                        defaultValue={fileInfo?.frameRate}
+                        onChange={(e) => {
+                          changeSettingInfo({ frameRate: e });
+                        }}
+                        size="small"
+                      />
+                    </div>
+                    <div>
+                      {t("commonText.bitrate")}:
+                      <div style={{ padding: "0 16px" }}>
+                        <Slider
+                          defaultValue={fileInfo?.bitrate}
+                          marks={{
+                            128: "128kbps",
+                            256: "256kbps",
+                            512: "512kbps",
+                            1024: "1Mbps",
+                            2048: "2Mbps",
+                            4096: "4Mbps",
+                          }}
+                          max={fileInfo?.bitrate}
+                          min={128}
+                          onChange={(e) => {
+                            changeSettingInfo({ bitrate: e });
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </Modal>
