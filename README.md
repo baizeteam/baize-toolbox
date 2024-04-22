@@ -26,6 +26,8 @@ $ pnpm install
 
 将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
 
+ps: 注意，阿里网盘中的linux/ffmpeg文件无法分享，因此需要更换为其他下载方式，或者自行到ffmpeg官网下载。
+
 ### 开发
 
 ```bash
