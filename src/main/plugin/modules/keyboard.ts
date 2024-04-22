@@ -12,14 +12,10 @@ let screenShotWin: BrowserWindow | null = null;
 app.whenReady().then(async () => {
   screenShotWin = await createWin({
     config: {
-      width: 800,
-      height: 600,
-      // frame: false,
-      minWidth: 300,
-      minHeight: 240,
+      frame: false,
       // resizable: false,
-      // transparent: true,
-      // alwaysOnTop: true,
+      transparent: true,
+      alwaysOnTop: true,
       show: false,
     },
     url: "/siteAssistTransprent/index.html#/screen-shot-win",

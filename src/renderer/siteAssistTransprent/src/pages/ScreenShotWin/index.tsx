@@ -11,7 +11,8 @@ export default function ScreenShotWin() {
   }, []);
 
   return (
-    <div className="screen-shot-win">
+    <div styleName="screen-shot-win">
+      <div styleName="mask"></div>
       {img && <img src={img} alt="screenshot" />}
     </div>
   );
