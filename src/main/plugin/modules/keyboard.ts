@@ -5,8 +5,28 @@ import {
   desktopCapturer,
   screen,
 } from "electron";
+import { createWin } from "../../helper";
+import { showCustomMenu } from "./MenuManger";
 
-app.whenReady().then(() => {
+let screenShotWin: BrowserWindow | null = null;
+app.whenReady().then(async () => {
+  screenShotWin = await createWin({
+    config: {
+      width: 800,
+      height: 600,
+      // frame: false,
+      minWidth: 300,
+      minHeight: 240,
+      // resizable: false,
+      // transparent: true,
+      // alwaysOnTop: true,
+      show: true,
+    },
+    url: "/siteAssistTransprent/index.html#/screen-shot-win",
+  });
+  screenShotWin.on("ready-to-show", () => {
+    showCustomMenu(screenShotWin);
+  });
   escape();
   registerScreenShot();
 });
@@ -15,6 +35,7 @@ app.whenReady().then(() => {
 const escape = () => {
   globalShortcut.register("Escape", () => {
     console.log("Escape is pressed");
+    screenShotWin.hide();
   });
 };
 
@@ -33,5 +54,11 @@ const registerScreenShot = () => {
       return source.display_id === String(display.id);
     });
     console.log(source);
+    screenShotWin.setBounds(display.bounds);
+    screenShotWin.show();
+    screenShotWin.webContents.send(
+      "GET_SCREEN_SHOT_IMG",
+      source.thumbnail.toDataURL(),
+    );
   });
 };
