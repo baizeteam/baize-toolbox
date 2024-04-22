@@ -20,7 +20,7 @@ app.whenReady().then(async () => {
       // resizable: false,
       // transparent: true,
       // alwaysOnTop: true,
-      show: true,
+      show: false,
     },
     url: "/siteAssistTransprent/index.html#/screen-shot-win",
   });
