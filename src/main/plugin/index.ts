@@ -1,4 +1,4 @@
-import "./modules/keyboard";
+// import "./modules/keyboard";
 import "./modules/baseConfig";
 import "./modules/ipcPenetrate";
 import "./modules/ipcFile";
