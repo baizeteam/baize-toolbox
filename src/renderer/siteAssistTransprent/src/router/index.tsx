@@ -7,6 +7,7 @@ import "./index.module.less";
 
 const RecordWin = lazy(() => import("../pages/RecordWin"));
 const ScreenShotWin = lazy(() => import("../pages/ScreenShotWin"));
+const ImageWin = lazy(() => import("../pages/ImageWin"));
 
 export default function BaseRouter() {
   return (
@@ -16,6 +17,7 @@ export default function BaseRouter() {
           <Route path={"/"}>
             <Route path={ROUTERS.RECODE_WIN} element={<RecordWin />} />
             <Route path={ROUTERS.SCREEN_SHOT_WIN} element={<ScreenShotWin />} />
+            <Route path={ROUTERS.IMAGE_WIN} element={<ImageWin />} />
           </Route>
         </Routes>
       </Suspense>

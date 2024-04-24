@@ -32,10 +32,33 @@ app.whenReady().then(async () => {
     showCustomMenu(screenShotWin);
   });
 
+  // 隐藏截图窗口
   ipcMain.handle("SCREEN_SHOT_WIN_HIDE", () => {
     hideScreenShotWin();
     return true;
   });
+
+  // 创建图片窗口
+  ipcMain.handle("SCREEN_SHOT_CREATE_IMAGE_WIN", async (event, data) => {
+    hideScreenShotWin();
+    const { display, cutInfo } = data;
+    const imageWin = await createWin({
+      config: {
+        frame: false,
+        transparent: true,
+        alwaysOnTop: true,
+        show: false,
+        x: display.bounds.x + cutInfo.startX,
+        y: display.bounds.y + cutInfo.startY,
+      },
+      url: "/siteAssistTransprent/index.html#/image-win",
+    });
+    imageWin.setSize(cutInfo.width, cutInfo.height);
+    imageWin.show();
+    console.log(imageWin.getSize());
+    return true;
+  });
+
   escape();
   registerScreenShot();
 });
@@ -73,6 +96,7 @@ const registerScreenShot = () => {
     screenShotWin.show();
     screenShotWin.webContents.send("GET_SCREEN_SHOT_STREAM", {
       source: source,
+      display: display,
     });
   });
 };

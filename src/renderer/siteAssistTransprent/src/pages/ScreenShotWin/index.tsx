@@ -30,15 +30,15 @@ export default function ScreenShotWin() {
   const screenShotRef = useRef<ScreenShot>(null);
   useEffect(() => {
     window.ipcOn("GET_SCREEN_SHOT_STREAM", async (event, data) => {
-      console.log(data);
-      const stream = await getStream(data.source);
+      const { display, source } = data;
+      const stream = await getStream(source);
       console.log(stream);
       screenShotRef.current = new ScreenShot({
         enableWebRtc: true, // 启用webrtc
         screenFlow: stream!, // 传入屏幕流数据
         level: 999,
-        completeCallback: () => {
-          window.ipcInvoke("SCREEN_SHOT_WIN_HIDE");
+        completeCallback: (e) => {
+          window.ipcInvoke("SCREEN_SHOT_CREATE_IMAGE_WIN", { ...e, display });
         },
         closeCallback: () => {
           window.ipcInvoke("SCREEN_SHOT_WIN_HIDE");
