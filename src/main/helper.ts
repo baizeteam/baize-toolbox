@@ -149,3 +149,19 @@ export function mainLogSend(data) {
     window.webContents.send("MAIN_LOG", data);
   });
 }
+
+// 进入全屏模式
+export function enterWinFullScreen(win: BrowserWindow) {
+  win.setVisibleOnAllWorkspaces(true, {
+    visibleOnFullScreen: true,
+  });
+  win.setSimpleFullScreen(true);
+}
+
+// 退出全屏模式
+export function exitWinFullScreen(win: BrowserWindow) {
+  win.setVisibleOnAllWorkspaces(false, {
+    visibleOnFullScreen: false,
+  });
+  win.setSimpleFullScreen(false);
+}
