@@ -55,9 +55,6 @@ app.whenReady().then(async () => {
       injectData: { base64 },
     });
     imageWin.setSize(cutInfo.width + 12, cutInfo.height + 12);
-    imageWin.webContents.on("context-menu", (e, params) => {
-      console.log(params);
-    });
     imageWin.show();
     return true;
   });
@@ -78,8 +75,6 @@ const registerScreenShot = () => {
   globalShortcut.register("Alt+S", async () => {
     const mousePoint = screen.getCursorScreenPoint();
     const display = screen.getDisplayNearestPoint(mousePoint);
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-    console.log(display, width, height);
     const sources = await desktopCapturer.getSources({
       types: ["screen"],
       thumbnailSize: display.size,
