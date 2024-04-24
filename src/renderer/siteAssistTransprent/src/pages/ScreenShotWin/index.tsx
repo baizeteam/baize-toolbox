@@ -37,6 +37,12 @@ export default function ScreenShotWin() {
         enableWebRtc: true, // 启用webrtc
         screenFlow: stream!, // 传入屏幕流数据
         level: 999,
+        completeCallback: () => {
+          window.ipcInvoke("SCREEN_SHOT_WIN_HIDE");
+        },
+        closeCallback: () => {
+          window.ipcInvoke("SCREEN_SHOT_WIN_HIDE");
+        },
       });
     });
   }, []);

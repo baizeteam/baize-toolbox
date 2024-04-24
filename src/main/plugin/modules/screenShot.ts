@@ -4,16 +4,24 @@ import {
   BrowserWindow,
   desktopCapturer,
   screen,
+  ipcMain,
 } from "electron";
 import { createWin } from "../../helper";
 import { showCustomMenu } from "./MenuManger";
 
 let screenShotWin: BrowserWindow | null = null;
+// 隐藏截图窗口
+const hideScreenShotWin = () => {
+  if (screenShotWin) {
+    screenShotWin.setSimpleFullScreen(false);
+    screenShotWin.hide();
+  }
+};
+
 app.whenReady().then(async () => {
   screenShotWin = await createWin({
     config: {
       frame: false,
-      // resizable: false,
       transparent: true,
       alwaysOnTop: true,
       show: false,
@@ -23,6 +31,11 @@ app.whenReady().then(async () => {
   screenShotWin.on("ready-to-show", () => {
     showCustomMenu(screenShotWin);
   });
+
+  ipcMain.handle("SCREEN_SHOT_WIN_HIDE", () => {
+    hideScreenShotWin();
+    return true;
+  });
   escape();
   registerScreenShot();
 });
@@ -31,8 +44,7 @@ app.whenReady().then(async () => {
 const escape = () => {
   globalShortcut.register("Escape", () => {
     console.log("Escape is pressed");
-    screenShotWin.setSimpleFullScreen(false);
-    screenShotWin.hide();
+    hideScreenShotWin();
   });
 };
 
