@@ -24,6 +24,7 @@
     "ajv": "^8.12.0",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.7",
+    "js-web-screen-shot": "1.9.9-rc.18",
     "lodash": "^4.17.21",
     "mobx-react": "^9.1.1",
     "nanoid": "^5.0.6",

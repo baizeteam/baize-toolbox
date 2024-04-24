@@ -14,6 +14,9 @@ dependencies:
   electron-updater:
     specifier: ^6.1.7
     version: 6.1.8
+  js-web-screen-shot:
+    specifier: 1.9.9-rc.18
+    version: 1.9.9-rc.18
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -42,7 +45,7 @@ devDependencies:
     version: 4.0.2(react@18.2.0)
   '@lobehub/tts':
     specifier: ^1.24.0
-    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.366.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
+    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.368.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
   '@types/node':
     specifier: ^18.19.5
     version: 18.19.28
@@ -1087,7 +1090,7 @@ packages:
     resolution: {integrity: sha512-s9KnjaPjsEefaNv150G3aifvB+J3P4eEKG+epY9zDPS2BeB6+V2jELWqAZll+nkogMaVovjEE813z3V751QwGw==}
     dev: true
 
-  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.366.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
+  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.368.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
     resolution: {integrity: sha512-1YXSdaY9P8kOEnTxgv/0JmUEvrxg4Uit61gfBN6z70ANzOQAIHVOx3KGjgxChjQsA36ZJtDabNybYyGBlKUeyw==}
     peerDependencies:
       '@lobehub/ui': '>=1'
@@ -1103,7 +1106,7 @@ packages:
       antd: 5.15.4(react-dom@18.2.0)(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.2.73)(antd@5.15.4)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.366.0(react@18.2.0)
+      lucide-react: 0.368.0(react@18.2.0)
       openai: 4.31.0
       query-string: 8.2.0
       react: 18.2.0
@@ -1157,7 +1160,7 @@ packages:
       immer: 10.0.4
       leva: 0.9.35(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.368.0(react@18.2.0)
+      lucide-react: 0.373.0(react@18.2.0)
       polished: 4.3.1
       prism-react-renderer: 2.3.1(react@18.2.0)
       query-string: 9.0.0
@@ -2616,6 +2619,11 @@ packages:
     resolution: {integrity: sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==}
     dev: true
 
+  /base64-arraybuffer@1.0.2:
+    resolution: {integrity: sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==}
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     requiresBuild: true
@@ -3085,6 +3093,12 @@ packages:
   /crypt@0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
     dev: true
+
+  /css-line-break@2.1.0:
+    resolution: {integrity: sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==}
+    dependencies:
+      utrie: 1.0.2
+    dev: false
 
   /css-modules-loader-core@1.1.0:
     resolution: {integrity: sha512-XWOBwgy5nwBn76aA+6ybUGL/3JBnCtBX9Ay9/OWIpzKYWlVHMazvJ+WtHumfi+xxdPF440cWK7JCYtt8xDifew==}
@@ -4272,6 +4286,14 @@ packages:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
     dev: true
 
+  /html2canvas@1.4.1:
+    resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      css-line-break: 2.1.0
+      text-segmentation: 1.0.3
+    dev: false
+
   /http-cache-semantics@4.1.1:
     resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
     dev: true
@@ -4644,6 +4666,12 @@ packages:
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
+  /js-web-screen-shot@1.9.9-rc.18:
+    resolution: {integrity: sha512-xuBbZZxON9ywdy7mQSBM8RFb2C9dZsEfS8eqcqOVi2GO+0jIaWxWGWhZmT+4F825f8cgcbxNSJAoLkjZ5Oxr/A==}
+    dependencies:
+      html2canvas: 1.4.1
+    dev: false
+
   /js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
@@ -4965,16 +4993,16 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-react@0.366.0(react@18.2.0):
-    resolution: {integrity: sha512-iUOsp/35wOkrgEzigZlZI/OhVxQZ8CmxjebdIjfSDzNBmrNYjQfKSpeKderaEFfGt3OycF1BE+wLlaqWRuoh4w==}
+  /lucide-react@0.368.0(react@18.2.0):
+    resolution: {integrity: sha512-soryVrCjheZs8rbXKdINw9B8iPi5OajBJZMJ1HORig89ljcOcEokKKAgGbg3QWxSXel7JwHOfDFUdDHAKyUAMw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
     dev: true
 
-  /lucide-react@0.368.0(react@18.2.0):
-    resolution: {integrity: sha512-soryVrCjheZs8rbXKdINw9B8iPi5OajBJZMJ1HORig89ljcOcEokKKAgGbg3QWxSXel7JwHOfDFUdDHAKyUAMw==}
+  /lucide-react@0.373.0(react@18.2.0):
+    resolution: {integrity: sha512-0kygFhk/DmK4mi+zf1t5mNStJQGaElACZdDdLiHOHFJzi7g3maC3SR86AcaUsxvDkZPId3XCd4vRngnjkPHu3Q==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -7663,6 +7691,12 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
+  /text-segmentation@1.0.3:
+    resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==}
+    dependencies:
+      utrie: 1.0.2
+    dev: false
+
   /throttle-debounce@5.0.0:
     resolution: {integrity: sha512-2iQTSgkkc1Zyk0MeVrt/3BvuOXYPl/R8Z0U2xxo9rjwNciaHDG3R+Lm6dh4EeUci49DanvBnuqI6jshoQQRGEg==}
     engines: {node: '>=12.22'}
@@ -7989,6 +8023,12 @@ packages:
     resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
     dependencies:
       inherits: 2.0.3
+    dev: false
+
+  /utrie@1.0.2:
+    resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==}
+    dependencies:
+      base64-arraybuffer: 1.0.2
     dev: false
 
   /uuid@9.0.1:

@@ -1,19 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./index.module.less";
+import ScreenShot from "js-web-screen-shot";
+
+const getStream = (source): Promise<MediaStream | null> => {
+  return new Promise((resolve, _reject) => {
+    // 获取指定窗口的媒体流
+    // 此处遵循的是webRTC的接口类型  暂时TS类型没有支持  只能断言成any
+    (navigator.mediaDevices as any)
+      .getUserMedia({
+        audio: false,
+        video: {
+          mandatory: {
+            chromeMediaSource: "desktop",
+            chromeMediaSourceId: source.id,
+          },
+        },
+      })
+      .then((stream: MediaStream) => {
+        resolve(stream);
+      })
+      .catch((error: any) => {
+        console.log(error);
+        resolve(null);
+      });
+  });
+};
 
 export default function ScreenShotWin() {
-  const [img, setImg] = useState<string>("");
+  const screenShotRef = useRef<ScreenShot>(null);
   useEffect(() => {
-    window.ipcOn("GET_SCREEN_SHOT_IMG", (event, data) => {
+    window.ipcOn("GET_SCREEN_SHOT_STREAM", async (event, data) => {
       console.log(data);
-      setImg(data);
+      const stream = await getStream(data.source);
+      console.log(stream);
+      screenShotRef.current = new ScreenShot({
+        enableWebRtc: true, // 启用webrtc
+        screenFlow: stream!, // 传入屏幕流数据
+        level: 999,
+      });
     });
   }, []);
 
-  return (
-    <div styleName="screen-shot-win">
-      <div styleName="mask"></div>
-      {img && <img src={img} alt="screenshot" />}
-    </div>
-  );
+  return <div styleName="screen-shot-win"></div>;
 }
