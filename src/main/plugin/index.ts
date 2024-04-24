@@ -1,9 +1,9 @@
-import "./modules/keyboard";
+import "./modules/screenShot";
 import "./modules/baseConfig";
 import "./modules/ipcPenetrate";
 import "./modules/ipcFile";
 import "./modules/ipcWin";
-import "./modules/ipcScreen";
+import "./modules/screenRecord";
 import "./modules/MenuManger";
 import "./modules/store";
 import "./modules/ffmpeg";

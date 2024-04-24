@@ -61,7 +61,7 @@ export default function RecordWin() {
 
   // 开始录屏
   const handleRecordStart = async () => {
-    const bounds = await window.ipcInvoke("SCREEN_GET_CURRENT_INFO");
+    const bounds = await window.ipcInvoke("SCREEN_RECORD_GET_CURRENT_INFO");
     setIsRecording(true);
     const contentBounds = contentRef.current.getBoundingClientRect();
     const screenArea = `${roundDownEven(contentBounds.width * bounds.scaleFactor)}x${roundDownEven(contentBounds.height * bounds.scaleFactor)}`;

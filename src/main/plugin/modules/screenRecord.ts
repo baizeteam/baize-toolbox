@@ -6,7 +6,7 @@ import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper";
 
 let ffmpegProcess = null;
 
-ipcMain.handle("SCREEN_GET_CURRENT_INFO", async (e, data) => {
+ipcMain.handle("SCREEN_RECORD_GET_CURRENT_INFO", async (e, data) => {
   const cur = BrowserWindow.fromWebContents(e.sender);
   const bounds = cur.getBounds();
   const currentDisplay = screen.getDisplayNearestPoint({
