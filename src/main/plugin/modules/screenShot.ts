@@ -49,6 +49,8 @@ const createImageWin = async (data) => {
     frame: false,
     transparent: true,
     alwaysOnTop: true,
+    hasShadow: false,
+    skipTaskbar: true,
     show: false,
   };
   if (x !== undefined && y !== undefined) {
