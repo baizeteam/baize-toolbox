@@ -8,3 +8,4 @@ import "./modules/MenuManger";
 import "./modules/store";
 import "./modules/ffmpeg";
 import "./modules/tts";
+import "./modules/tray";
