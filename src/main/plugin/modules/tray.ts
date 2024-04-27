@@ -1,32 +1,36 @@
 import { app, Tray, Menu, BrowserWindow } from "electron";
 import { is } from "@electron-toolkit/utils";
 import { join } from "path";
+import i18n from "../../i18n";
 
-// todo: 系统托盘i18n接入
-
+export let tray: Tray;
 // 系统托盘
 app.on("ready", () => {
-  const tray = new Tray(join(app.getAppPath(), "resources", "icon.png")); // 换成你的系统托盘图标的路径
+  tray = new Tray(join(app.getAppPath(), "resources", "icon.png"));
+  initTray(tray);
+});
+
+export const initTray = (tray) => {
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "主页",
+      label: i18n.t("tray.home"),
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/home");
       },
     },
     {
-      label: "设置",
+      label: i18n.t("tray.setting"),
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/setting");
       },
     },
-    { label: "退出", type: "normal", click: () => app.quit() },
+    { label: i18n.t("tray.exit"), type: "normal", click: () => app.quit() },
   ]);
-  tray.setToolTip("白泽工具箱"); // 鼠标悬停时的提示文本
+  tray.setToolTip(i18n.t("appTitle")); // 鼠标悬停时的提示文本
   tray.setContextMenu(contextMenu);
-});
+};
 
 // 找到指定id的窗口
 const findWindow = (customId: string) => {

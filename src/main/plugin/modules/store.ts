@@ -2,6 +2,8 @@ import ElectronStore from "electron-store";
 import { app, ipcMain, BrowserWindow } from "electron";
 import { queueStoreDelete } from "../../utils/storeHelper";
 import { electronReload, electronRestart } from "../../utils/reload";
+import i18n from "../../i18n";
+import { tray, initTray } from "./tray";
 
 export const store = new ElectronStore();
 const configIgnoreKeys = [
@@ -25,6 +27,11 @@ ipcMain.handle("GET_STORE", (_, key) => {
 ipcMain.handle("SET_STORE_RELOAD", (_, { key, value, code }) => {
   store.set(key, value);
   const allWindows = BrowserWindow.getAllWindows();
+  if (key === "i18n") {
+    // 如果是语言切换，则需要重新初始化托盘图标
+    i18n.changeLanguage(value);
+    initTray(tray);
+  }
   allWindows.forEach((window) => {
     electronReload();
     // window.webContents.send(`STORE_${code}_CHANGE`);
