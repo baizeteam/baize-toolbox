@@ -11,6 +11,9 @@ let loadingWin: BrowserWindow
 const a = {
   测试: "git-hook + prettier"
 }
+const b = {
+  测试: "git-hook + prettier"
+}
 export enum START_STATUS {
   pedding = "pedding",
   success = "success",
