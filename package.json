@@ -6,7 +6,8 @@
   "author": "xiaoyu@sulg.top",
   "homepage": "https://electron-vite.org",
   "scripts": {
-    "format": "prettier --write .",
+    "format": "prettier --write . .prettierrc",
+    "husky": "husky install",
     "lint-staged": "lint-staged",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
@@ -28,7 +29,7 @@
     "node": ">=16.16.0"
   },
   "lint-staged": {
-    "src/**/*": "prettier --write"
+    "src/**/*.{js,ts,jsx,tsx,json}": "prettier --write"
   },
   "dependencies": {
     "ajv": "^8.12.0",

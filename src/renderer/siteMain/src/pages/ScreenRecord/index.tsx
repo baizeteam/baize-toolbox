@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react"
+import { Table } from "antd"
+import { useTranslation } from "react-i18next"
 import {
   tableFile,
   tableCreateTime,
   OpenFileBtn,
   OpenFolderBtn,
-  DeleteRecordBtn,
-} from "@renderer/utils/tableHelper";
-import AppTableHeader from "@siteMain/components/AppTableHeader";
-import { VideoCameraOutlined } from "@ant-design/icons";
-import "./index.module.less";
+  DeleteRecordBtn
+} from "@renderer/utils/tableHelper"
+import AppTableHeader from "@siteMain/components/AppTableHeader"
+import { VideoCameraOutlined } from "@ant-design/icons"
+import "./index.module.less"
 
 export default function ScreenRecord() {
-  const [screenRecordList, setScreenRecordList] = useState([]);
-  const { t } = useTranslation();
+  const [screenRecordList, setScreenRecordList] = useState([])
+  const { t } = useTranslation()
   const openScreenRecordWin = () => {
-    window.ipcSend("OPEN_RECORD_WIN");
-  };
+    window.ipcSend("OPEN_RECORD_WIN")
+  }
 
   const columns = [
     tableFile,
@@ -25,7 +25,7 @@ export default function ScreenRecord() {
       title: t("siteMain.pages.screenRecord.createType"),
       dataIndex: "createType",
       key: "createType",
-      width: 160,
+      width: 160
     },
     tableCreateTime,
     {
@@ -40,26 +40,24 @@ export default function ScreenRecord() {
             <OpenFolderBtn record={record} />
             <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
-        );
-      },
-    },
-  ];
+        )
+      }
+    }
+  ]
 
   const init = async () => {
-    const res = await window.ipcInvoke("GET_STORE", "screenRecordList");
-    console.log(res);
-    setScreenRecordList(res);
-  };
+    const res = await window.ipcInvoke("GET_STORE", "screenRecordList")
+    console.log(res)
+    setScreenRecordList(res)
+  }
 
   useEffect(() => {
-    init();
-    window.ipcOn("SCREEN_RECORD_DATA_CHANGE", init);
+    init()
+    window.ipcOn("SCREEN_RECORD_DATA_CHANGE", init)
     return () => {
-      window.electron.ipcRenderer.removeAllListeners(
-        "SCREEN_RECORD_DATA_CHANGE",
-      );
-    };
-  }, []);
+      window.electron.ipcRenderer.removeAllListeners("SCREEN_RECORD_DATA_CHANGE")
+    }
+  }, [])
   return (
     <div styleName="screen-record" className="common-content">
       {/* <AppFunctionDev /> */}
@@ -67,9 +65,7 @@ export default function ScreenRecord() {
         <div styleName="icon">
           <VideoCameraOutlined />
         </div>
-        <p className="ant-upload-text">
-          {t("siteMain.pages.screenRecord.createBtn")}
-        </p>
+        <p className="ant-upload-text">{t("siteMain.pages.screenRecord.createBtn")}</p>
       </div>
       <AppTableHeader
         title={"siteMain.pages.screenRecord.tableTitle"}
@@ -83,5 +79,5 @@ export default function ScreenRecord() {
         pagination={{ pageSize: 5, total: screenRecordList.length }}
       />
     </div>
-  );
+  )
 }

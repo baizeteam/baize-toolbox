@@ -1,75 +1,68 @@
-import React, { useState, useMemo, useEffect } from "react";
-import "./index.module.less";
-import { Button, Input, Table, Cascader, message, Divider } from "antd";
-import type { TableProps } from "antd";
-import { nanoid } from "nanoid";
-import { EdgeSpeechTTS } from "@lobehub/tts";
-import AudioPlay from "@renderer/components/AudioPlay";
-import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-import {
-  tableText,
-  tableCreateTime,
-  DeleteRecordBtn,
-} from "@renderer/utils/tableHelper";
-import { separator } from "@renderer/utils/fileHelper";
-import AppTableHeader from "@siteMain/components/AppTableHeader";
+import React, { useState, useMemo, useEffect } from "react"
+import "./index.module.less"
+import { Button, Input, Table, Cascader, message, Divider } from "antd"
+import type { TableProps } from "antd"
+import { nanoid } from "nanoid"
+import { EdgeSpeechTTS } from "@lobehub/tts"
+import AudioPlay from "@renderer/components/AudioPlay"
+import { useTranslation } from "react-i18next"
+import { useLocation } from "react-router-dom"
+import { tableText, tableCreateTime, DeleteRecordBtn } from "@renderer/utils/tableHelper"
+import { separator } from "@renderer/utils/fileHelper"
+import AppTableHeader from "@siteMain/components/AppTableHeader"
 
 enum EStatus {
   pending = "pending",
   success = "success",
-  error = "error",
+  error = "error"
 }
 
-const SUB_FLODER_NAME = "tts";
+const SUB_FLODER_NAME = "tts"
 
 interface IAudioItem {
-  taskId: string;
-  voice: string;
-  text: string;
-  url: string;
-  createTime: number;
-  status: EStatus;
+  taskId: string
+  voice: string
+  text: string
+  url: string
+  createTime: number
+  status: EStatus
 }
 
 const base64ToBlob = (base64: string) => {
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
+  const binaryString = atob(base64)
+  const bytes = new Uint8Array(binaryString.length)
   for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+    bytes[i] = binaryString.charCodeAt(i)
   }
-  let blob = new Blob([bytes], { type: "audio/mp3" });
-  const url = URL.createObjectURL(blob);
-  return url;
-};
+  let blob = new Blob([bytes], { type: "audio/mp3" })
+  const url = URL.createObjectURL(blob)
+  return url
+}
 
 export default function TTS() {
-  const [value, setValue] = useState("如果你也喜欢这个项目就点个star吧");
-  const [voiceSelect, setVoiceSelect] = useState<string[]>([
-    "zh-CN",
-    "zh-CN-XiaoxiaoNeural",
-  ]);
-  const [audioList, setAudioList] = useState<IAudioItem[]>([]);
-  const { t } = useTranslation();
-  const { pathname } = useLocation();
+  const [value, setValue] = useState("如果你也喜欢这个项目就点个star吧")
+  const [voiceSelect, setVoiceSelect] = useState<string[]>(["zh-CN", "zh-CN-XiaoxiaoNeural"])
+  const [audioList, setAudioList] = useState<IAudioItem[]>([])
+  const { t } = useTranslation()
+  const { pathname } = useLocation()
 
   // 下载语音
   const downLoadTTS = async (record) => {
-    console.log(record);
-    const outputPath = await window.ipcInvoke("GET_STORE", "defaultOutPath");
-    const filePath = `${outputPath}${separator}${SUB_FLODER_NAME}`;
+    console.log(record)
+    const outputPath = await window.ipcInvoke("GET_STORE", "defaultOutPath")
+    const filePath = `${outputPath}${separator}${SUB_FLODER_NAME}`
     const res = await window.ipcInvoke("WIN_DOWNLOAD_BASE64", {
       base64: record.url,
       fileName: `${record.createTime}-${nanoid(8)}.mp3`,
-      filePath,
-    });
+      filePath
+    })
     if (res === true) {
-      message.success(t("commonText.downloadSuccess"));
+      message.success(t("commonText.downloadSuccess"))
     } else {
-      message.error(t("commonText.downloadErroe"));
-      console.log(res);
+      message.error(t("commonText.downloadErroe"))
+      console.log(res)
     }
-  };
+  }
 
   const columns = [
     tableText,
@@ -79,15 +72,15 @@ export default function TTS() {
       width: 120,
       key: "url",
       render: (url: string) => {
-        return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。";
-      },
+        return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。"
+      }
     },
     {
       title: t("commonText.vocalLine"),
       dataIndex: "voice",
       key: "voice",
       width: 160,
-      render: (voice: string) => EdgeSpeechTTS.voiceName[voice],
+      render: (voice: string) => EdgeSpeechTTS.voiceName[voice]
     },
     tableCreateTime,
     {
@@ -108,10 +101,10 @@ export default function TTS() {
             </Button>
             <DeleteRecordBtn record={record} callback={init} />
           </>
-        );
-      },
-    },
-  ];
+        )
+      }
+    }
+  ]
 
   const options = useMemo(() => {
     return Object.keys(EdgeSpeechTTS.voiceList).map((item) => {
@@ -121,19 +114,19 @@ export default function TTS() {
         children: EdgeSpeechTTS.voiceList[item].map((voice) => {
           return {
             value: voice,
-            label: EdgeSpeechTTS.voiceName[voice],
-          };
-        }),
-      };
-    });
-  }, []);
+            label: EdgeSpeechTTS.voiceName[voice]
+          }
+        })
+      }
+    })
+  }, [])
 
   const createTTS = async () => {
     if (!value) {
-      message.error("请输入文本");
-      return;
+      message.error("请输入文本")
+      return
     }
-    const taskId = nanoid(16);
+    const taskId = nanoid(16)
     const params = {
       taskId,
       text: value,
@@ -141,25 +134,25 @@ export default function TTS() {
       url: null,
       createTime: Date.now(),
       status: EStatus.pending,
-      code: "tts",
-    };
+      code: "tts"
+    }
     setAudioList((res) => {
-      return [params, ...res];
-    });
-    await window.ipcInvoke("TTS_CREATE", params);
-    const ttsList = await window.ipcInvoke("GET_STORE", "ttsList");
-    setAudioList(ttsList);
-  };
+      return [params, ...res]
+    })
+    await window.ipcInvoke("TTS_CREATE", params)
+    const ttsList = await window.ipcInvoke("GET_STORE", "ttsList")
+    setAudioList(ttsList)
+  }
 
   const init = () => {
     window.ipcInvoke("GET_STORE", "ttsList").then((res) => {
-      setAudioList(res);
-    });
-  };
+      setAudioList(res)
+    })
+  }
 
   useEffect(() => {
-    init();
-  }, [pathname]);
+    init()
+  }, [pathname])
 
   return (
     <div styleName="tts" className="common-content">
@@ -169,13 +162,13 @@ export default function TTS() {
         count={{
           max: 200,
           exceedFormatter: (value, config) => {
-            return value.slice(0, config.max);
-          },
+            return value.slice(0, config.max)
+          }
         }}
         onChange={(e) => setValue(e.target.value)}
         autoSize={{
           minRows: 5,
-          maxRows: 5,
+          maxRows: 5
         }}
       />
       <div styleName="action">
@@ -207,5 +200,5 @@ export default function TTS() {
         />
       </div>
     </div>
-  );
+  )
 }
