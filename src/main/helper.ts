@@ -1,20 +1,20 @@
-import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions } from 'electron'
-import { join } from 'path'
-import { is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
-import { showCustomMenu } from './plugin/modules/MenuManger'
-import { InjectData } from './utils/inject'
-import { getSystemInfo } from './utils/systemHelper'
+import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions } from "electron"
+import { join } from "path"
+import { is } from "@electron-toolkit/utils"
+import icon from "../../resources/icon.png?asset"
+import { showCustomMenu } from "./plugin/modules/MenuManger"
+import { InjectData } from "./utils/inject"
+import { getSystemInfo } from "./utils/systemHelper"
 
 let mainWindow: BrowserWindow
 let loadingWin: BrowserWindow
 const a = {
-  测试: 'git-hook + prettier'
+  测试: "git-hook + prettier"
 }
 export enum START_STATUS {
-  pedding = 'pedding',
-  success = 'success',
-  fail = 'fail'
+  pedding = "pedding",
+  success = "success",
+  fail = "fail"
 }
 const mainWinStart = {
   web: START_STATUS.pedding,
@@ -56,17 +56,17 @@ export function createloadingWin() {
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
-      preload: join(__dirname, '../preload/index.js')
+      preload: join(__dirname, "../preload/index.js")
     }
   })
 
-  initWinUrl(loadingWin, '/siteElectronLoading/index.html')
+  initWinUrl(loadingWin, "/siteElectronLoading/index.html")
 }
 
 // 加载的url
 export function initWinUrl(win: BrowserWindow, url: string) {
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}${url}`)
+  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+    win.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}${url}`)
   } else {
     win.loadFile(join(__dirname, `../renderer${url}`))
   }
@@ -84,9 +84,9 @@ export async function createWin({ config, url, injectData }: ICreateWin): Promis
       nodeIntegration: true,
       sandbox: false,
       webSecurity: false,
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, "../preload/index.js"),
       experimentalFeatures: true,
-      enableBlinkFeatures: 'MediaStreamTrack.getDisplayMedia'
+      enableBlinkFeatures: "MediaStreamTrack.getDisplayMedia"
     },
     ...config
   })
@@ -111,19 +111,19 @@ export async function createMainWin(): Promise<void> {
       minHeight: 600,
       autoHideMenuBar: true,
       frame: false,
-      ...(process.platform === 'linux' ? { icon } : {})
+      ...(process.platform === "linux" ? { icon } : {})
     },
-    url: '/siteMain/index.html'
+    url: "/siteMain/index.html"
   })
-  mainWindow['customId'] = 'main'
-  mainWindow.on('ready-to-show', () => {
+  mainWindow["customId"] = "main"
+  mainWindow.on("ready-to-show", () => {
     showCustomMenu(mainWindow)
   })
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
-    return { action: 'deny' }
+    return { action: "deny" }
   })
-  mainWindow.webContents.on('did-start-loading', () => {
+  mainWindow.webContents.on("did-start-loading", () => {
     if (!loadingWin) {
       createloadingWin()
     }
@@ -131,7 +131,7 @@ export async function createMainWin(): Promise<void> {
       loadingWin.show()
     }
   })
-  mainWindow.webContents.on('did-stop-loading', () => {
+  mainWindow.webContents.on("did-stop-loading", () => {
     if (loadingWin && mainWinStart.web !== START_STATUS.success) {
       setTimeout(() => {
         mainWinStartProxy.web = START_STATUS.success
@@ -144,7 +144,7 @@ export async function createMainWin(): Promise<void> {
 export function mainLogSend(data) {
   const allWindows = BrowserWindow.getAllWindows()
   allWindows.forEach((window) => {
-    window.webContents.send('MAIN_LOG', data)
+    window.webContents.send("MAIN_LOG", data)
   })
 }
 
