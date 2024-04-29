@@ -13,6 +13,8 @@ import { getSystemInfo } from "./utils/systemHelper";
 
 let mainWindow: BrowserWindow;
 let loadingWin: BrowserWindow;
+const a = { '测试':'git-hook + prettier'
+}
 export enum START_STATUS {
   pedding = "pedding",
   success = "success",
@@ -38,9 +40,13 @@ export function onMainWinStartChange() {
     }
   });
   if (tag) {
+    // console.log('loading hide')
     mainWindow.show();
     loadingWin.hide();
+  }else{
+    // console.log('loading...')
   }
+  // console.log(mainWinStartProxy, 'mainWinStartProxy')
 }
 
 export function createloadingWin() {
