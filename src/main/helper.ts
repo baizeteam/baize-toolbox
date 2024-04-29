@@ -13,7 +13,8 @@ import { getSystemInfo } from "./utils/systemHelper";
 
 let mainWindow: BrowserWindow;
 let loadingWin: BrowserWindow;
-const a = { '测试':'git-hook + prettier'
+const a = {
+  '测试':                         'git-hook + prettier'
 }
 export enum START_STATUS {
   pedding = "pedding",
