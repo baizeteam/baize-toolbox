@@ -29,9 +29,7 @@ export const tableOriginFile = {
   dataIndex: "inputFilePath",
   key: "inputFilePath",
   width: 240,
-  render: (inputFilePath) => (
-    <EllipsisTextControl content={inputFilePath} width={200} type="single" />
-  )
+  render: (inputFilePath) => <EllipsisTextControl content={inputFilePath} width={200} type="single" />
 }
 
 //
@@ -85,11 +83,7 @@ export const OpenFolderBtn = (props: ITableBtnProps) => {
   const { record } = props
   const { t } = useTranslation()
   return (
-    <Button
-      onClick={() => openFolder(record.outputFloaderPath)}
-      type="link"
-      className="common-table-link-btn"
-    >
+    <Button onClick={() => openFolder(record.outputFloaderPath)} type="link" className="common-table-link-btn">
       {t("commonText.openFolder")}
     </Button>
   )
@@ -121,9 +115,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
       })
       res ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     } else {
-      recordDeleteRes
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"))
+      recordDeleteRes ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     }
     callback()
   }

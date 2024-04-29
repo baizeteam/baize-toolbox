@@ -20,9 +20,7 @@ import {
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 
 const SUB_FLODER_NAME = "transcode"
-const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
-  .map((item) => `.${item}`)
-  .join(",")
+const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map((item) => `.${item}`).join(",")
 
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null)
@@ -67,9 +65,7 @@ export default function Transcode() {
     }
     changeTranscodeList([params, ...(transcodeListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
-    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) =>
-      onProgressChange(e, data, baseInfo.taskId)
-    )
+    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
   }
 
   // 转码进度
@@ -140,11 +136,7 @@ export default function Transcode() {
         rowKey={"taskId"}
         pagination={{ pageSize: 5, total: transcodeList.length }}
       />
-      <TranscodeTypeModal
-        open={showTypeModal}
-        onCancel={() => setShowTypeModal(false)}
-        onOk={handleFile}
-      />
+      <TranscodeTypeModal open={showTypeModal} onCancel={() => setShowTypeModal(false)} onOk={handleFile} />
     </div>
   )
 }

@@ -27,14 +27,7 @@ export default function AudioPlay({ src }: AudioPlayProps) {
 
   return (
     <div styleName="audio-play" onClick={changePlay}>
-      <audio
-        src={src}
-        controls
-        ref={audioRef}
-        onPlay={onPlay}
-        onPause={onEnded}
-        onEnded={onEnded}
-      />
+      <audio src={src} controls ref={audioRef} onPlay={onPlay} onPause={onEnded} onEnded={onEnded} />
       <div styleName="audio-content">
         <div styleName={`bg${isPlaying ? " voice-play" : ""}`}></div>
       </div>

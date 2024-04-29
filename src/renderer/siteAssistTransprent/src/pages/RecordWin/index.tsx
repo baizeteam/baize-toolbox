@@ -30,9 +30,7 @@ function roundDownEven(num) {
 
 export default function RecordWin() {
   const [isRecording, setIsRecording] = useState(false)
-  const [fileType, setFileType] = useState(
-    localStorage.getItem("recordFormatValue") || fileTypeOptions[0].value
-  )
+  const [fileType, setFileType] = useState(localStorage.getItem("recordFormatValue") || fileTypeOptions[0].value)
   const [fps, setFps] = useState(localStorage.getItem("recordFpsValue") || fpsOptions[0].value)
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -121,17 +119,9 @@ export default function RecordWin() {
       <div styleName="footer">
         <div styleName="left">
           {isRecording ? (
-            <AppIcon
-              styleName="not-drag record-btn"
-              icon="#baize-lianxi2hebing-15"
-              onClick={handleRecordStop}
-            />
+            <AppIcon styleName="not-drag record-btn" icon="#baize-lianxi2hebing-15" onClick={handleRecordStop} />
           ) : (
-            <AppIcon
-              styleName="not-drag record-btn"
-              icon="#baize-kaishi"
-              onClick={handleRecordStart}
-            />
+            <AppIcon styleName="not-drag record-btn" icon="#baize-kaishi" onClick={handleRecordStart} />
           )}
         </div>
         <div styleName="right">

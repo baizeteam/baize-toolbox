@@ -24,10 +24,7 @@ function App() {
         <Button type="link" onClick={openOfficialWebsite}>
           {t("siteMain.pages.home.officialWebsite")}
         </Button>
-        <Button
-          type="link"
-          onClick={() => window.open("https://github.com/baizeteam/baize-toolbox")}
-        >
+        <Button type="link" onClick={() => window.open("https://github.com/baizeteam/baize-toolbox")}>
           Github
         </Button>
       </div>

@@ -26,10 +26,7 @@ export default function AppHeader() {
           window.ipcSend("WIN_MINIMIZE")
         }}
       />
-      <AppIcon
-        icon={isMaximized ? "#baize-zuidahua" : "#baize-zuidahua1"}
-        onClick={handleWinMaximize}
-      />
+      <AppIcon icon={isMaximized ? "#baize-zuidahua" : "#baize-zuidahua1"} onClick={handleWinMaximize} />
       <AppIcon
         icon="#baize-guanbi"
         onClick={() => {

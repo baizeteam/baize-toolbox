@@ -20,9 +20,7 @@ import AppTableHeader from "@siteMain/components/AppTableHeader"
 
 const SUB_FLODER_NAME = "extract"
 
-const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio]
-  .map((item) => `.${item}`)
-  .join(",")
+const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map((item) => `.${item}`).join(",")
 
 export default function Extract() {
   const [filePath, setFilePath] = useState(null)
@@ -69,9 +67,7 @@ export default function Extract() {
     }
     changeExtractList([params, ...(extractListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
-    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) =>
-      onProgressChange(e, data, baseInfo.taskId)
-    )
+    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
   }
 
   // 转码进度

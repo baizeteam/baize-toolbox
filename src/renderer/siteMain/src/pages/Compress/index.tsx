@@ -72,9 +72,7 @@ export default function Compress() {
     }
     changeCompressList([params, ...(compressListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
-    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) =>
-      onProgressChange(e, data, baseInfo.taskId)
-    )
+    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
   }
 
   // 进度
@@ -158,12 +156,7 @@ export default function Compress() {
         rowKey={"taskId"}
         pagination={{ pageSize: 5, total: compressList.length }}
       />
-      <TypeModal
-        filePath={filePath}
-        open={showTypeModal}
-        onCancel={() => setShowTypeModal(false)}
-        onOk={handleFile}
-      />
+      <TypeModal filePath={filePath} open={showTypeModal} onCancel={() => setShowTypeModal(false)} onOk={handleFile} />
     </div>
   )
 }

@@ -162,9 +162,7 @@ app.on("ready", () => {
       }
       const durationMatch = line.match(/Duration: (\d{2}):(\d{2}):(\d{2})/)
       if (durationMatch) {
-        videoInfo.duration = convertTimeToSeconds(
-          `${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`
-        )
+        videoInfo.duration = convertTimeToSeconds(`${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`)
       }
     })
 

@@ -187,11 +187,7 @@ export default function TTS() {
       </div>
       <Divider />
       <div>
-        <AppTableHeader
-          title={"siteMain.pages.TTS.tableTitle"}
-          valueKey="ttsList"
-          onClean={() => setAudioList([])}
-        />
+        <AppTableHeader title={"siteMain.pages.TTS.tableTitle"} valueKey="ttsList" onClean={() => setAudioList([])} />
         <Table
           columns={columns}
           dataSource={audioList}

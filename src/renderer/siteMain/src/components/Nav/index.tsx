@@ -47,11 +47,7 @@ const Nav: React.FC = () => {
     getItem(t("siteMain.components.nav.transcode"), ROUTERS.TRANSCODE, <NodeExpandOutlined />),
     getItem(t("siteMain.components.nav.extract"), ROUTERS.EXTRACT, <ContainerOutlined />),
     getItem(t("siteMain.components.nav.TTS"), ROUTERS.TTS, <AudioOutlined />),
-    getItem(
-      t("siteMain.components.nav.screenRecord"),
-      ROUTERS.SCREEN_RECORD,
-      <VideoCameraOutlined />
-    ),
+    getItem(t("siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />),
     getItem(t("siteMain.components.nav.screenShot"), ROUTERS.SCREEN_SHOT, <PictureOutlined />),
     getItem(t("siteMain.components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
     getItem(t("siteMain.components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />)

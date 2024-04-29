@@ -38,9 +38,7 @@ export const getTaskBaseInfo = async ({
   return {
     taskId,
     inputFilePath: filePath,
-    outputFloaderPath: subFloder
-      ? `${outputFloaderPath}${separator}${subFloder}`
-      : outputFloaderPath,
+    outputFloaderPath: subFloder ? `${outputFloaderPath}${separator}${subFloder}` : outputFloaderPath,
     outputFileName,
     outputType: fileOutputType,
     createTime: new Date().getTime(),

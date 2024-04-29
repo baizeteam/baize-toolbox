@@ -122,10 +122,7 @@ const EllipsisTextControl = ({
         setShowLastEllipsis(true)
         return
       }
-      ellipsisInput.innerHTML = `${trueContentText.slice(
-        0,
-        maxLength - 3 > 0 ? maxLength - 3 : 1
-      )}...`
+      ellipsisInput.innerHTML = `${trueContentText.slice(0, maxLength - 3 > 0 ? maxLength - 3 : 1)}...`
       handleHidePopupTip(false)
       return
     } else {

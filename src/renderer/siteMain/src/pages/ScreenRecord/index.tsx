@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Table } from "antd"
 import { useTranslation } from "react-i18next"
-import {
-  tableFile,
-  tableCreateTime,
-  OpenFileBtn,
-  OpenFolderBtn,
-  DeleteRecordBtn
-} from "@renderer/utils/tableHelper"
+import { tableFile, tableCreateTime, OpenFileBtn, OpenFolderBtn, DeleteRecordBtn } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 import { VideoCameraOutlined } from "@ant-design/icons"
 import "./index.module.less"

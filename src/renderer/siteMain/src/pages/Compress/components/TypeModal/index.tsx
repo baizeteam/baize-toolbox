@@ -88,16 +88,13 @@ export default function TypeModal(props: ITypeModalProps) {
                       {t("commonText.fps")}:{fileInfo?.frameRate}
                     </div>
                     <div>
-                      {t("commonText.resolution")}:{fileInfo?.resolution?.width}x
-                      {fileInfo?.resolution?.height}
+                      {t("commonText.resolution")}:{fileInfo?.resolution?.width}x{fileInfo?.resolution?.height}
                     </div>
                   </div>
                 </div>
 
                 <div styleName="setting">
-                  <div styleName="title">
-                    {t("siteMain.pages.compress.typeModal.compressSetting")}
-                  </div>
+                  <div styleName="title">{t("siteMain.pages.compress.typeModal.compressSetting")}</div>
                   <div styleName="content">
                     <div>
                       {t("commonText.fps")}:
