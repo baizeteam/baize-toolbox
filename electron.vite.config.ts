@@ -1,11 +1,11 @@
-import { resolve } from "path";
-import { defineConfig, externalizeDepsPlugin } from "electron-vite";
-import react from "@vitejs/plugin-react";
-import reactCssModule from "vite-plugin-react-css-modules";
-import genericNames from "generic-names";
-import autoprefixer from "autoprefixer";
+import { resolve } from "path"
+import { defineConfig, externalizeDepsPlugin } from "electron-vite"
+import react from "@vitejs/plugin-react"
+import reactCssModule from "vite-plugin-react-css-modules"
+import genericNames from "generic-names"
+import autoprefixer from "autoprefixer"
 
-const generateScopedName = genericNames("[name]__[local]__[hash:base64:4]");
+const generateScopedName = genericNames("[name]__[local]__[hash:base64:4]")
 
 export default defineConfig({
   main: {
@@ -20,9 +20,7 @@ export default defineConfig({
         "@renderer": resolve("src/renderer"),
         "@siteMain": resolve("src/renderer/siteMain/src"),
         "@siteAssistOpaque": resolve("src/renderer/siteAssistOpaque/src"),
-        "@siteAssistTransprent": resolve(
-          "src/renderer/siteAssistTransprent/src",
-        ),
+        "@siteAssistTransprent": resolve("src/renderer/siteAssistTransprent/src"),
         "@siteElectronLoading": resolve("src/renderer/siteElectronLoading/src"),
       },
     },
@@ -57,18 +55,9 @@ export default defineConfig({
       rollupOptions: {
         input: {
           siteMain: resolve(__dirname, "src/renderer/siteMain/index.html"),
-          siteAssistTransprent: resolve(
-            __dirname,
-            "src/renderer/siteAssistTransprent/index.html",
-          ),
-          siteAssistOpaque: resolve(
-            __dirname,
-            "src/renderer/siteAssistOpaque/index.html",
-          ),
-          siteElectronLoading: resolve(
-            __dirname,
-            "src/renderer/siteElectronLoading/index.html",
-          ),
+          siteAssistTransprent: resolve(__dirname, "src/renderer/siteAssistTransprent/index.html"),
+          siteAssistOpaque: resolve(__dirname, "src/renderer/siteAssistOpaque/index.html"),
+          siteElectronLoading: resolve(__dirname, "src/renderer/siteElectronLoading/index.html"),
         },
         output: {
           manualChunks: {
@@ -81,4 +70,4 @@ export default defineConfig({
       },
     },
   },
-});
+})
