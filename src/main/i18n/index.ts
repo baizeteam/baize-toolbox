@@ -1,13 +1,10 @@
 import i18n from "i18next"
-import { initReactI18next } from "react-i18next"
-
 import enUS from "./modules/en_US.json"
 import zhCN from "./modules/zh_CN.json"
+import { app } from "electron"
+import { store } from "../plugin/modules/store"
 
-import antdzhCN from "antd/locale/zh_CN"
-import antdenUS from "antd/locale/en_US"
-
-i18n.use(initReactI18next).init({
+i18n.init({
   resources: {
     enUS: {
       translation: enUS,
@@ -23,9 +20,8 @@ i18n.use(initReactI18next).init({
   },
 })
 
-export const antdLocale = {
-  enUS: antdenUS,
-  zhCN: antdzhCN,
-}
+app.on("ready", () => {
+  i18n.changeLanguage((store.get("i18n") as string) || "zhCN")
+})
 
 export default i18n

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { lazy, Suspense } from "react";
-import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
-import { ROUTERS } from "./ROUTERS";
-import "./index.module.less";
+import React, { useEffect } from "react"
+import { lazy, Suspense } from "react"
+import { Routes, Route, HashRouter, Navigate } from "react-router-dom"
+import { ROUTERS } from "./ROUTERS"
+import "./index.module.less"
 
 export default function BaseRouter() {
   return (
@@ -13,5 +13,5 @@ export default function BaseRouter() {
         </Routes>
       </Suspense>
     </HashRouter>
-  );
+  )
 }

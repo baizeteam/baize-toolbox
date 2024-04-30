@@ -1,27 +1,25 @@
-import React from "react";
-import { InboxOutlined } from "@ant-design/icons";
-import { Upload, UploadProps } from "antd";
-import { useTranslation } from "react-i18next";
-import "./index.module.less";
+import React from "react"
+import { InboxOutlined } from "@ant-design/icons"
+import { Upload, UploadProps } from "antd"
+import { useTranslation } from "react-i18next"
+import "./index.module.less"
 
-const { Dragger } = Upload;
+const { Dragger } = Upload
 
 // interface IAppSelectFileProps extends UploadProps {
 //   onSelectFile: (value: any) => void;
 // }
 
 export default function AppSelectFile(props: UploadProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <div styleName="app-select-file">
       <Dragger {...props} showUploadList={false}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
-        <p className="ant-upload-text">
-          {t("siteMain.components.appSelectFile.title")}
-        </p>
+        <p className="ant-upload-text">{t("siteMain.components.appSelectFile.title")}</p>
       </Dragger>
     </div>
-  );
+  )
 }
