@@ -1,25 +1,25 @@
-import { app, BrowserWindow } from "electron";
-import { electronApp, optimizer } from "@electron-toolkit/utils";
-import "./plugin";
-import { createMainWin } from "./helper";
-import { autoLanuch } from "./utils/autoLanuch";
+import { app, BrowserWindow } from "electron"
+import { electronApp, optimizer } from "@electron-toolkit/utils"
+import "./plugin"
+import { createMainWin } from "./helper"
+import { autoLanuch } from "./utils/autoLanuch"
 
 app.whenReady().then(() => {
-  autoLanuch();
-  electronApp.setAppUserModelId("com.electron");
+  autoLanuch()
+  electronApp.setAppUserModelId("com.electron")
   app.on("browser-window-created", (_, window) => {
-    optimizer.watchWindowShortcuts(window);
-  });
-  createMainWin();
+    optimizer.watchWindowShortcuts(window)
+  })
+  createMainWin()
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createMainWin();
+      createMainWin()
     }
-  });
-});
+  })
+})
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    app.quit();
+    app.quit()
   }
-});
+})

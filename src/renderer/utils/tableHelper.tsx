@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
-import EllipsisTextControl from "@renderer/components/EllipsisTextControl";
-import { Trans, useTranslation } from "react-i18next";
-import { formatTime } from "@renderer/utils/formatTime";
-import { Progress, Button, Modal, Checkbox, message } from "antd";
-import { openFile, openFolder, separator } from "@renderer/utils/fileHelper";
+import React, { useRef, useState } from "react"
+import EllipsisTextControl from "@renderer/components/EllipsisTextControl"
+import { Trans, useTranslation } from "react-i18next"
+import { formatTime } from "@renderer/utils/formatTime"
+import { Progress, Button, Modal, Checkbox, message } from "antd"
+import { openFile, openFolder, separator } from "@renderer/utils/fileHelper"
 
 // 文本
 export const tableText = {
@@ -11,10 +11,8 @@ export const tableText = {
   dataIndex: "text",
   key: "text",
   width: 400,
-  render: (text) => (
-    <EllipsisTextControl content={text} width={360} type="single" />
-  ),
-};
+  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />,
+}
 
 // 文件
 export const tableFile = {
@@ -22,10 +20,8 @@ export const tableFile = {
   dataIndex: "outputFileName",
   key: "outputFileName",
   width: 400,
-  render: (text) => (
-    <EllipsisTextControl content={text} width={360} type="single" />
-  ),
-};
+  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />,
+}
 
 // 源文件
 export const tableOriginFile = {
@@ -33,10 +29,8 @@ export const tableOriginFile = {
   dataIndex: "inputFilePath",
   key: "inputFilePath",
   width: 240,
-  render: (inputFilePath) => (
-    <EllipsisTextControl content={inputFilePath} width={200} type="single" />
-  ),
-};
+  render: (inputFilePath) => <EllipsisTextControl content={inputFilePath} width={200} type="single" />,
+}
 
 //
 export const tableFps = {
@@ -44,7 +38,7 @@ export const tableFps = {
   dataIndex: "fps",
   key: "fps",
   width: 60,
-};
+}
 
 // 进度
 export const tableProgress = {
@@ -52,7 +46,7 @@ export const tableProgress = {
   dataIndex: "progress",
   key: "progress",
   render: (progress) => <Progress percent={progress} />,
-};
+}
 
 // 创建时间
 export const tableCreateTime = {
@@ -61,59 +55,51 @@ export const tableCreateTime = {
   key: "createTime",
   width: 160,
   render: (createTime: number) => formatTime(createTime),
-};
+}
 
 interface ITableBtnProps {
-  record: any;
-  hasFile?: boolean;
-  callback?: () => void;
+  record: any
+  hasFile?: boolean
+  callback?: () => void
 }
 
 // 打开文件按钮
 export const OpenFileBtn = (props: ITableBtnProps) => {
-  const { record } = props;
-  const { t } = useTranslation();
+  const { record } = props
+  const { t } = useTranslation()
   return (
     <Button
-      onClick={() =>
-        openFile(
-          `${record.outputFloaderPath}${separator}${record.outputFileName}`,
-        )
-      }
+      onClick={() => openFile(`${record.outputFloaderPath}${separator}${record.outputFileName}`)}
       type="link"
       className="common-table-link-btn"
     >
       {t("commonText.openFile")}
     </Button>
-  );
-};
+  )
+}
 
 // 打开文件夹按钮
 export const OpenFolderBtn = (props: ITableBtnProps) => {
-  const { record } = props;
-  const { t } = useTranslation();
+  const { record } = props
+  const { t } = useTranslation()
   return (
-    <Button
-      onClick={() => openFolder(record.outputFloaderPath)}
-      type="link"
-      className="common-table-link-btn"
-    >
+    <Button onClick={() => openFolder(record.outputFloaderPath)} type="link" className="common-table-link-btn">
       {t("commonText.openFolder")}
     </Button>
-  );
-};
+  )
+}
 
 // 删除按钮
 export const DeleteRecordBtn = (props: ITableBtnProps) => {
-  const { record, hasFile, callback } = props;
-  const isCheckRef = useRef(true);
+  const { record, hasFile, callback } = props
+  const isCheckRef = useRef(true)
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   // 选择是否删除文件
   const onCheckBoxChnage = (e) => {
-    isCheckRef.current = e.target.checked;
-  };
+    isCheckRef.current = e.target.checked
+  }
 
   // 删除记录
   const deleteData = async ({ record, isDeleteFile }) => {
@@ -121,22 +107,18 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
       key: `${record.code}List`,
       idKey: "taskId",
       id: record.taskId,
-    });
+    })
     if (isDeleteFile && hasFile) {
-      const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`;
+      const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`
       const res = await window.ipcInvoke("WIN_DELETE_FILE", {
         path,
-      });
-      res
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
+      })
+      res ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     } else {
-      recordDeleteRes
-        ? message.success(t("commonText.success"))
-        : message.error(t("commonText.error"));
+      recordDeleteRes ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     }
-    callback();
-  };
+    callback()
+  }
 
   // 删除按钮点击事件, 弹出确认框
   const onDelete = (record) => {
@@ -148,17 +130,13 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
         </Checkbox>
       ) : null,
       onOk: () => {
-        deleteData({ record, isDeleteFile: isCheckRef.current });
+        deleteData({ record, isDeleteFile: isCheckRef.current })
       },
-    });
-  };
+    })
+  }
   return (
-    <Button
-      onClick={() => onDelete(record)}
-      type="link"
-      className="common-table-link-btn"
-    >
+    <Button onClick={() => onDelete(record)} type="link" className="common-table-link-btn">
       {t("commonText.delete")}
     </Button>
-  );
-};
+  )
+}

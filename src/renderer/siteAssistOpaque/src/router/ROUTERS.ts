@@ -1,1 +1,1 @@
-export const ROUTERS = {};
+export const ROUTERS = {}

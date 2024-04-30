@@ -4,6 +4,6 @@ export function InjectData({ webContents, data }) {
     webContents.executeJavaScript(`
       if(!window.injectData) window.injectData = {};
       window.injectData = ${JSON.stringify(data)};
-    `);
-  });
+    `)
+  })
 }
