@@ -14,7 +14,7 @@ export default function Restore() {
       content: t("siteMain.pages.setting.restore.config.content"),
       onOk() {
         window.ipcInvoke("STORE_RESTORE_CONFIG")
-      }
+      },
     })
   }
 
@@ -25,7 +25,7 @@ export default function Restore() {
       content: t("siteMain.pages.setting.restore.all.content"),
       onOk() {
         window.ipcInvoke("STORE_RESTORE_ALL")
-      }
+      },
     })
   }
   return (

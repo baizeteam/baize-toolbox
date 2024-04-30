@@ -45,7 +45,7 @@ const menuObj = {
     label: "销毁",
     click: (menuItem, browserWindow, event) => {
       browserWindow?.destroy()
-    }
+    },
   }),
   reload: new MenuItem({
     label: "刷新",
@@ -55,14 +55,14 @@ const menuObj = {
         browserWindow.reload()
         showCustomMenu(browserWindow)
       }
-    }
+    },
   }),
   devTools: new MenuItem({
     label: "开发者工具",
     click: (menuItem, browserWindow, event) => {
       browserWindow?.webContents?.openDevTools()
-    }
-  })
+    },
+  }),
 }
 
 const DEFAULT_MENU_LIST = ["destory", "reload", "devTools"]

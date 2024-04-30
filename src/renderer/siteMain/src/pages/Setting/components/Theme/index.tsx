@@ -13,7 +13,7 @@ export default function Theme() {
     await window.ipcInvoke("SET_STORE_RELOAD", {
       key: "theme",
       value: e.target.value,
-      code: "THEME"
+      code: "THEME",
     })
   }
   useEffect(() => {

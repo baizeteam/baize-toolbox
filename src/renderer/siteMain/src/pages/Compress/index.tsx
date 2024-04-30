@@ -14,7 +14,7 @@ import {
   tableCreateTime,
   OpenFileBtn,
   OpenFolderBtn,
-  DeleteRecordBtn
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 
@@ -54,21 +54,21 @@ export default function Compress() {
     console.log(configData)
     const baseInfo = await getTaskBaseInfo({
       filePath,
-      subFloder: SUB_FLODER_NAME
+      subFloder: SUB_FLODER_NAME,
     })
     console.log(baseInfo)
     const commandObj = {
       "-i": filePath,
       "-b:v": configData.bitrate + "k",
       // "-b:a": configData.audioBitrate,
-      "-r": configData.frameRate
+      "-r": configData.frameRate,
     }
     const command = ffmpegObj2List(commandObj)
     const params = {
       command: [...command],
       ...baseInfo,
       originFileSize: fileSize,
-      code: "compress"
+      code: "compress",
     }
     changeCompressList([params, ...(compressListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
@@ -83,11 +83,11 @@ export default function Compress() {
           item = {
             ...item,
             progress: data.progress,
-            outputFileSize: data.outputFileSize
+            outputFileSize: data.outputFileSize,
           }
         }
         return item
-      })
+      }),
     ])
     if (data.progress === 100) {
       window.electron.ipcRenderer.removeAllListeners(`FFMPEG_PROGRESS_${taskId}`)
@@ -101,14 +101,14 @@ export default function Compress() {
       dataIndex: "originFileSize",
       key: "originFileSize",
       width: 160,
-      render: (text) => formatFileSize(text)
+      render: (text) => formatFileSize(text),
     },
     {
       title: t("siteMain.pages.compress.compressFileSize"),
       dataIndex: "outputFileSize",
       key: "outputFileSize",
       width: 160,
-      render: (text) => (text ? formatFileSize(text) : "-")
+      render: (text) => (text ? formatFileSize(text) : "-"),
     },
     tableProgress,
     tableCreateTime,
@@ -125,8 +125,8 @@ export default function Compress() {
             <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         )
-      }
-    }
+      },
+    },
   ]
 
   const init = () => {

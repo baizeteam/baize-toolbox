@@ -19,7 +19,7 @@ export default function ScreenRecord() {
       title: t("siteMain.pages.screenRecord.createType"),
       dataIndex: "createType",
       key: "createType",
-      width: 160
+      width: 160,
     },
     tableCreateTime,
     {
@@ -35,8 +35,8 @@ export default function ScreenRecord() {
             <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         )
-      }
-    }
+      },
+    },
   ]
 
   const init = async () => {

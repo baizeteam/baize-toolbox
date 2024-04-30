@@ -11,7 +11,7 @@ export const tableText = {
   dataIndex: "text",
   key: "text",
   width: 400,
-  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />
+  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />,
 }
 
 // 文件
@@ -20,7 +20,7 @@ export const tableFile = {
   dataIndex: "outputFileName",
   key: "outputFileName",
   width: 400,
-  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />
+  render: (text) => <EllipsisTextControl content={text} width={360} type="single" />,
 }
 
 // 源文件
@@ -29,7 +29,7 @@ export const tableOriginFile = {
   dataIndex: "inputFilePath",
   key: "inputFilePath",
   width: 240,
-  render: (inputFilePath) => <EllipsisTextControl content={inputFilePath} width={200} type="single" />
+  render: (inputFilePath) => <EllipsisTextControl content={inputFilePath} width={200} type="single" />,
 }
 
 //
@@ -37,7 +37,7 @@ export const tableFps = {
   title: <Trans i18nKey="commonText.fps" />,
   dataIndex: "fps",
   key: "fps",
-  width: 60
+  width: 60,
 }
 
 // 进度
@@ -45,7 +45,7 @@ export const tableProgress = {
   title: <Trans i18nKey="commonText.progress" />,
   dataIndex: "progress",
   key: "progress",
-  render: (progress) => <Progress percent={progress} />
+  render: (progress) => <Progress percent={progress} />,
 }
 
 // 创建时间
@@ -54,7 +54,7 @@ export const tableCreateTime = {
   dataIndex: "createTime",
   key: "createTime",
   width: 160,
-  render: (createTime: number) => formatTime(createTime)
+  render: (createTime: number) => formatTime(createTime),
 }
 
 interface ITableBtnProps {
@@ -106,12 +106,12 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
     const recordDeleteRes = window.ipcInvoke("QUEUE_STORE_DELETE", {
       key: `${record.code}List`,
       idKey: "taskId",
-      id: record.taskId
+      id: record.taskId,
     })
     if (isDeleteFile && hasFile) {
       const path = `${record.outputFloaderPath}${separator}${record.outputFileName}`
       const res = await window.ipcInvoke("WIN_DELETE_FILE", {
-        path
+        path,
       })
       res ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     } else {
@@ -131,7 +131,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
       ) : null,
       onOk: () => {
         deleteData({ record, isDeleteFile: isCheckRef.current })
-      }
+      },
     })
   }
   return (

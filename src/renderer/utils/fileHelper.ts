@@ -7,7 +7,7 @@ export const fileSelectAccetps = {
   video: ["mp4", "avi", "mkv", "rmvb", "wmv", "mov", "flv", "3gp", "webm"],
   image: ["jpg", "jpeg", "png", "gif", "svg", "webp"],
   audio: ["mp3", "wav", "flac", "aac", "m4a", "amr"],
-  document: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "md", "epub"]
+  document: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "md", "epub"],
 }
 
 // fps 列表
@@ -20,7 +20,7 @@ export const separator = platformUtil.isWin ? "\\" : "/"
 export const openFolder = (path) => {
   window.electron.ipcRenderer
     .invoke("WIN_OPEN_FILE", {
-      path
+      path,
     })
     .then((res) => {
       if (!res) {
@@ -33,7 +33,7 @@ export const openFolder = (path) => {
 export const openFile = (path) => {
   window.electron.ipcRenderer
     .invoke("WIN_OPEN_FILE", {
-      path
+      path,
     })
     .then((res) => {
       if (!res) {

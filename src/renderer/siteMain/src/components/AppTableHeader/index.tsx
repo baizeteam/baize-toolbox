@@ -24,7 +24,7 @@ export default function AppTableHeader(props: IAppTableHeaderProps) {
           onClean()
           modal.destroy()
         })
-      }
+      },
     })
   }
 

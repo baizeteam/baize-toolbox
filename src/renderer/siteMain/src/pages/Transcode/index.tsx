@@ -15,7 +15,7 @@ import {
   tableCreateTime,
   OpenFileBtn,
   OpenFolderBtn,
-  DeleteRecordBtn
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 
@@ -50,7 +50,7 @@ export default function Transcode() {
     const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,
-      subFloder: SUB_FLODER_NAME
+      subFloder: SUB_FLODER_NAME,
     })
     const params = {
       command: ffmpegObj2List({
@@ -58,10 +58,10 @@ export default function Transcode() {
         "-c:v": platformUtil.isMac ? "h264_videotoolbox" : "h264",
         "-preset": "fast",
         "-c:a": "aac",
-        "-strict": "experimental"
+        "-strict": "experimental",
       }),
       ...baseInfo,
-      code: "transcode"
+      code: "transcode",
     }
     changeTranscodeList([params, ...(transcodeListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
@@ -76,7 +76,7 @@ export default function Transcode() {
           item.progress = data.progress
         }
         return item
-      })
+      }),
     ])
     if (data.progress === 100) {
       window.electron.ipcRenderer.removeAllListeners(`FFMPEG_PROGRESS_${taskId}`)
@@ -89,7 +89,7 @@ export default function Transcode() {
       title: t("siteMain.pages.transcode.transcodeType"),
       dataIndex: "outputType",
       key: "outputType",
-      width: 160
+      width: 160,
     },
     tableProgress,
     tableCreateTime,
@@ -106,8 +106,8 @@ export default function Transcode() {
             <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         )
-      }
-    }
+      },
+    },
   ]
 
   const init = () => {

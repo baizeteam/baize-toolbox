@@ -14,12 +14,12 @@ const SUB_FLODER_NAME = "record"
 // 文件格式选项
 const fileTypeOptions = [...fileSelectAccetps.video, "gif"].map((item) => ({
   label: item.toUpperCase(),
-  value: item
+  value: item,
 }))
 // 帧率选项
 const fpsOptions = fpsList.map((item) => ({
   label: item,
-  value: item
+  value: item,
 }))
 
 // 取偶数值，防止录屏区域不整
@@ -71,7 +71,7 @@ export default function RecordWin() {
       "-i": "desktop",
       "-pix_fmt": "yuv420p",
       // "-c:v": "libx264",
-      [`${subOutputFloaderPath}${separator}${fileName}`]: null
+      [`${subOutputFloaderPath}${separator}${fileName}`]: null,
     }
     // {
     //   "-f": "avfoundation",
@@ -91,7 +91,7 @@ export default function RecordWin() {
       outputFloaderPath: subOutputFloaderPath,
       outputFileName: fileName,
       createType: fileType,
-      fps
+      fps,
     })
   }
 

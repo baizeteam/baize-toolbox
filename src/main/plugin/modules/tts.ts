@@ -13,8 +13,8 @@ app.on("ready", () => {
     const payload = {
       input: data.text,
       options: {
-        voice: data.voice
-      }
+        voice: data.voice,
+      },
     }
     const res = await tts.create(payload)
     const arrayBuffer = await res.arrayBuffer()
@@ -23,7 +23,7 @@ app.on("ready", () => {
     const params = {
       ...data,
       url: base64Data,
-      status: "success"
+      status: "success",
     }
     queueStoreUpdate({ params, key: "ttsList", idKey: "taskId" })
     return

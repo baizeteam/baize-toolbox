@@ -10,22 +10,22 @@ import antdenUS from "antd/locale/en_US"
 i18n.use(initReactI18next).init({
   resources: {
     enUS: {
-      translation: enUS
+      translation: enUS,
     },
     zhCN: {
-      translation: zhCN
-    }
+      translation: zhCN,
+    },
   },
   lng: "zhCN",
   fallbackLng: "zhCN",
   interpolation: {
-    escapeValue: false
-  }
+    escapeValue: false,
+  },
 })
 
 export const antdLocale = {
   enUS: antdenUS,
-  zhCN: antdzhCN
+  zhCN: antdzhCN,
 }
 
 export default i18n

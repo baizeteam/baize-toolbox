@@ -14,7 +14,7 @@ import {
   tableCreateTime,
   OpenFileBtn,
   OpenFolderBtn,
-  DeleteRecordBtn
+  DeleteRecordBtn,
 } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 
@@ -50,10 +50,10 @@ export default function Extract() {
     const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,
-      subFloder: SUB_FLODER_NAME
+      subFloder: SUB_FLODER_NAME,
     })
     const commandObj = {
-      "-i": filePath
+      "-i": filePath,
     }
     if (outputType === "mp4") {
       commandObj["-an"] = "-vcodec"
@@ -63,7 +63,7 @@ export default function Extract() {
     const params = {
       command: [...command],
       ...baseInfo,
-      code: "extract"
+      code: "extract",
     }
     changeExtractList([params, ...(extractListRef.current || [])])
     window.ipcSend("FFMPEG_COMMAND", params)
@@ -78,7 +78,7 @@ export default function Extract() {
           item.progress = data.progress
         }
         return item
-      })
+      }),
     ])
     if (data.progress === 100) {
       window.electron.ipcRenderer.removeAllListeners(`FFMPEG_PROGRESS_${taskId}`)
@@ -91,7 +91,7 @@ export default function Extract() {
       title: t("siteMain.pages.extract.extractType"),
       dataIndex: "outputType",
       key: "outputType",
-      width: 160
+      width: 160,
     },
     tableProgress,
     tableCreateTime,
@@ -108,8 +108,8 @@ export default function Extract() {
             <DeleteRecordBtn record={record} hasFile callback={init} />
           </>
         )
-      }
-    }
+      },
+    },
   ]
 
   const init = () => {

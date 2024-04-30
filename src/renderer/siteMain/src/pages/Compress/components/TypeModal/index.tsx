@@ -29,13 +29,13 @@ export default function TypeModal(props: ITypeModalProps) {
     if (filePath && open) {
       setLoading(true)
       const res = await window.ipcInvoke("FFMPEG_GET_VIDEO_INFO", {
-        filePath
+        filePath,
       })
       console.log(res)
       setFileInfo(res)
       changeSettingInfo({
         frameRate: res.frameRate,
-        bitrate: res.bitrate
+        bitrate: res.bitrate,
       })
       setLoading(false)
     }
@@ -57,7 +57,7 @@ export default function TypeModal(props: ITypeModalProps) {
     return {
       label: item + "fps",
       value: item,
-      disabled: item > fileInfo?.frameRate
+      disabled: item > fileInfo?.frameRate,
     }
   })
 
@@ -103,7 +103,7 @@ export default function TypeModal(props: ITypeModalProps) {
                         defaultValue={fileInfo?.frameRate}
                         onChange={(e) => {
                           changeSettingInfo({
-                            frameRate: e
+                            frameRate: e,
                           })
                         }}
                         size="small"
@@ -120,13 +120,13 @@ export default function TypeModal(props: ITypeModalProps) {
                             512: "512kbps",
                             1024: "1Mbps",
                             2048: "2Mbps",
-                            4096: "4Mbps"
+                            4096: "4Mbps",
                           }}
                           max={fileInfo?.bitrate}
                           min={128}
                           onChange={(e) => {
                             changeSettingInfo({
-                              bitrate: e
+                              bitrate: e,
                             })
                           }}
                         />

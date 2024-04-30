@@ -17,16 +17,16 @@ export const initTray = (tray) => {
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/home")
-      }
+      },
     },
     {
       label: i18n.t("tray.setting"),
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/setting")
-      }
+      },
     },
-    { label: i18n.t("tray.exit"), type: "normal", click: () => app.quit() }
+    { label: i18n.t("tray.exit"), type: "normal", click: () => app.quit() },
   ])
   tray.setToolTip(i18n.t("appTitle")) // 鼠标悬停时的提示文本
   tray.setContextMenu(contextMenu)

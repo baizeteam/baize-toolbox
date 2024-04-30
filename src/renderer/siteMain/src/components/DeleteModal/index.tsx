@@ -15,7 +15,7 @@ export default function DeleteModal(props: IDeleteModalProps) {
   const _onOk = () => {
     onOk({
       path,
-      isDeleteFile: value
+      isDeleteFile: value,
     })
   }
   return (

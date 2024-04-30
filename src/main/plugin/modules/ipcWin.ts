@@ -61,9 +61,9 @@ app.on("ready", async () => {
           minHeight: 240,
           // resizable: false,
           transparent: true,
-          alwaysOnTop: true
+          alwaysOnTop: true,
         },
-        url: "/siteAssistTransprent/index.html#/record-win"
+        url: "/siteAssistTransprent/index.html#/record-win",
       })
       recordWin.on("ready-to-show", () => {
         showCustomMenu(recordWin)

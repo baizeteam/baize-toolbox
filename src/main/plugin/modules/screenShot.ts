@@ -18,7 +18,7 @@ const showScreenShotWin = async () => {
     const display = screen.getDisplayNearestPoint(mousePoint)
     const sources = await desktopCapturer.getSources({
       types: ["screen"],
-      thumbnailSize: display.size
+      thumbnailSize: display.size,
     })
     const source = sources.find((source) => {
       return source.display_id === String(display.id)
@@ -30,7 +30,7 @@ const showScreenShotWin = async () => {
     screenShotWin.show()
     screenShotWin.webContents.send("GET_SCREEN_SHOT_STREAM", {
       source: source,
-      display: display
+      display: display,
     })
   }
 }
@@ -44,7 +44,7 @@ const createImageWin = async (data) => {
     alwaysOnTop: true,
     hasShadow: false,
     skipTaskbar: true,
-    show: false
+    show: false,
   }
   if (x !== undefined && y !== undefined) {
     config["x"] = x
@@ -53,7 +53,7 @@ const createImageWin = async (data) => {
   const imageWin = await createWin({
     config,
     url: "/siteAssistTransprent/index.html#/image-win",
-    injectData: { base64 }
+    injectData: { base64 },
   })
   imageWin.setSize(width + 12, height + 12)
   imageWin.show()
@@ -65,9 +65,9 @@ app.whenReady().then(async () => {
       frame: false,
       transparent: true,
       alwaysOnTop: true,
-      show: false
+      show: false,
     },
-    url: "/siteAssistTransprent/index.html#/screen-shot-win"
+    url: "/siteAssistTransprent/index.html#/screen-shot-win",
   })
   screenShotWin.on("ready-to-show", () => {
     showCustomMenu(screenShotWin)
@@ -94,7 +94,7 @@ app.whenReady().then(async () => {
       height: cutInfo.height,
       base64,
       x: display.bounds.x + cutInfo.startX,
-      y: display.bounds.y + cutInfo.startY
+      y: display.bounds.y + cutInfo.startY,
     })
     return true
   })
@@ -105,7 +105,7 @@ app.whenReady().then(async () => {
     createImageWin({
       width: cutInfo.width,
       height: cutInfo.height,
-      base64
+      base64,
     })
     return true
   })

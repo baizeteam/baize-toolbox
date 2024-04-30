@@ -8,7 +8,7 @@ import {
   PictureOutlined,
   AudioOutlined,
   FallOutlined,
-  SettingOutlined
+  SettingOutlined,
 } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 import { Menu } from "antd"
@@ -25,14 +25,14 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: "group"
+  type?: "group",
 ): MenuItem {
   return {
     key,
     icon,
     children,
     label,
-    type
+    type,
   } as MenuItem
 }
 
@@ -50,7 +50,7 @@ const Nav: React.FC = () => {
     getItem(t("siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />),
     getItem(t("siteMain.components.nav.screenShot"), ROUTERS.SCREEN_SHOT, <PictureOutlined />),
     getItem(t("siteMain.components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
-    getItem(t("siteMain.components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />)
+    getItem(t("siteMain.components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />),
   ]
 
   // 点击菜单项后，路由跳转

@@ -5,7 +5,7 @@ import { nanoid } from "nanoid"
 export const COLLECT_TYPE = {
   win32: "gdigrab",
   darwin: "avfoundation",
-  linux: "x11grab"
+  linux: "x11grab",
 }
 
 // ffmpeg 命令对象转数组
@@ -24,7 +24,7 @@ export const ffmpegObj2List = (ffmpegObj) => {
 export const getTaskBaseInfo = async ({
   filePath,
   outputType,
-  subFloder
+  subFloder,
 }: {
   filePath: string
   outputType?: string
@@ -42,6 +42,6 @@ export const getTaskBaseInfo = async ({
     outputFileName,
     outputType: fileOutputType,
     createTime: new Date().getTime(),
-    progress: 0
+    progress: 0,
   }
 }

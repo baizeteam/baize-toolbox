@@ -7,5 +7,5 @@ import BaseRouter from "@siteAssistOpaque/router"
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BaseApp showBgColor>
     <BaseRouter />
-  </BaseApp>
+  </BaseApp>,
 )

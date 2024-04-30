@@ -11,7 +11,7 @@ ipcMain.handle("SCREEN_RECORD_GET_CURRENT_INFO", async (e, data) => {
   const bounds = cur.getBounds()
   const currentDisplay = screen.getDisplayNearestPoint({
     x: bounds.x,
-    y: bounds.y
+    y: bounds.y,
   })
   const scaleFactor = currentDisplay.scaleFactor
   const windowX = currentDisplay.nativeOrigin.x - currentDisplay.bounds.x + bounds.x
@@ -31,7 +31,7 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   checkFolderExists(params.outputFloaderPath)
   queueStoreAdd({
     params: { ...params },
-    key: `${params.code}List`
+    key: `${params.code}List`,
   })
 
   const allWindows = BrowserWindow.getAllWindows()

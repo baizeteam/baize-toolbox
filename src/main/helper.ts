@@ -9,26 +9,26 @@ import { getSystemInfo } from "./utils/systemHelper"
 let mainWindow: BrowserWindow
 let loadingWin: BrowserWindow
 const a = {
-  测试: "git-hook + prettier"
+  测试: "git-hook + prettier",
 }
 const b = {
-  测试: "git-hook + prettier"
+  测试: "git-hook + prettier",
 }
 export enum START_STATUS {
   pedding = "pedding",
   success = "success",
-  fail = "fail"
+  fail = "fail",
 }
 const mainWinStart = {
   web: START_STATUS.pedding,
-  ffmpeg: START_STATUS.pedding
+  ffmpeg: START_STATUS.pedding,
 }
 const handler = {
   set(target, p, value) {
     Reflect.set(target, p, value)
     onMainWinStartChange()
     return true
-  }
+  },
 }
 export const mainWinStartProxy = new Proxy(mainWinStart, handler)
 export function onMainWinStartChange() {
@@ -59,8 +59,8 @@ export function createloadingWin() {
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
-      preload: join(__dirname, "../preload/index.js")
-    }
+      preload: join(__dirname, "../preload/index.js"),
+    },
   })
 
   initWinUrl(loadingWin, "/siteElectronLoading/index.html")
@@ -89,16 +89,16 @@ export async function createWin({ config, url, injectData }: ICreateWin): Promis
       webSecurity: false,
       preload: join(__dirname, "../preload/index.js"),
       experimentalFeatures: true,
-      enableBlinkFeatures: "MediaStreamTrack.getDisplayMedia"
+      enableBlinkFeatures: "MediaStreamTrack.getDisplayMedia",
     },
-    ...config
+    ...config,
   })
   InjectData({
     webContents: win.webContents,
     data: {
       system: await getSystemInfo(),
-      ...injectData
-    }
+      ...injectData,
+    },
   })
   initWinUrl(win, url)
   return win
@@ -114,9 +114,9 @@ export async function createMainWin(): Promise<void> {
       minHeight: 600,
       autoHideMenuBar: true,
       frame: false,
-      ...(process.platform === "linux" ? { icon } : {})
+      ...(process.platform === "linux" ? { icon } : {}),
     },
-    url: "/siteMain/index.html"
+    url: "/siteMain/index.html",
   })
   mainWindow["customId"] = "main"
   mainWindow.on("ready-to-show", () => {
@@ -154,7 +154,7 @@ export function mainLogSend(data) {
 // 进入全屏模式
 export function enterWinFullScreen(win: BrowserWindow) {
   win.setVisibleOnAllWorkspaces(true, {
-    visibleOnFullScreen: true
+    visibleOnFullScreen: true,
   })
   win.setSimpleFullScreen(true)
 }
@@ -162,7 +162,7 @@ export function enterWinFullScreen(win: BrowserWindow) {
 // 退出全屏模式
 export function exitWinFullScreen(win: BrowserWindow) {
   win.setVisibleOnAllWorkspaces(false, {
-    visibleOnFullScreen: false
+    visibleOnFullScreen: false,
   })
   win.setSimpleFullScreen(false)
 }

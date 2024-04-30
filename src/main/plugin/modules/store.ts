@@ -75,7 +75,7 @@ const defaultStore = {
   extractList: [],
   screenRecordList: [],
   screenShotList: [],
-  compressList: []
+  compressList: [],
 }
 
 const init = () => {

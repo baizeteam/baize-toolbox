@@ -7,5 +7,5 @@ import BaseRouter from "@siteAssistTransprent/router"
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BaseApp>
     <BaseRouter />
-  </BaseApp>
+  </BaseApp>,
 )

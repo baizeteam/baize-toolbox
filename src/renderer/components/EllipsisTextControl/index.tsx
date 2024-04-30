@@ -50,7 +50,7 @@ const EllipsisTextControl = ({
   showTooltip = true,
   tooltipTitle,
   placement = "bottomLeft",
-  endContent = ""
+  endContent = "",
 }: EllipsisTextControlProps) => {
   /** 主体显示的内容 */
   const ellipsisInputRef = useRef<HTMLDivElement>(null)
@@ -139,7 +139,7 @@ const EllipsisTextControl = ({
     if (ellipsisInput && ellipsisContainer) {
       const map = {
         single: handleSingle,
-        multiple: handleMulitiple
+        multiple: handleMulitiple,
       }
       map?.[type]?.()
     }
@@ -148,7 +148,7 @@ const EllipsisTextControl = ({
   const style = {
     maxWidth: maxWidth ?? width ?? "none",
     width: width ?? "none",
-    maxHeight: type === "multiple" ? maxHeight : "none"
+    maxHeight: type === "multiple" ? maxHeight : "none",
   }
 
   return (
@@ -165,7 +165,7 @@ const EllipsisTextControl = ({
         style={style}
         className={classNames("ellipsis-text-container", {
           "ellipsis-text": type === "single",
-          [contentClassName]: !!contentClassName
+          [contentClassName]: !!contentClassName,
         })}
       >
         {contentText ? (
@@ -174,7 +174,7 @@ const EllipsisTextControl = ({
               className={showLastEllipsis ? "last-ellipsis" : ""}
               style={{
                 height: maxHeight,
-                maxWidth: maxWidth
+                maxWidth: maxWidth,
               }}
             >
               {content}

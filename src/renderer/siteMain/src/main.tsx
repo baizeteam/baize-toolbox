@@ -7,5 +7,5 @@ import BaseRouter from "@siteMain/router"
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BaseApp showBgColor>
     <BaseRouter />
-  </BaseApp>
+  </BaseApp>,
 )

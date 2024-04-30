@@ -9,10 +9,10 @@ const generateScopedName = genericNames("[name]__[local]__[hash:base64:4]")
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
   },
   preload: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
   },
   renderer: {
     resolve: {
@@ -21,33 +21,33 @@ export default defineConfig({
         "@siteMain": resolve("src/renderer/siteMain/src"),
         "@siteAssistOpaque": resolve("src/renderer/siteAssistOpaque/src"),
         "@siteAssistTransprent": resolve("src/renderer/siteAssistTransprent/src"),
-        "@siteElectronLoading": resolve("src/renderer/siteElectronLoading/src")
-      }
+        "@siteElectronLoading": resolve("src/renderer/siteElectronLoading/src"),
+      },
     },
     plugins: [
       reactCssModule({
         generateScopedName,
         filetypes: {
           ".less": {
-            syntax: "postcss-less"
-          }
-        }
+            syntax: "postcss-less",
+          },
+        },
       }),
-      react()
+      react(),
     ],
     css: {
       modules: {
-        generateScopedName: generateScopedName
+        generateScopedName: generateScopedName,
       },
       postcss: {
-        plugins: [autoprefixer]
+        plugins: [autoprefixer],
       },
       preprocessorOptions: {
         less: {
           additionalData: `@import '@renderer/assets/styles/theme.less';`,
-          javascriptEnabled: true
-        }
-      }
+          javascriptEnabled: true,
+        },
+      },
     },
     build: {
       minify: "terser",
@@ -57,17 +57,17 @@ export default defineConfig({
           siteMain: resolve(__dirname, "src/renderer/siteMain/index.html"),
           siteAssistTransprent: resolve(__dirname, "src/renderer/siteAssistTransprent/index.html"),
           siteAssistOpaque: resolve(__dirname, "src/renderer/siteAssistOpaque/index.html"),
-          siteElectronLoading: resolve(__dirname, "src/renderer/siteElectronLoading/index.html")
+          siteElectronLoading: resolve(__dirname, "src/renderer/siteElectronLoading/index.html"),
         },
         output: {
           manualChunks: {
             reactBase: ["react", "react-dom"],
             reactEcology: ["react-router-dom", "mobx", "mobx-react"],
-            tools: ["ahooks", "lodash", "nanoid"]
+            tools: ["ahooks", "lodash", "nanoid"],
             // antd: ["antd"],
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 })

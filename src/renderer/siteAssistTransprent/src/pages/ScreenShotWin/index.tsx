@@ -12,9 +12,9 @@ const getStream = (source): Promise<MediaStream | null> => {
         video: {
           mandatory: {
             chromeMediaSource: "desktop",
-            chromeMediaSourceId: source.id
-          }
-        }
+            chromeMediaSourceId: source.id,
+          },
+        },
       })
       .then((stream: MediaStream) => {
         resolve(stream)
@@ -40,12 +40,12 @@ export default function ScreenShotWin() {
         completeCallback: (e) => {
           window.ipcInvoke("SCREEN_SHOT_CREATE_IMAGE_WIN", {
             ...e,
-            display
+            display,
           })
         },
         closeCallback: () => {
           window.ipcInvoke("SCREEN_SHOT_WIN_HIDE")
-        }
+        },
       })
     })
   }, [])

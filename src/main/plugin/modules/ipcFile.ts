@@ -9,7 +9,7 @@ app.on("ready", () => {
   ipcMain.handle("WIN_SELECT_FILE", async (e, data) => {
     return dialog
       .showOpenDialog({
-        properties: ["openFile"]
+        properties: ["openFile"],
       })
       .then((result) => {
         if (!result.canceled) {
@@ -24,7 +24,7 @@ app.on("ready", () => {
   ipcMain.handle("WIN_SELECT_FOLDER", async (e, data) => {
     return dialog
       .showOpenDialog({
-        properties: ["openDirectory"]
+        properties: ["openDirectory"],
       })
       .then((result) => {
         if (!result.canceled) {

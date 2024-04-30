@@ -6,7 +6,7 @@ import { fileSelectAccetps } from "@renderer/utils/fileHelper"
 
 const options = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map((item) => ({
   label: item.toUpperCase(),
-  value: item
+  value: item,
 }))
 
 interface ITranscodeTypeModalProps extends Omit<ModalProps, "onOk"> {

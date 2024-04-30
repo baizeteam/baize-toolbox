@@ -5,7 +5,7 @@ import "./index.module.less"
 
 const options = [
   { value: "zhCN", label: "中文" },
-  { value: "enUS", label: "English" }
+  { value: "enUS", label: "English" },
 ]
 
 export default function Language() {
@@ -16,7 +16,7 @@ export default function Language() {
     await window.ipcInvoke("SET_STORE_RELOAD", {
       key: "i18n",
       value: e,
-      code: "I18N"
+      code: "I18N",
     })
   }
 

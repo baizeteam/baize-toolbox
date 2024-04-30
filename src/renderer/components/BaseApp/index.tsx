@@ -50,7 +50,7 @@ export default function App(props) {
   return (
     <ConfigProvider
       theme={{
-        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm
+        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
       locale={antdLocale[i18nCur]}
     >

@@ -18,11 +18,11 @@ export const getFfmpegPath = () => {
     freebsd: "linux",
     netbsd: "linux",
     openbsd: "linux",
-    sunos: "linux"
+    sunos: "linux",
   }
   return {
     ffmpegPath: path.join(basePath, `${platformObj[process.platform]}/ffmpeg`),
-    ffprobePath: path.join(basePath, `${platformObj[process.platform]}/ffprobe`)
+    ffprobePath: path.join(basePath, `${platformObj[process.platform]}/ffprobe`),
   }
 }
 
@@ -50,14 +50,14 @@ app.on("ready", () => {
     const taskId = params.taskId
     queueStoreAdd({
       params: { ...params, progress: 0 },
-      key: `${params.code}List`
+      key: `${params.code}List`,
     })
     const sendFunc = (data) => {
       const newParams = { ...params, ...data }
       queueStoreUpdate({
         params: newParams,
         key: `${params.code}List`,
-        idKey: "taskId"
+        idKey: "taskId",
       })
       BrowserWindow.fromWebContents(e.sender)?.webContents.send(`FFMPEG_PROGRESS_${taskId}`, data)
     }
@@ -70,7 +70,7 @@ app.on("ready", () => {
         const progress = ((currentTime / videoDuration) * 100).toFixed(2)
         console.log(`Progress: ${progress}%`)
         sendFunc({
-          progress: Number(progress)
+          progress: Number(progress),
         })
       }
     })
@@ -79,14 +79,14 @@ app.on("ready", () => {
       if (code !== 0) {
         console.error(`FFmpeg 进程关闭，但出现错误，退出码 ${code}`)
         sendFunc({
-          error: code
+          error: code,
         })
       } else {
         console.log("FFmpeg 进程正常关闭")
         const outputFileSize = getFileSize(outputFilePath)
         sendFunc({
           outputFileSize,
-          progress: 100
+          progress: 100,
         })
       }
     })
@@ -153,7 +153,7 @@ app.on("ready", () => {
         if (resolutionMatch) {
           videoInfo.resolution = {
             width: parseInt(resolutionMatch[1]),
-            height: parseInt(resolutionMatch[2])
+            height: parseInt(resolutionMatch[2]),
           }
         }
         if (frameRateMatch && !videoInfo.frameRate) {

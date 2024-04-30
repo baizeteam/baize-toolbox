@@ -14,7 +14,7 @@ import AppTableHeader from "@siteMain/components/AppTableHeader"
 enum EStatus {
   pending = "pending",
   success = "success",
-  error = "error"
+  error = "error",
 }
 
 const SUB_FLODER_NAME = "tts"
@@ -54,7 +54,7 @@ export default function TTS() {
     const res = await window.ipcInvoke("WIN_DOWNLOAD_BASE64", {
       base64: record.url,
       fileName: `${record.createTime}-${nanoid(8)}.mp3`,
-      filePath
+      filePath,
     })
     if (res === true) {
       message.success(t("commonText.downloadSuccess"))
@@ -73,14 +73,14 @@ export default function TTS() {
       key: "url",
       render: (url: string) => {
         return url ? <AudioPlay src={base64ToBlob(url)} /> : "生成中。。。"
-      }
+      },
     },
     {
       title: t("commonText.vocalLine"),
       dataIndex: "voice",
       key: "voice",
       width: 160,
-      render: (voice: string) => EdgeSpeechTTS.voiceName[voice]
+      render: (voice: string) => EdgeSpeechTTS.voiceName[voice],
     },
     tableCreateTime,
     {
@@ -102,8 +102,8 @@ export default function TTS() {
             <DeleteRecordBtn record={record} callback={init} />
           </>
         )
-      }
-    }
+      },
+    },
   ]
 
   const options = useMemo(() => {
@@ -114,9 +114,9 @@ export default function TTS() {
         children: EdgeSpeechTTS.voiceList[item].map((voice) => {
           return {
             value: voice,
-            label: EdgeSpeechTTS.voiceName[voice]
+            label: EdgeSpeechTTS.voiceName[voice],
           }
-        })
+        }),
       }
     })
   }, [])
@@ -134,7 +134,7 @@ export default function TTS() {
       url: null,
       createTime: Date.now(),
       status: EStatus.pending,
-      code: "tts"
+      code: "tts",
     }
     setAudioList((res) => {
       return [params, ...res]
@@ -163,12 +163,12 @@ export default function TTS() {
           max: 200,
           exceedFormatter: (value, config) => {
             return value.slice(0, config.max)
-          }
+          },
         }}
         onChange={(e) => setValue(e.target.value)}
         autoSize={{
           minRows: 5,
-          maxRows: 5
+          maxRows: 5,
         }}
       />
       <div styleName="action">

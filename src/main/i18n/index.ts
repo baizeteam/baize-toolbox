@@ -7,17 +7,17 @@ import { store } from "../plugin/modules/store"
 i18n.init({
   resources: {
     enUS: {
-      translation: enUS
+      translation: enUS,
     },
     zhCN: {
-      translation: zhCN
-    }
+      translation: zhCN,
+    },
   },
   lng: "zhCN",
   fallbackLng: "zhCN",
   interpolation: {
-    escapeValue: false
-  }
+    escapeValue: false,
+  },
 })
 
 app.on("ready", () => {
