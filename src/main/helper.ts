@@ -8,12 +8,6 @@ import { getSystemInfo } from "./utils/systemHelper"
 
 let mainWindow: BrowserWindow
 let loadingWin: BrowserWindow
-const a = {
-  测试: "git-hook + prettier",
-}
-const b = {
-  测试: "git-hook + prettier",
-}
 export enum START_STATUS {
   pedding = "pedding",
   success = "success",
@@ -39,13 +33,9 @@ export function onMainWinStartChange() {
     }
   })
   if (tag) {
-    // console.log('loading hide')
     mainWindow.show()
     loadingWin.hide()
-  } else {
-    // console.log('loading...')
   }
-  // console.log(mainWinStartProxy, 'mainWinStartProxy')
 }
 
 export function createloadingWin() {
@@ -135,7 +125,7 @@ export async function createMainWin(): Promise<void> {
     }
   })
   mainWindow.webContents.on("did-stop-loading", () => {
-    if (loadingWin && mainWinStart.web !== START_STATUS.success) {
+    if (mainWinStart.web !== START_STATUS.success) {
       setTimeout(() => {
         mainWinStartProxy.web = START_STATUS.success
       }, 200)
