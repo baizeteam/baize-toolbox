@@ -45,7 +45,7 @@ devDependencies:
     version: 4.0.2(react@18.2.0)
   '@lobehub/tts':
     specifier: ^1.24.0
-    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.373.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
+    version: 1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.376.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0)
   '@types/node':
     specifier: ^18.19.5
     version: 18.19.28
@@ -82,6 +82,9 @@ devDependencies:
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  easy-auto-launch:
+    specifier: ^6.0.2
+    version: 6.0.2
   electron:
     specifier: ^29.1.6
     version: 29.1.6
@@ -1096,7 +1099,7 @@ packages:
     resolution: {integrity: sha512-s9KnjaPjsEefaNv150G3aifvB+J3P4eEKG+epY9zDPS2BeB6+V2jELWqAZll+nkogMaVovjEE813z3V751QwGw==}
     dev: true
 
-  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.373.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
+  /@lobehub/tts@1.24.0(@lobehub/ui@1.137.7)(antd-style@3.6.2)(antd@5.15.4)(lucide-react@0.376.0)(react-dom@18.2.0)(react-layout-kit@1.9.0)(react@18.2.0):
     resolution: {integrity: sha512-1YXSdaY9P8kOEnTxgv/0JmUEvrxg4Uit61gfBN6z70ANzOQAIHVOx3KGjgxChjQsA36ZJtDabNybYyGBlKUeyw==}
     peerDependencies:
       '@lobehub/ui': '>=1'
@@ -1112,7 +1115,7 @@ packages:
       antd: 5.15.4(react-dom@18.2.0)(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.2.73)(antd@5.15.4)(react-dom@18.2.0)(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.373.0(react@18.2.0)
+      lucide-react: 0.376.0(react@18.2.0)
       openai: 4.31.0
       query-string: 8.2.0
       react: 18.2.0
@@ -2426,6 +2429,10 @@ packages:
       - supports-color
     dev: true
 
+  /applescript@1.0.0:
+    resolution: {integrity: sha512-yvtNHdWvtbYEiIazXAdp/NY+BBb65/DAseqlNiJQjOx9DynuzOYDbVLBJvuc0ve0VL9x6B3OHF6eH52y9hCBtQ==}
+    dev: true
+
   /archiver-utils@2.1.0:
     resolution: {integrity: sha512-bEL/yUb/fNNiNTuUz979Z0Yg5L+LzLxGJz8x79lYmR54fmTIb6ob/hNQgkQnIUDWIFjZVQwl9Xs356I6BAMHfw==}
     engines: {node: '>= 6'}
@@ -3371,6 +3378,16 @@ packages:
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+    dev: true
+
+  /easy-auto-launch@6.0.2:
+    resolution: {integrity: sha512-UhrWpPlPB2YKQXU+hw2kIfQzVecDnYsLUiFdLkKv3eCUtxmCcfEcAjxk8P6RMc8IjCoW8N9ALpJh5n0R1h/z1A==}
+    engines: {node: '>=4.0.0'}
+    dependencies:
+      applescript: 1.0.0
+      mkdirp: 1.0.4
+      untildify: 4.0.0
+      winreg: 1.2.5
     dev: true
 
   /ejs@3.1.9:
@@ -5136,14 +5153,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-
-  /lucide-react@0.373.0(react@18.2.0):
-    resolution: {integrity: sha512-0kygFhk/DmK4mi+zf1t5mNStJQGaElACZdDdLiHOHFJzi7g3maC3SR86AcaUsxvDkZPId3XCd4vRngnjkPHu3Q==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: true
 
   /lucide-react@0.376.0(react@18.2.0):
     resolution: {integrity: sha512-g91IX3ERD6yUR1TL2dsL4BkcGygpZz/EsqjAeL/kcRQV0EApIOr/9eBfKhYOVyQIcGGuotFGjF3xKLHMEz+b7g==}
@@ -8194,6 +8203,11 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
+  /untildify@4.0.0:
+    resolution: {integrity: sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==}
+    engines: {node: '>=8'}
+    dev: true
+
   /update-browserslist-db@1.0.13(browserslist@4.23.0):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
     hasBin: true
@@ -8455,6 +8469,10 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: true
+
+  /winreg@1.2.5:
+    resolution: {integrity: sha512-uf7tHf+tw0B1y+x+mKTLHkykBgK2KMs3g+KlzmyMbLvICSHQyB/xOFjTT8qZ3oeTFyU7Bbj4FzXitGG6jvKhYw==}
     dev: true
 
   /wrap-ansi@7.0.0:

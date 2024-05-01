@@ -1,8 +1,8 @@
 import { BrowserWindow, ipcMain, screen } from "electron"
 import { spawn } from "child_process"
-import { getFfmpegPath } from "./ffmpeg"
-import { checkFolderExists } from "../../utils/fileHelper"
-import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper"
+import { getFfmpegPath } from "@main/plugin/modules/ffmpeg"
+import { checkFolderExists } from "@main/utils/fileHelper"
+import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
 let ffmpegProcess = null
 
