@@ -10,6 +10,13 @@ const generateScopedName = genericNames("[name]__[local]__[hash:base64:4]")
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
+    resolve: {
+      alias: {
+        "@resources": resolve("resources"),
+        "@main": resolve("src/main"),
+        "@preload": resolve("src/preload"),
+      },
+    },
   },
   preload: {
     plugins: [externalizeDepsPlugin()],
