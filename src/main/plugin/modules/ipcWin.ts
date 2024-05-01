@@ -1,5 +1,5 @@
 import { app, ipcMain, BrowserWindow } from "electron"
-import { createWin } from "../../helper"
+import { createWin } from "@main/helper"
 import { showCustomMenu } from "./MenuManger"
 
 app.on("ready", async () => {

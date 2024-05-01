@@ -2,7 +2,7 @@ import i18n from "i18next"
 import enUS from "./modules/en_US.json"
 import zhCN from "./modules/zh_CN.json"
 import { app } from "electron"
-import { store } from "../plugin/modules/store"
+import { store } from "@main/plugin/modules/store"
 
 i18n.init({
   resources: {

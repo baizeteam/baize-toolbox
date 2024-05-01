@@ -1,4 +1,4 @@
-import { store } from "../plugin/modules/store"
+import { store } from "@main/plugin/modules/store"
 
 const DEFAULT_LENGTH = 30
 

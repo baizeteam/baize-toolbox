@@ -1,5 +1,5 @@
 import { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain } from "electron"
-import { createWin, enterWinFullScreen, exitWinFullScreen } from "../../helper"
+import { createWin, enterWinFullScreen, exitWinFullScreen } from "@main/helper"
 import { showCustomMenu } from "./MenuManger"
 
 let screenShotWin: BrowserWindow | null = null

@@ -1,10 +1,10 @@
 import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions } from "electron"
 import { join } from "path"
 import { is } from "@electron-toolkit/utils"
-import icon from "../../resources/icon.png?asset"
-import { showCustomMenu } from "./plugin/modules/MenuManger"
-import { InjectData } from "./utils/inject"
-import { getSystemInfo } from "./utils/systemHelper"
+import icon from "@resources/icon.png?asset"
+import { showCustomMenu } from "@main/plugin/modules/MenuManger"
+import { InjectData } from "@main/utils/inject"
+import { getSystemInfo } from "@main/utils/systemHelper"
 
 let mainWindow: BrowserWindow
 let loadingWin: BrowserWindow

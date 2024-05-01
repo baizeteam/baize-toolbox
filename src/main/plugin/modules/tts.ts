@@ -1,7 +1,7 @@
 import { EdgeSpeechTTS } from "@lobehub/tts"
 import WebSocket from "ws"
 import { app, ipcMain } from "electron"
-import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper"
+import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
 global.WebSocket = WebSocket
 

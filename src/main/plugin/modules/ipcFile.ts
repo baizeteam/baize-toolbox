@@ -1,6 +1,6 @@
 import { app, ipcMain, dialog } from "electron"
 import { promisify } from "node:util"
-import { openFile, deleteFile, checkFolderExists } from "../../utils/fileHelper"
+import { openFile, deleteFile, checkFolderExists } from "@main/utils/fileHelper"
 import fs from "fs"
 import path from "path"
 
