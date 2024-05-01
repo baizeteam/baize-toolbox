@@ -1,8 +1,8 @@
 import { app, BrowserWindow } from "electron"
 import { electronApp, optimizer } from "@electron-toolkit/utils"
-import "./plugin"
-import { createMainWin } from "./helper"
-import { autoLanuch } from "./utils/autoLanuch"
+import "@main/plugin"
+import { createMainWin } from "@main/helper"
+import { autoLanuch } from "@main/utils/autoLanuch"
 
 app.whenReady().then(() => {
   autoLanuch()

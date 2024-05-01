@@ -1,6 +1,6 @@
 import { app, ipcMain, BrowserWindow } from "electron"
 import { createWin } from "@main/helper"
-import { showCustomMenu } from "./MenuManger"
+import { showCustomMenu } from "@main/plugin/modules/MenuManger"
 
 app.on("ready", async () => {
   let recordWin: BrowserWindow | null = null

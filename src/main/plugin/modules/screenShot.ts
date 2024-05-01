@@ -1,6 +1,6 @@
 import { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain } from "electron"
 import { createWin, enterWinFullScreen, exitWinFullScreen } from "@main/helper"
-import { showCustomMenu } from "./MenuManger"
+import { showCustomMenu } from "@main/plugin/modules/MenuManger"
 
 let screenShotWin: BrowserWindow | null = null
 // 隐藏截图窗口
