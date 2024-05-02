@@ -1,11 +1,11 @@
-import LinuxAutoLaunch from "easy-auto-launch";
-import { app } from "electron";
+import LinuxAutoLaunch from "easy-auto-launch"
+import { app } from "electron"
 
-export const autoLanuch = async (isAutoLaunchEnabled: boolean = true) => {
-  const electronIsDev = !app.isPackaged;
+export const autoLaunch = async (isAutoLaunchEnabled: boolean = true) => {
+  const electronIsDev = !app.isPackaged
 
   if (electronIsDev) {
-    return;
+    return
   }
 
   if (process.platform === "linux") {
@@ -13,19 +13,19 @@ export const autoLanuch = async (isAutoLaunchEnabled: boolean = true) => {
       name: app.getName(),
       isHidden: false,
       path: process.env.APPIMAGE,
-    });
+    })
 
     if (isAutoLaunchEnabled) {
-      await autoLauncher.enable();
+      await autoLauncher.enable()
     } else {
-      await autoLauncher.disable();
+      await autoLauncher.disable()
     }
 
-    return;
+    return
   }
 
   app.setLoginItemSettings({
     openAtLogin: isAutoLaunchEnabled,
     openAsHidden: false,
-  });
-};
+  })
+}

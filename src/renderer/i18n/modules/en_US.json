@@ -77,6 +77,10 @@
         "theme": "Theme",
         "language": "Language",
         "change": "Change",
+        "autoLaunchOption": {
+          "yes": "yes",
+          "no": "no"
+        },
         "themeOptions": {
           "light": "Light",
           "dark": "Dark",
@@ -88,7 +92,7 @@
           "config": {
             "btn": "Restore configuration",
             "title": "Confirm restore configuration?",
-            "content": "Restoring configuration includes export path, theme, and language. Do you want to continue?"
+            "content": "Restore the configuration, including the export path, theme, language, and automatic startup. Do you want to continue?"
           },
           "all": {
             "btn": "Restore all",

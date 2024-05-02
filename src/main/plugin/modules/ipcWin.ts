@@ -1,6 +1,7 @@
 import { app, ipcMain, BrowserWindow } from "electron"
 import { createWin } from "@main/helper"
 import { showCustomMenu } from "@main/plugin/modules/MenuManger"
+import { autoLaunch } from "@main/utils/autoLaunch"
 
 app.on("ready", async () => {
   let recordWin: BrowserWindow | null = null
@@ -74,5 +75,10 @@ app.on("ready", async () => {
       })
     }
     recordWin.show()
+  })
+
+  // 开机自启动
+  ipcMain.handle("SET_AUTO_LAUNCH", (_, bool) => {
+    autoLaunch(bool === "true")
   })
 })

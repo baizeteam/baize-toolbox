@@ -69,6 +69,7 @@ const defaultStore = {
   defaultOutPath: DEFAULT_OUTPUT_PATH,
   defaultSetting: "default",
   theme: "system",
+  isAutoLaunch: "false",
   i18n: "zhCN",
   ttsList: [],
   transcodeList: [],
