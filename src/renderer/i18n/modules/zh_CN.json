@@ -77,6 +77,7 @@
         "theme": "主题",
         "language": "语言",
         "change": "修改",
+        "autoLaunch": "开机自启动",
         "themeOptions": {
           "light": "浅色模式",
           "dark": "深色模式",
@@ -88,7 +89,7 @@
           "config": {
             "btn": "还原配置",
             "title": "确认还原配置？",
-            "content": "还原配置包括导出路径、主题、语言，是否继续？"
+            "content": "还原配置包括导出路径、主题、语言、开机自启动，是否继续？"
           },
           "all": {
             "btn": "还原全部",

@@ -4,6 +4,7 @@ import Theme from "./components/Theme"
 import DefaultOutPath from "./components/DefaultOutPath"
 import Language from "./components/Language"
 import Restore from "./components/Restore"
+import AutoLaunch from "./components/AutoLaunch"
 import "./index.module.less"
 
 export default function Setting() {
@@ -11,6 +12,7 @@ export default function Setting() {
     <div styleName="setting" className="common-content">
       <Language />
       <Theme />
+      <AutoLaunch />
       <DefaultOutPath />
       <Restore />
     </div>

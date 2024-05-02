@@ -4,6 +4,7 @@ import { queueStoreDelete } from "../../utils/storeHelper"
 import { electronReload, electronRestart } from "../../utils/reload"
 import i18n from "../../i18n"
 import { tray, initTray } from "./tray"
+import { autoLaunch } from "../../../main/utils/autoLaunch"
 
 export const store = new ElectronStore()
 const configIgnoreKeys = ["ttsList", "transcodeList", "extractList", "compressList"]
@@ -44,6 +45,11 @@ ipcMain.handle("RESET_STORE_BY_KEY", (_, key) => {
   return
 })
 
+// 开机自启动
+ipcMain.handle("SET_AUTO_LAUNCH", (_, bool) => {
+  autoLaunch(bool === "true" ? true : false)
+})
+
 // 恢复默认设置
 ipcMain.handle("STORE_RESTORE_CONFIG", () => {
   Object.keys(store.store).forEach((key) => {
@@ -69,6 +75,7 @@ const defaultStore = {
   defaultOutPath: DEFAULT_OUTPUT_PATH,
   defaultSetting: "default",
   theme: "system",
+  isAutoLaunch: "false",
   i18n: "zhCN",
   ttsList: [],
   transcodeList: [],
