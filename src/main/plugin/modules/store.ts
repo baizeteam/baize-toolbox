@@ -1,10 +1,10 @@
 import ElectronStore from "electron-store"
 import { app, ipcMain, BrowserWindow } from "electron"
-import { queueStoreDelete } from "../../utils/storeHelper"
-import { electronReload, electronRestart } from "../../utils/reload"
-import i18n from "../../i18n"
-import { tray, initTray } from "./tray"
-import { autoLaunch } from "../../../main/utils/autoLaunch"
+import { queueStoreDelete } from "@main/utils/storeHelper"
+import { electronReload, electronRestart } from "@main/utils/reload"
+import i18n from "@main/i18n"
+import { tray, initTray } from "@main/plugin/modules/tray"
+import { autoLaunch } from "@main/utils/autoLaunch"
 
 export const store = new ElectronStore()
 const configIgnoreKeys = ["ttsList", "transcodeList", "extractList", "compressList"]

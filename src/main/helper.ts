@@ -1,21 +1,21 @@
 import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions } from "electron"
 import { join } from "path"
 import { is } from "@electron-toolkit/utils"
-import icon from "../../resources/icon.png?asset"
-import { showCustomMenu } from "./plugin/modules/MenuManger"
-import { InjectData } from "./utils/inject"
-import { getSystemInfo } from "./utils/systemHelper"
+import icon from "@resources/icon.png?asset"
+import { showCustomMenu } from "@main/plugin/modules/MenuManger"
+import { InjectData } from "@main/utils/inject"
+import { getSystemInfo } from "@main/utils/systemHelper"
 
 let mainWindow: BrowserWindow
 let loadingWin: BrowserWindow
 export enum START_STATUS {
-  pedding = "pedding",
+  pending = "pending",
   success = "success",
   fail = "fail",
 }
 const mainWinStart = {
-  web: START_STATUS.pedding,
-  ffmpeg: START_STATUS.pedding,
+  web: START_STATUS.pending,
+  ffmpeg: START_STATUS.pending,
 }
 const handler = {
   set(target, p, value) {
@@ -38,7 +38,7 @@ export function onMainWinStartChange() {
   }
 }
 
-export function createloadingWin() {
+export function createLoadingWin() {
   loadingWin = new BrowserWindow({
     width: 300,
     height: 100,
@@ -118,9 +118,9 @@ export async function createMainWin(): Promise<void> {
   })
   mainWindow.webContents.on("did-start-loading", () => {
     if (!loadingWin) {
-      createloadingWin()
+      createLoadingWin()
     }
-    if (mainWinStartProxy.web === START_STATUS.pedding) {
+    if (mainWinStartProxy.web === START_STATUS.pending) {
       loadingWin.show()
     }
   })

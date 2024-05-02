@@ -60,6 +60,7 @@
     "babel-plugin-react-css-modules": "^5.2.6",
     "bufferutil": "^4.0.8",
     "dayjs": "^1.11.10",
+    "easy-auto-launch": "^6.0.2",
     "electron": "^29.1.6",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
@@ -81,7 +82,7 @@
     "terser": "^5.30.0",
     "typescript": "^5.3.3",
     "utf-8-validate": "^6.0.3",
-    "vite": "5.0.12",
+    "vite": "^5.2.10",
     "vite-plugin-react-css-modules": "^1.0.0",
     "ws": "^8.16.0"
   }

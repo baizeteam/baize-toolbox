@@ -5,9 +5,9 @@ import { ROUTERS } from "./ROUTERS"
 import { Spin } from "antd"
 import "./index.module.less"
 
-const RecordWin = lazy(() => import("../pages/RecordWin"))
-const ScreenShotWin = lazy(() => import("../pages/ScreenShotWin"))
-const ImageWin = lazy(() => import("../pages/ImageWin"))
+const RecordWin = lazy(() => import("@siteAssistTransprent/pages/RecordWin"))
+const ScreenShotWin = lazy(() => import("@siteAssistTransprent/pages/ScreenShotWin"))
+const ImageWin = lazy(() => import("@siteAssistTransprent/pages/ImageWin"))
 
 export default function BaseRouter() {
   return (

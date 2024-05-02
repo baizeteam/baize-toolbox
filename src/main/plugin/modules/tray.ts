@@ -1,7 +1,7 @@
 import { app, Tray, Menu, BrowserWindow } from "electron"
 import { is } from "@electron-toolkit/utils"
 import { join } from "path"
-import i18n from "../../i18n"
+import i18n from "@main/i18n"
 
 export let tray: Tray
 // 系统托盘

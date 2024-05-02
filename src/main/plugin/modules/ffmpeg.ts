@@ -1,10 +1,10 @@
 import { execFile, spawn } from "child_process"
 import { app, ipcMain, BrowserWindow, dialog } from "electron"
 import path, { resolve } from "path"
-import { checkFolderExists, getFileSize } from "../../utils/fileHelper"
-import { queueStoreAdd, queueStoreUpdate } from "../../utils/storeHelper"
-import { mainWinStartProxy, START_STATUS } from "../../helper"
-// import { mainLogSend } from "../../helper";
+import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
+import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
+import { mainWinStartProxy, START_STATUS } from "@main/helper"
+// import { mainLogSend } from "@main/helper";
 
 // 获取 ffmpeg 路径
 export const getFfmpegPath = () => {
