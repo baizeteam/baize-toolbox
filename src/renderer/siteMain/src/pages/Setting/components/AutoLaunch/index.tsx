@@ -3,14 +3,15 @@ import { Select } from "antd"
 import { useTranslation } from "react-i18next"
 import "./index.module.less"
 
-const options = [
-  { value: "true", label: "是" },
-  { value: "false", label: "否" },
-]
-
 export default function AutoLaunch() {
   const [isAutoLaunch, setIsAutoLaunch] = useState("false")
   const { t } = useTranslation()
+
+  const options = [
+    { value: "true", label: t("siteMain.pages.setting.autoLaunchOption.yes") },
+    { value: "false", label: t("siteMain.pages.setting.autoLaunchOption.no") },
+  ]
+
   const onChange = async (e) => {
     setIsAutoLaunch(e)
     window.ipcInvoke("SET_STORE", "isAutoLaunch", e)

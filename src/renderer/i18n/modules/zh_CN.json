@@ -78,6 +78,10 @@
         "language": "语言",
         "change": "修改",
         "autoLaunch": "开机自启动",
+        "autoLaunchOption": {
+          "yes": "是",
+          "no": "否"
+        },
         "themeOptions": {
           "light": "浅色模式",
           "dark": "深色模式",
