@@ -191,7 +191,7 @@ export default function TTS() {
         <Table
           columns={columns}
           dataSource={audioList}
-          rowKey="id"
+          rowKey="taskId"
           pagination={{ pageSize: 5, total: audioList.length }}
         />
       </div>

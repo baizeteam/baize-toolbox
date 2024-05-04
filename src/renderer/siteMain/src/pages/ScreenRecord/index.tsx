@@ -69,7 +69,7 @@ export default function ScreenRecord() {
       <Table
         dataSource={screenRecordList}
         columns={columns}
-        rowKey={(record) => record.id}
+        rowKey={(record) => record.taskId}
         pagination={{ pageSize: 5, total: screenRecordList.length }}
       />
     </div>
