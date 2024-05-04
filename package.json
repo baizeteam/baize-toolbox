@@ -20,7 +20,8 @@
     "build:win": "npm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac --config",
     "build:linux": "electron-vite build && electron-builder --linux --config",
-    "build:all": "npm run build:win && npm run build:mac && npm run build:linux"
+    "build:all": "npm run build:win && npm run build:mac && npm run build:linux",
+    "preinstall": "npx only-allow pnpm"
   },
   "volta": {
     "node": "16.16.0"
@@ -73,8 +74,8 @@
     "npm-run-all": "^4.1.5",
     "postcss-less": "^6.0.0",
     "prettier": "^3.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-i18next": "^14.1.0",
     "react-router-dom": "^6.21.2",
     "rollup-plugin-copy": "^3.5.0",
