@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react"
 import {
   ContainerOutlined,
   NodeExpandOutlined,
-  DesktopOutlined,
-  HomeOutlined,
   VideoCameraOutlined,
   PictureOutlined,
   AudioOutlined,

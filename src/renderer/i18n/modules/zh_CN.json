@@ -124,6 +124,11 @@
         "tableTitle": "录屏记录",
         "createBtn": "开始录屏"
       },
+      "screenShot": {
+        "tableTitle": "截屏记录",
+        "createText": "使用快捷键alt + s进行截屏",
+        "macCreateText": "使用快捷键option + s进行截屏"
+      },
       "compress": {
         "tableTitle": "压缩记录",
         "originFileSize": "原文件大小",

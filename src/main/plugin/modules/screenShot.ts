@@ -1,6 +1,7 @@
 import { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain } from "electron"
 import { createWin, enterWinFullScreen, exitWinFullScreen } from "@main/helper"
 import { showCustomMenu } from "@main/plugin/modules/MenuManger"
+import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
 let screenShotWin: BrowserWindow | null = null
 // 隐藏截图窗口
@@ -86,7 +87,17 @@ app.whenReady().then(async () => {
   })
 
   // 创建图片窗口
-  ipcMain.handle("SCREEN_SHOT_CREATE_IMAGE_WIN", async (event, data) => {
+  ipcMain.handle("SCREEN_SHOT_COMPLETE", async (event, data) => {
+    queueStoreAdd({
+      params: data,
+      key: `${data.code}List`,
+    })
+    const allWindows = BrowserWindow.getAllWindows()
+    allWindows.forEach((window) => {
+      if (window["customId"] === "main") {
+        window.webContents.send("SCREEN_SHOT_DATA_CHANGE")
+      }
+    })
     hideScreenShotWin()
     const { display, cutInfo, base64 } = data
     createImageWin({

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import "./index.module.less"
 import ScreenShot from "js-web-screen-shot"
+import { nanoid } from "nanoid"
 
 const getStream = (source): Promise<MediaStream | null> => {
   return new Promise((resolve, _reject) => {
@@ -26,22 +27,30 @@ const getStream = (source): Promise<MediaStream | null> => {
   })
 }
 
+const handleCompleteBack = (e, display) => {
+  const taskId = nanoid(16)
+  const params = {
+    taskId,
+    createTime: new Date().getTime(),
+    code: "screenShot",
+    ...e,
+    display,
+  }
+  window.ipcInvoke("SCREEN_SHOT_COMPLETE", params)
+}
+
 export default function ScreenShotWin() {
   const screenShotRef = useRef<ScreenShot>(null)
   useEffect(() => {
     window.ipcOn("GET_SCREEN_SHOT_STREAM", async (event, data) => {
       const { display, source } = data
       const stream = await getStream(source)
-      console.log(stream)
       screenShotRef.current = new ScreenShot({
         enableWebRtc: true, // 启用webrtc
         screenFlow: stream!, // 传入屏幕流数据
         level: 999,
         completeCallback: (e) => {
-          window.ipcInvoke("SCREEN_SHOT_CREATE_IMAGE_WIN", {
-            ...e,
-            display,
-          })
+          handleCompleteBack(e, display)
         },
         closeCallback: () => {
           window.ipcInvoke("SCREEN_SHOT_WIN_HIDE")
