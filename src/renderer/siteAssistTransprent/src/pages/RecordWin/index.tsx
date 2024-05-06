@@ -91,6 +91,7 @@ export default function RecordWin() {
       outputFloaderPath: subOutputFloaderPath,
       outputFileName: fileName,
       createType: fileType,
+      createTime: Date.now(),
       fps,
     })
   }
