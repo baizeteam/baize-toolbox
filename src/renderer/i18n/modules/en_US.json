@@ -124,6 +124,10 @@
         "tableTitle": "Screen Record History",
         "createBtn": "Start Recording"
       },
+      "screenShot": {
+        "tableTitle": "Screen Shot History",
+        "createBtn": "Click to take a screenshot, or use the shortcut alt + s"
+      },
       "compress": {
         "tableTitle": "Compress History",
         "originFileSize": "Origin Size",
