@@ -11,12 +11,32 @@ export default function ScreenShot() {
   const { t } = useTranslation()
 
   const columns = [
-    tableFile,
     {
       title: t("commonText.size"),
-      dataIndex: "createType",
-      key: "createType",
+      dataIndex: "base64",
+      key: "base64",
+      width: 200,
+      render: (base64, record) => {
+        return (
+          <img
+            src={base64}
+            alt="截图"
+            width={160}
+            onClick={() => {
+              window.ipcInvoke("SCREEN_SHOT_OPEN_IMAGE_WIN", { base64: record.base64, cutInfo: record.cutInfo })
+            }}
+          />
+        )
+      },
+    },
+    {
+      title: t("commonText.size"),
+      dataIndex: "cutInfo",
+      key: "cutInfo",
       width: 160,
+      render: (cutInfo) => {
+        return `${cutInfo.width}*${cutInfo.height}`
+      },
     },
     tableCreateTime,
     {
@@ -27,9 +47,7 @@ export default function ScreenShot() {
       render: (_, record) => {
         return (
           <>
-            <OpenFileBtn record={record} />
-            <OpenFolderBtn record={record} />
-            <DeleteRecordBtn record={record} hasFile callback={init} />
+            <DeleteRecordBtn record={record} callback={init} />
           </>
         )
       },
