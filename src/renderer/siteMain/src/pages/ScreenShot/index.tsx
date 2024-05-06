@@ -58,15 +58,14 @@ export default function ScreenShot() {
 
   const init = async () => {
     const res = await window.ipcInvoke("GET_STORE", "screenShotList")
-    console.log(res)
     setScreenShotList(res)
   }
 
   useEffect(() => {
     init()
-    window.ipcOn("SCREEN_RECORD_DATA_CHANGE", init)
+    window.ipcOn("SCREEN_SHOT_DATA_CHANGE", init)
     return () => {
-      window.electron.ipcRenderer.removeAllListeners("SCREEN_RECORD_DATA_CHANGE")
+      window.electron.ipcRenderer.removeAllListeners("SCREEN_SHOT_DATA_CHANGE")
     }
   }, [])
   return (

@@ -88,10 +88,15 @@ app.whenReady().then(async () => {
 
   // 创建图片窗口
   ipcMain.handle("SCREEN_SHOT_COMPLETE", async (event, data) => {
-    console.log("截图完成", data)
     queueStoreAdd({
       params: data,
       key: `${data.code}List`,
+    })
+    const allWindows = BrowserWindow.getAllWindows()
+    allWindows.forEach((window) => {
+      if (window["customId"] === "main") {
+        window.webContents.send("SCREEN_SHOT_DATA_CHANGE")
+      }
     })
     hideScreenShotWin()
     const { display, cutInfo, base64 } = data
