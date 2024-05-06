@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Table } from "antd"
 import { useTranslation } from "react-i18next"
-import { tableFile, tableCreateTime, OpenFileBtn, OpenFolderBtn, DeleteRecordBtn } from "@renderer/utils/tableHelper"
+import { tableCreateTime, DeleteRecordBtn } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 import { PictureOutlined } from "@ant-design/icons"
+import platformUtil from "@renderer/utils/platformUtil"
 import "./index.module.less"
 
 export default function ScreenShot() {
@@ -70,12 +71,13 @@ export default function ScreenShot() {
   }, [])
   return (
     <div styleName="screen-shot" className="common-content">
-      {/* <AppFunctionDev /> */}
       <div styleName="screen-shot-btn">
         <div styleName="icon">
           <PictureOutlined />
         </div>
-        <p className="ant-upload-text">{t("siteMain.pages.screenShot.createBtn")}</p>
+        <p className="ant-upload-text">
+          {t(platformUtil.isMac ? "siteMain.pages.screenShot.macCreateText" : "siteMain.pages.screenShot.createText")}
+        </p>
       </div>
       <AppTableHeader
         title={"siteMain.pages.screenShot.tableTitle"}

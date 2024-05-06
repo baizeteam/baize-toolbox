@@ -126,7 +126,8 @@
       },
       "screenShot": {
         "tableTitle": "Screen Shot History",
-        "createBtn": "Use the shortcut keys alt + s to take a screenshot"
+        "createText": "Use the shortcut keys alt + s to take a screenshot",
+        "macCreateText": "Use the shortcut keys option + s to take a screenshot"
       },
       "compress": {
         "tableTitle": "Compress History",
