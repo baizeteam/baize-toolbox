@@ -126,7 +126,7 @@
       },
       "screenShot": {
         "tableTitle": "截屏记录",
-        "createBtn": "点击开始截屏，或者使用快捷键alt + s"
+        "createBtn": "使用快捷键alt + s进行截屏"
       },
       "compress": {
         "tableTitle": "压缩记录",

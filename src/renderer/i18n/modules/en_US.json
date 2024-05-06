@@ -126,7 +126,7 @@
       },
       "screenShot": {
         "tableTitle": "Screen Shot History",
-        "createBtn": "Click to take a screenshot, or use the shortcut alt + s"
+        "createBtn": "Use the shortcut keys alt + s to take a screenshot"
       },
       "compress": {
         "tableTitle": "Compress History",

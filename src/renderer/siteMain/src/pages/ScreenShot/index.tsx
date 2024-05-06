@@ -9,9 +9,6 @@ import "./index.module.less"
 export default function ScreenShot() {
   const [screenShotList, setScreenShotList] = useState([])
   const { t } = useTranslation()
-  const openScreenShotWin = () => {
-    window.ipcSend("OPEN_RECORD_WIN")
-  }
 
   const columns = [
     tableFile,
@@ -55,7 +52,7 @@ export default function ScreenShot() {
   return (
     <div styleName="screen-shot" className="common-content">
       {/* <AppFunctionDev /> */}
-      <div styleName="screen-shot-btn" onClick={openScreenShotWin}>
+      <div styleName="screen-shot-btn">
         <div styleName="icon">
           <PictureOutlined />
         </div>
