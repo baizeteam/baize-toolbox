@@ -12,7 +12,7 @@ export default function ScreenShot() {
 
   const columns = [
     {
-      title: t("commonText.size"),
+      title: t("commonText.image"),
       dataIndex: "base64",
       key: "base64",
       width: 200,
@@ -21,7 +21,8 @@ export default function ScreenShot() {
           <img
             src={base64}
             alt="截图"
-            width={160}
+            width={180}
+            style={{ cursor: "pointer" }}
             onClick={() => {
               window.ipcInvoke("SCREEN_SHOT_OPEN_IMAGE_WIN", { base64: record.base64, cutInfo: record.cutInfo })
             }}
