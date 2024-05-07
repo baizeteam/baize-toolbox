@@ -59,8 +59,25 @@ export const tableCreateTime = {
 
 interface ITableBtnProps {
   record: any
+  suffix?: string
   hasFile?: boolean
-  callback?: () => void
+  callback?: (data?: any) => void
+}
+
+// 保存文件按钮
+export const SaveFileBtn = (props: ITableBtnProps) => {
+  const { record, suffix, callback } = props
+  const { t } = useTranslation()
+  const handleSaveFile = async () => {
+    const res = await window.ipcInvoke("WIN_SAVE_AND_RENAME", { fileName: record.taskId + suffix })
+    callback && callback(res)
+  }
+
+  return (
+    <Button onClick={handleSaveFile} type="link" className="common-table-link-btn">
+      {t("commonText.save")}
+    </Button>
+  )
 }
 
 // 打开文件按钮

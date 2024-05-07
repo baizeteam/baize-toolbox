@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react"
 import { Table } from "antd"
 import { useTranslation } from "react-i18next"
-import { tableCreateTime, DeleteRecordBtn } from "@renderer/utils/tableHelper"
+import { tableCreateTime, SaveFileBtn, DeleteRecordBtn } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 import { PictureOutlined } from "@ant-design/icons"
 import platformUtil from "@renderer/utils/platformUtil"
+import { message } from "antd"
 import "./index.module.less"
 
 export default function ScreenShot() {
   const [screenShotList, setScreenShotList] = useState([])
   const { t } = useTranslation()
+
+  const saveImage = async (record, filePath) => {
+    const res = await window.ipcInvoke("WIN_DOWNLOAD_BASE64", {
+      base64: record.base64.replace(/data:image\/(png|jpg|jpeg);base64,/i, ""),
+      filePath,
+    })
+    if (res === true) {
+      message.success(t("commonText.saveSuccess"))
+    } else {
+      message.error(t("commonText.saveError"))
+    }
+  }
 
   const columns = [
     {
@@ -49,6 +62,7 @@ export default function ScreenShot() {
       render: (_, record) => {
         return (
           <>
+            <SaveFileBtn record={record} suffix=".png" callback={(filePath) => saveImage(record, filePath)} />
             <DeleteRecordBtn record={record} callback={init} />
           </>
         )

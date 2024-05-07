@@ -113,10 +113,13 @@ app.whenReady().then(async () => {
   // 打开图片窗口
   ipcMain.handle("SCREEN_SHOT_OPEN_IMAGE_WIN", async (event, data) => {
     const { cutInfo, base64 } = data
+    const mousePoint = screen.getCursorScreenPoint()
     createImageWin({
       width: cutInfo.width,
       height: cutInfo.height,
       base64,
+      x: mousePoint.x,
+      y: mousePoint.y,
     })
     return true
   })

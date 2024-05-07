@@ -35,6 +35,22 @@ app.on("ready", () => {
       })
   })
 
+  // 保存并重命名
+  ipcMain.handle("WIN_SAVE_AND_RENAME", async (e, data) => {
+    return dialog
+      .showSaveDialog({
+        properties: ["showOverwriteConfirmation"],
+        defaultPath: data.fileName,
+      })
+      .then((result) => {
+        if (!result.canceled) {
+          return result.filePath
+        } else {
+          return null
+        }
+      })
+  })
+
   // 打开文件
   ipcMain.handle("WIN_OPEN_FILE", async (e, data) => {
     return openFile(data.path)
@@ -48,11 +64,10 @@ app.on("ready", () => {
   // 下载base64文件
   ipcMain.handle("WIN_DOWNLOAD_BASE64", async (e, data) => {
     return new Promise((resolve) => {
-      const { base64, fileName, filePath } = data
-      checkFolderExists(filePath)
+      const { base64, filePath } = data
+      checkFolderExists(path.dirname(filePath))
       const buffer = Buffer.from(base64, "base64")
-      const downloadPath = path.join(filePath, fileName)
-      fs.writeFile(downloadPath, buffer, (err) => {
+      fs.writeFile(filePath, buffer, (err) => {
         console.log("err", err)
         if (err) {
           resolve(err)
@@ -64,7 +79,6 @@ app.on("ready", () => {
   })
 
   ipcMain.handle("WIN_DOWNLOAD_FILE", async (event, data) => {
-    console.log(data)
     const { path, file } = data
     const writeFile = promisify(fs.writeFile)
     try {

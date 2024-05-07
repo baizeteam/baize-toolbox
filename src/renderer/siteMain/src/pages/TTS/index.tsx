@@ -7,8 +7,7 @@ import { EdgeSpeechTTS } from "@lobehub/tts"
 import AudioPlay from "@renderer/components/AudioPlay"
 import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"
-import { tableText, tableCreateTime, DeleteRecordBtn } from "@renderer/utils/tableHelper"
-import { separator } from "@renderer/utils/fileHelper"
+import { tableText, tableCreateTime, DeleteRecordBtn, SaveFileBtn } from "@renderer/utils/tableHelper"
 import AppTableHeader from "@siteMain/components/AppTableHeader"
 
 enum EStatus {
@@ -16,8 +15,6 @@ enum EStatus {
   success = "success",
   error = "error",
 }
-
-const SUB_FLODER_NAME = "tts"
 
 interface IAudioItem {
   taskId: string
@@ -46,21 +43,16 @@ export default function TTS() {
   const { t } = useTranslation()
   const { pathname } = useLocation()
 
-  // 下载语音
-  const downLoadTTS = async (record) => {
-    console.log(record)
-    const outputPath = await window.ipcInvoke("GET_STORE", "defaultOutPath")
-    const filePath = `${outputPath}${separator}${SUB_FLODER_NAME}`
+  // 保存语音
+  const saveTTS = async (record, filePath) => {
     const res = await window.ipcInvoke("WIN_DOWNLOAD_BASE64", {
       base64: record.url,
-      fileName: `${record.createTime}-${nanoid(8)}.mp3`,
       filePath,
     })
     if (res === true) {
-      message.success(t("commonText.downloadSuccess"))
+      message.success(t("commonText.saveSuccess"))
     } else {
-      message.error(t("commonText.downloadErroe"))
-      console.log(res)
+      message.error(t("commonText.saveError"))
     }
   }
 
@@ -90,15 +82,7 @@ export default function TTS() {
       render: (_, record) => {
         return (
           <>
-            <Button
-              onClick={() => downLoadTTS(record)}
-              type="link"
-              className="common-table-link-btn"
-              style={{ padding: 0 }}
-              disabled={record.status !== EStatus.success}
-            >
-              {t("commonText.download")}
-            </Button>
+            <SaveFileBtn record={record} suffix=".mp3" callback={(filePath) => saveTTS(record, filePath)} />
             <DeleteRecordBtn record={record} callback={init} />
           </>
         )
