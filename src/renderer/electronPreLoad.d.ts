@@ -10,7 +10,7 @@ declare global {
       width: number
       height: number
     }
-    ipcInvoke: (channel: string, data?: any) => Promise<any>
+    ipcInvoke: (channel: string, ...args: any[]) => Promise<any>
     ipcOn: (channel: string, listener: (event: any, data: any) => void) => void
     ipcSend: (channel: string, data?: any) => void
   }
