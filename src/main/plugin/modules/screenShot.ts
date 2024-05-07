@@ -53,8 +53,9 @@ const createImageWin = async (data) => {
   }
   const imageWin = await createWin({
     config,
-    url: "/siteAssistTransprent/index.html#/image-win",
+    url: "/siteAssistTransprent/index.html",
     injectData: { base64 },
+    route: "/image-win",
   })
   imageWin.setSize(width + 12, height + 12)
   imageWin.show()
@@ -68,7 +69,8 @@ app.whenReady().then(async () => {
       alwaysOnTop: true,
       show: false,
     },
-    url: "/siteAssistTransprent/index.html#/screen-shot-win",
+    url: "/siteAssistTransprent/index.html",
+    route: "/screen-shot-win",
   })
   screenShotWin.on("ready-to-show", () => {
     showCustomMenu(screenShotWin)

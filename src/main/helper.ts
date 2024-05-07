@@ -69,9 +69,10 @@ interface ICreateWin {
   config: BrowserWindowConstructorOptions
   url: string
   injectData?: any
+  route?: string
 }
 
-export async function createWin({ config, url, injectData }: ICreateWin): Promise<BrowserWindow> {
+export async function createWin({ config, url, injectData, route }: ICreateWin): Promise<BrowserWindow> {
   const win = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
@@ -90,6 +91,11 @@ export async function createWin({ config, url, injectData }: ICreateWin): Promis
       ...injectData,
     },
   })
+  if (route) {
+    win.webContents.on("did-finish-load", () => {
+      win.webContents.send("INIT_ROUTE", route)
+    })
+  }
   initWinUrl(win, url)
   return win
 }

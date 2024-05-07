@@ -64,7 +64,8 @@ app.on("ready", async () => {
           transparent: true,
           alwaysOnTop: true,
         },
-        url: "/siteAssistTransprent/index.html#/record-win",
+        url: "/siteAssistTransprent/index.html",
+        route: "record-win",
       })
       recordWin.on("ready-to-show", () => {
         showCustomMenu(recordWin)
