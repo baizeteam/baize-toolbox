@@ -38,13 +38,13 @@ export default function Extract() {
     }
   }
 
-  // 更新转码列表
+  // 更新提取列表
   const changeExtractList = (list) => {
     extractListRef.current = list
     setExtractList(list)
   }
 
-  // 转码
+  // 提取
   const handleFile = async (outputType) => {
     setShowTypeModal(false)
     const baseInfo = await getTaskBaseInfo({
@@ -70,7 +70,7 @@ export default function Extract() {
     window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
   }
 
-  // 转码进度
+  // 提取进度
   const onProgressChange = (e, data, taskId) => {
     changeExtractList([
       ...extractListRef.current?.map((item) => {
