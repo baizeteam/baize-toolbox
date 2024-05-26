@@ -79,7 +79,7 @@ app.on("ready", async () => {
   })
 
   // 开机自启动
-  ipcMain.handle("SET_AUTO_LAUNCH", (_, bool) => {
-    autoLaunch(bool === "true")
-  })
+  // ipcMain.handle("SET_AUTO_LAUNCH", (_, bool) => {
+  //   autoLaunch(bool === "true")
+  // })
 })
