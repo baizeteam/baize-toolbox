@@ -7,6 +7,5 @@ out
 .DS_Store
 *.log*
 .idea
-.vscode
 yarn.lock
 package-lock.json
