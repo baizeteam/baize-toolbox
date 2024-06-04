@@ -120,7 +120,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
 
   // 删除记录
   const deleteData = async ({ record, isDeleteFile }) => {
-    const recordDeleteRes = window.ipcInvoke("QUEUE_STORE_DELETE", {
+    const recordDeleteRes = await window.ipcInvoke("QUEUE_STORE_DELETE", {
       key: `${record.code}List`,
       idKey: "taskId",
       id: record.taskId,
@@ -134,7 +134,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
     } else {
       recordDeleteRes ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
     }
-    callback()
+    callback && callback()
   }
 
   // 删除按钮点击事件, 弹出确认框

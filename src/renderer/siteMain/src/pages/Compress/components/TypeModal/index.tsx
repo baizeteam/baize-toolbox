@@ -73,7 +73,7 @@ export default function TypeModal(props: ITypeModalProps) {
           <AppLoading />
         ) : (
           <>
-            {fileSelectAccetps?.video.includes(filePath?.split(".").pop()) && (
+            {fileSelectAccetps?.video.includes(filePath?.split(".").pop() ?? "") && (
               <div styleName="video-info">
                 <div styleName="info">
                   <div styleName="title">{t("siteMain.pages.compress.typeModal.infoTitle")}</div>

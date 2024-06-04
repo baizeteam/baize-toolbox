@@ -73,7 +73,7 @@ app.whenReady().then(async () => {
     route: "/screen-shot-win",
   })
   screenShotWin.on("ready-to-show", () => {
-    showCustomMenu(screenShotWin)
+    screenShotWin && showCustomMenu(screenShotWin)
   })
 
   // 隐藏截图窗口

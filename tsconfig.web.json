@@ -11,6 +11,7 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "strictNullChecks": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {

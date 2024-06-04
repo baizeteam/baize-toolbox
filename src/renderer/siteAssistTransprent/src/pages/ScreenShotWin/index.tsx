@@ -40,7 +40,7 @@ const handleCompleteBack = (e, display) => {
 }
 
 export default function ScreenShotWin() {
-  const screenShotRef = useRef<ScreenShot>(null)
+  const screenShotRef = useRef<ScreenShot | null>(null)
   useEffect(() => {
     window.ipcOn("GET_SCREEN_SHOT_STREAM", async (event, data) => {
       const { display, source } = data
