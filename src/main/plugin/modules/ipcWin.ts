@@ -68,7 +68,7 @@ app.on("ready", async () => {
         route: "record-win",
       })
       recordWin.on("ready-to-show", () => {
-        showCustomMenu(recordWin)
+        recordWin && showCustomMenu(recordWin)
       })
       recordWin.webContents.on("context-menu", (e) => {
         console.log("context-menu", e)

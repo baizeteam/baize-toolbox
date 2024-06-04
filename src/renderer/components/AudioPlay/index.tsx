@@ -11,9 +11,9 @@ export default function AudioPlay({ src }: AudioPlayProps) {
 
   const changePlay = () => {
     if (isPlaying) {
-      audioRef.current.pause()
+      audioRef.current?.pause()
     } else {
-      audioRef.current.play()
+      audioRef.current?.play()
     }
   }
 

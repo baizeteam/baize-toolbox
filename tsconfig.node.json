@@ -6,6 +6,7 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "strictNullChecks": true,
     "types": ["electron-vite/node"],
     "baseUrl": ".",
     "paths": {

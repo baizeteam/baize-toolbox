@@ -42,7 +42,7 @@ app.on("ready", () => {
   ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
     console.log("FFMPEG_COMMAND", params)
     const videoInfo = await getVideoInfo(params.inputFilePath)
-    const videoDuration = videoInfo.duration
+    const videoDuration = videoInfo.duration ?? 0
     checkFolderExists(params.outputFloaderPath)
     const outputFilePath = path.join(params.outputFloaderPath, params.outputFileName)
     const command = [...params.command, outputFilePath]

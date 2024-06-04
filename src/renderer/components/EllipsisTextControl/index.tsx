@@ -43,7 +43,7 @@ const EllipsisTextControl = ({
   width,
   maxWidth,
   maxHeight,
-  contentClassName,
+  contentClassName = "",
   tooltipsClassName,
   getPopupContainer,
   type = "single",
@@ -56,7 +56,7 @@ const EllipsisTextControl = ({
   const ellipsisInputRef = useRef<HTMLDivElement>(null)
   /** 存放主体内容的容器 */
   const ellipsisContainerRef = useRef<HTMLDivElement>(null)
-  const [optionProps, setOptionProps] = useState<OptionProps>(null)
+  const [optionProps, setOptionProps] = useState<OptionProps>({ open: false })
   const [showLastEllipsis, setShowLastEllipsis] = useState(false)
 
   const trueContentText = (contentText || content) as string
@@ -69,10 +69,13 @@ const EllipsisTextControl = ({
   const getMaxLength = () => {
     const ellipsisInput = ellipsisInputRef.current
     const ellipsisContainer = ellipsisContainerRef.current
+    let result = 0
+    if (!ellipsisInput || !ellipsisContainer) {
+      return result
+    }
     const offsetHeight = ellipsisContainer.offsetHeight
     let left = 0,
       right = trueContentText?.length
-    let result = 0
     while (left <= right) {
       const middle = Math.ceil((left + right) / 2)
       ellipsisInput.innerHTML = trueContentText.slice(0, middle)
@@ -104,6 +107,7 @@ const EllipsisTextControl = ({
   /** 处理单选 */
   const handleSingle = () => {
     const ellipsisContainer = ellipsisContainerRef.current
+    if (!ellipsisContainer) return
     // 说明没有超出范围
     if (ellipsisContainer.offsetWidth >= ellipsisContainer.scrollWidth) {
       handleHidePopupTip(true)
@@ -115,6 +119,7 @@ const EllipsisTextControl = ({
   /** 处理多选 */
   const handleMulitiple = () => {
     const ellipsisInput = ellipsisInputRef.current
+    if (!ellipsisInput) return
     const maxLength = getMaxLength()
     const isOver = maxLength < trueContentText.length
     if (isOver) {
@@ -158,7 +163,7 @@ const EllipsisTextControl = ({
       placement={placement}
       {...optionProps}
       getPopupContainer={getPopupContainer}
-      trigger={showTooltip ? "hover" : null}
+      trigger={showTooltip ? "hover" : undefined}
     >
       <div
         ref={ellipsisContainerRef}

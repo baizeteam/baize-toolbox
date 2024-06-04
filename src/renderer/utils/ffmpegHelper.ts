@@ -10,7 +10,7 @@ export const COLLECT_TYPE = {
 
 // ffmpeg 命令对象转数组
 export const ffmpegObj2List = (ffmpegObj) => {
-  const list = []
+  const list: string[] = []
   for (const key in ffmpegObj) {
     list.push(key)
     if (ffmpegObj[key]) {
@@ -30,8 +30,8 @@ export const getTaskBaseInfo = async ({
   outputType?: string
   subFloder?: string
 }) => {
-  const oldFileName = filePath.split(separator).pop().split(".").shift()
-  const fileOutputType = outputType || filePath.split("/").pop().split(".").pop()
+  const oldFileName = filePath.split(separator).pop()?.split(".").shift()
+  const fileOutputType = outputType || filePath.split("/").pop()?.split(".").pop()
   const outputFileName = `${oldFileName}-${new Date().getTime()}.${fileOutputType}`
   const outputFloaderPath = await window.ipcInvoke("GET_STORE", "defaultOutPath")
   const taskId = nanoid(16)

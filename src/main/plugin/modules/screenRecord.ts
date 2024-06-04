@@ -1,13 +1,14 @@
 import { BrowserWindow, ipcMain, screen } from "electron"
-import { spawn } from "child_process"
+import { ChildProcessWithoutNullStreams, spawn } from "child_process"
 import { getFfmpegPath } from "@main/plugin/modules/ffmpeg"
 import { checkFolderExists } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
-let ffmpegProcess = null
+let ffmpegProcess: ChildProcessWithoutNullStreams | null = null
 
 ipcMain.handle("SCREEN_RECORD_GET_CURRENT_INFO", async (e, data) => {
   const cur = BrowserWindow.fromWebContents(e.sender)
+  if (!cur) return null
   const bounds = cur.getBounds()
   const currentDisplay = screen.getDisplayNearestPoint({
     x: bounds.x,
@@ -25,8 +26,8 @@ ipcMain.handle("SCREEN_RECORD_GET_CURRENT_INFO", async (e, data) => {
 // 开始录屏
 ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   const win = BrowserWindow.fromWebContents(e.sender)
-  win.setResizable(false)
-  win.setMovable(false)
+  win?.setResizable(false)
+  win?.setMovable(false)
   const { ffmpegPath } = getFfmpegPath()
   checkFolderExists(params.outputFloaderPath)
   queueStoreAdd({
@@ -56,10 +57,10 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
 // 结束录屏
 ipcMain.handle("SCREEN_RECORD_STOP", async (e, data) => {
   const win = BrowserWindow.fromWebContents(e.sender)
-  win.setResizable(true)
-  win.setMovable(true)
-  ffmpegProcess.on("exit", (code, signal) => {
+  win?.setResizable(true)
+  win?.setMovable(true)
+  ffmpegProcess?.on("exit", (code, signal) => {
     console.log(`FFmpeg进程退出，退出码：${code}，信号：${signal}`)
   })
-  ffmpegProcess.stdin.write("q\n")
+  ffmpegProcess?.stdin.write("q\n")
 })

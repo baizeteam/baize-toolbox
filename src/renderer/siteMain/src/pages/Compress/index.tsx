@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useCallback } from "react"
 import { Table } from "antd"
 import AppSelectFile from "@siteMain/components/AppSelectFile"
 import TypeModal from "./components/TypeModal"
@@ -28,7 +28,7 @@ export default function Compress() {
   const [filePath, setFilePath] = useState(null)
   const [fileSize, setFileSize] = useState(null)
   const [showTypeModal, setShowTypeModal] = useState(false)
-  const [compressList, setCompressList] = useState([])
+  const [compressList, setCompressList] = useState<compressType[]>([])
   const compressListRef = useRef(compressList)
   const { t } = useTranslation()
   const { pathname } = useLocation()
@@ -49,31 +49,35 @@ export default function Compress() {
   }
 
   // 转码
-  const handleFile = async (configData) => {
-    setShowTypeModal(false)
-    console.log(configData)
-    const baseInfo = await getTaskBaseInfo({
-      filePath,
-      subFloder: SUB_FLODER_NAME,
-    })
-    console.log(baseInfo)
-    const commandObj = {
-      "-i": filePath,
-      "-b:v": configData.bitrate + "k",
-      // "-b:a": configData.audioBitrate,
-      "-r": configData.frameRate,
-    }
-    const command = ffmpegObj2List(commandObj)
-    const params = {
-      command: [...command],
-      ...baseInfo,
-      originFileSize: fileSize,
-      code: "compress",
-    }
-    changeCompressList([params, ...(compressListRef.current || [])])
-    window.ipcSend("FFMPEG_COMMAND", params)
-    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
-  }
+  const handleFile = useCallback(
+    async (configData) => {
+      if (!filePath) return
+      setShowTypeModal(false)
+      console.log(configData)
+      const baseInfo = await getTaskBaseInfo({
+        filePath,
+        subFloder: SUB_FLODER_NAME,
+      })
+      console.log(baseInfo)
+      const commandObj = {
+        "-i": filePath,
+        "-b:v": configData.bitrate + "k",
+        // "-b:a": configData.audioBitrate,
+        "-r": configData.frameRate,
+      }
+      const command = ffmpegObj2List(commandObj)
+      const params = {
+        command: [...command],
+        ...baseInfo,
+        originFileSize: fileSize,
+        code: "compress",
+      }
+      changeCompressList([params, ...(compressListRef.current || [])])
+      window.ipcSend("FFMPEG_COMMAND", params)
+      window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
+    },
+    [filePath],
+  )
 
   // 进度
   const onProgressChange = (e, data, taskId) => {
@@ -156,7 +160,14 @@ export default function Compress() {
         rowKey={"taskId"}
         pagination={{ pageSize: 5, total: compressList.length }}
       />
-      <TypeModal filePath={filePath} open={showTypeModal} onCancel={() => setShowTypeModal(false)} onOk={handleFile} />
+      {filePath && (
+        <TypeModal
+          filePath={filePath}
+          open={showTypeModal}
+          onCancel={() => setShowTypeModal(false)}
+          onOk={handleFile}
+        />
+      )}
     </div>
   )
 }

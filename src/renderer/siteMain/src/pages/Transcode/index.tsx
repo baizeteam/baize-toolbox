@@ -25,7 +25,7 @@ const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map((ite
 export default function Transcode() {
   const [filePath, setFilePath] = useState(null)
   const [showTypeModal, setShowTypeModal] = useState(false)
-  const [transcodeList, setTranscodeList] = useState([])
+  const [transcodeList, setTranscodeList] = useState<compressType[]>([])
   const transcodeListRef = useRef(transcodeList)
   const { t } = useTranslation()
   const { pathname } = useLocation()
@@ -46,6 +46,7 @@ export default function Transcode() {
 
   // 转码
   const handleFile = async (outputType) => {
+    if (!filePath) return
     setShowTypeModal(false)
     const baseInfo = await getTaskBaseInfo({
       filePath,

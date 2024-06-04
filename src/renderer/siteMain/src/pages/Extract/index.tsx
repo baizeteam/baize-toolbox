@@ -25,7 +25,7 @@ const accept = [...fileSelectAccetps.video, ...fileSelectAccetps.audio].map((ite
 export default function Extract() {
   const [filePath, setFilePath] = useState(null)
   const [showTypeModal, setShowTypeModal] = useState(false)
-  const [extractList, setExtractList] = useState([])
+  const [extractList, setExtractList] = useState<compressType[]>([])
   const extractListRef = useRef(extractList)
   const { t } = useTranslation()
   const { pathname } = useLocation()
@@ -46,6 +46,7 @@ export default function Extract() {
 
   // 提取
   const handleFile = async (outputType) => {
+    if (!filePath) return
     setShowTypeModal(false)
     const baseInfo = await getTaskBaseInfo({
       filePath,

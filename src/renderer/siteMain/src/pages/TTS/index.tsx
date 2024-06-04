@@ -20,7 +20,7 @@ interface IAudioItem {
   taskId: string
   voice: string
   text: string
-  url: string
+  url: string | null
   createTime: number
   status: EStatus
 }
