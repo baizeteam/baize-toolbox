@@ -4,7 +4,9 @@
     "src/renderer/*.d.ts",
     "src/renderer/**/*",
     "src/renderer/**/*.tsx",
-    "src/preload/*.d.ts"
+    "src/preload/*.d.ts", 
+    "typings/electronPreLoad.d.ts",
+    "typings/env.d.ts",
   ],
   "compilerOptions": {
     "composite": true,
