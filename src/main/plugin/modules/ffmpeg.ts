@@ -59,7 +59,7 @@ app.on("ready", () => {
         key: `${params.code}List`,
         idKey: "taskId",
       })
-      BrowserWindow.fromWebContents(e.sender)?.webContents.send(`FFMPEG_PROGRESS_${taskId}`, data)
+      BrowserWindow.fromWebContents(e.sender)?.webContents.send(`FFMPEG_PROGRESS_${taskId}`, newParams)
     }
 
     ffmpegProcess.stderr.on("data", (data) => {

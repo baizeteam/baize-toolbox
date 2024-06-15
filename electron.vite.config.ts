@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import { defineConfig, externalizeDepsPlugin } from "electron-vite"
 import react from "@vitejs/plugin-react"
-import reactCssModule from "vite-plugin-react-css-modules"
+import reactCssModule from "vite-react-stylename"
 import genericNames from "generic-names"
 import autoprefixer from "autoprefixer"
 
