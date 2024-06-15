@@ -4,30 +4,23 @@ import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 import { mainWinStartProxy, START_STATUS } from "@main/helper"
+import * as ffmpegStatic from "ss-ffmpeg-static-electron"
 // import { mainLogSend } from "@main/helper";
 
 // 获取 ffmpeg 路径
-export const getFfmpegPath = () => {
-  const basePath = app.isPackaged
-    ? path.join(process.resourcesPath, "app.asar.unpacked/resources")
-    : path.join(__dirname, "../../resources")
-  const platformObj = {
-    win32: "win",
-    darwin: "mac",
-    linux: "linux",
-    freebsd: "linux",
-    netbsd: "linux",
-    openbsd: "linux",
-    sunos: "linux",
-  }
-  return {
-    ffmpegPath: path.join(basePath, `${platformObj[process.platform]}/ffmpeg`),
-    ffprobePath: path.join(basePath, `${platformObj[process.platform]}/ffprobe`),
+export const getFfmpegPath = (): string => {
+  if (!app.isPackaged) {
+    return ffmpegStatic.path
+  } else {
+    const basePath = path.join(process.resourcesPath, "app.asar.unpacked/node_modules/ss-ffmpeg-static-electron")
+    const list = ffmpegStatic.path.split("\\ss-ffmpeg-static-electron")
+    const ffmpegPath = list[list.length - 1]
+    return path.join(basePath, ffmpegPath)
   }
 }
 
 app.on("ready", () => {
-  const { ffmpegPath } = getFfmpegPath()
+  const ffmpegPath = getFfmpegPath()
   // 检查 ffmpeg 是否存在
   execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
     if (error) {

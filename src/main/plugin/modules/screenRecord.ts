@@ -28,7 +28,7 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   const win = BrowserWindow.fromWebContents(e.sender)
   win?.setResizable(false)
   win?.setMovable(false)
-  const { ffmpegPath } = getFfmpegPath()
+  const ffmpegPath = getFfmpegPath()
   checkFolderExists(params.outputFloaderPath)
   queueStoreAdd({
     params: { ...params },
