@@ -46,8 +46,11 @@ export default function Extract() {
 
   // 提取
   const handleFile = async (outputType) => {
-    if (!filePath) return
     setShowTypeModal(false)
+    if (outputType === "text") {
+      return
+    }
+    if (!filePath) return
     const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,

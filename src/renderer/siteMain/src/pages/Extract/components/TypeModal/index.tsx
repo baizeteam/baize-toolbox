@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 const options = [
   { label: "提取视频", value: "mp4" },
   { label: "提取音频", value: "mp3" },
+  { label: "提取字幕", value: "text" },
 ]
 
 interface ITypeModalProps extends Omit<ModalProps, "onOk"> {
