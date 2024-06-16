@@ -5,7 +5,7 @@ import AppIcon from "@renderer/components/AppIcon"
 import { Modal, message } from "antd"
 
 interface IAppTableHeaderProps {
-  title: string
+  title: any
   valueKey: string
   onClean: () => void
 }
