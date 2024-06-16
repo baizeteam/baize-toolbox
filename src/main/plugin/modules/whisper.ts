@@ -1,29 +1,58 @@
-import { ipcMain } from "electron"
-import { execFile, spawn } from "child_process"
+import { ipcMain, BrowserWindow } from "electron"
+import { spawn, ChildProcessWithoutNullStreams } from "child_process"
+import { getFfmpegPath } from "@main/plugin/modules/ffmpeg"
+import { checkFolderExists } from "@main/utils/fileHelper"
+import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
+import { whisperAsync, whisperModelFile } from "../../utils/whisperHelper.js"
 
-const filePath = "D:\\workplace\\baize-toolbox\\resources\\win\\xiaoyu_output.wav"
+ipcMain.on("WHISPER_EXTRACT", (e, params) => {
+  console.log(params)
+  // 将音视频转换为wav格式
+  const ffmpegPath = getFfmpegPath()
+  checkFolderExists(params.outputFloaderPath)
+  // queueStoreAdd({
+  //   params: { ...params },
+  //   key: `${params.code}List`,
+  // })
 
-const whisperFile = "D:\\workplace\\baize-toolbox\\resources\\whisper\\main.exe"
-const tinyModelFile = "D:\\workplace\\baize-toolbox\\resources\\whisper\\models\\ggml-base.bin"
+  const whisperWav = `${params.outputFloaderPath}\\whisper-${params.taskId}.wav`
 
-// ipcMain.on("WIN_WHISPER", async () => {
-//   spawn(whisperFile, [filePath, tinyModelFile], { shell: true })
-// })
-ipcMain.on("WHISPER_EXTRACT", () => {
-  const args = ["-m", tinyModelFile, "-f", filePath, "--language", "zh", "-t", "16"]
-  const process = spawn(whisperFile, args)
-  // 监听子进程的标准输出
-  process.stdout.on("data", (data) => {
+  const ffmpegProcess: ChildProcessWithoutNullStreams = spawn(ffmpegPath, [
+    "-i",
+    params.inputFilePath,
+    "-vn",
+    "-ar",
+    "16000",
+    "-ac",
+    "1",
+    whisperWav,
+  ])
+  ffmpegProcess.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`)
   })
-
-  // 监听子进程的标准错误输出
-  process.stderr.on("data", (data) => {
+  ffmpegProcess.stderr.on("data", (data) => {
     console.error(`stderr: ${data}`)
   })
-
-  // 监听子进程的退出事件
-  process.on("close", (code) => {
-    console.log(`子进程退出，退出码 ${code}`)
+  ffmpegProcess.on("close", (code) => {
+    console.log(`ffmpeg退出，退出码 ${code}`)
+    if (code === 0) {
+      // 通过whisper提取字幕
+      const whisperParams = {
+        language: "zh",
+        model: whisperModelFile,
+        fname_inp: whisperWav,
+        use_gpu: false,
+        flash_attn: false,
+        no_prints: true,
+        comma_in_time: false,
+        translate: true,
+        no_timestamps: false,
+        audio_ctx: 0,
+        n_threads: 8,
+      }
+      whisperAsync(whisperParams).then((result) => {
+        console.log(result)
+      })
+    }
   })
 })

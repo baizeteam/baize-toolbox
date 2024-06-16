@@ -47,10 +47,21 @@ export default function Extract() {
   // 提取
   const handleFile = async (outputType) => {
     setShowTypeModal(false)
+    if (!filePath) return
     if (outputType === "text") {
+      // 提取字幕
+      const baseInfo = await getTaskBaseInfo({
+        filePath,
+        outputType,
+        subFloder: SUB_FLODER_NAME,
+      })
+      const params = {
+        ...baseInfo,
+        code: "extract",
+      }
+      window.ipcSend("WHISPER_EXTRACT", params)
       return
     }
-    if (!filePath) return
     const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,
