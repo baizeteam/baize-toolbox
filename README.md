@@ -16,18 +16,6 @@
 $ pnpm install
 ```
 
-### 加载资源
-
-百度网盘链接：https://pan.baidu.com/s/1NlVTe_elkZtjT9gJIc0k3w?pwd=m7t9
-
-阿里网盘链接：https://www.alipan.com/s/WRjhfS4T2p7
-
-谷歌网盘链接 https://drive.google.com/file/d/1gHq5uYQ7cfBRzMiT4leZmRMXSlNXxloo/view?usp=sharing
-
-将解压后的linux、macos、win文件夹分别复制到项目的resources文件夹下
-
-ps: 注意，阿里网盘中的linux/ffmpeg文件无法分享，因此需要更换为其他下载方式，或者自行到ffmpeg官网下载。
-
 ### 开发
 
 ```bash
