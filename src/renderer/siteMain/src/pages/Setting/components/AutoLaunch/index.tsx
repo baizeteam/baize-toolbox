@@ -26,9 +26,9 @@ export default function AutoLaunch() {
   }, [])
 
   return (
-    <>
+    <div styleName="auto-launch">
       <div styleName="title">{t("siteMain.pages.setting.autoLaunch")}</div>
       <Select options={options} style={{ width: 120 }} value={isAutoLaunch} onChange={onChange} />
-    </>
+    </div>
   )
 }

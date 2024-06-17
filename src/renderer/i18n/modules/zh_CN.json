@@ -77,6 +77,7 @@
       },
       "setting": {
         "outputPath": "默认导出路径",
+        "whisperModelPath": "whisper模型路径",
         "theme": "主题",
         "language": "语言",
         "change": "修改",

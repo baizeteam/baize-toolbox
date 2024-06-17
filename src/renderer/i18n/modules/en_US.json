@@ -77,6 +77,7 @@
       },
       "setting": {
         "outputPath": "Default output path",
+        "whisperModelPath": "Whisper model path",
         "theme": "Theme",
         "language": "Language",
         "change": "Change",
