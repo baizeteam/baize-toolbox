@@ -7,6 +7,17 @@ import { mainWinStartProxy, START_STATUS } from "@main/helper"
 import * as ffmpegStatic from "ss-ffmpeg-static-electron"
 // import { mainLogSend } from "@main/helper";
 
+interface VideoInfo {
+  duration?: number
+  bitrate?: number
+  codec?: string
+  resolution?: {
+    width: number
+    height: number
+  }
+  frameRate?: number
+}
+
 // 获取 ffmpeg 路径
 export const getFfmpegPath = (): string => {
   if (!app.isPackaged) {
@@ -17,6 +28,75 @@ export const getFfmpegPath = (): string => {
     const ffmpegPath = list[list.length - 1]
     return path.join(basePath, ffmpegPath)
   }
+}
+
+// 将时间字符串转换为秒数
+export function convertTimeToSeconds(timeStr) {
+  const [hours, minutes, seconds] = timeStr.split(":").map(parseFloat)
+  return hours * 3600 + minutes * 60 + seconds
+}
+
+// 获取视频信息
+export const getVideoInfo = async (filePath): Promise<VideoInfo> => {
+  return new Promise((resolve, reject) => {
+    const command = ["-i", filePath, "-f", null, "-"]
+    const ffmpegPath = getFfmpegPath()
+    const ffmpegProcess = spawn(ffmpegPath, command)
+    let output = ""
+
+    ffmpegProcess.stderr.on("data", (data) => {
+      output += data.toString()
+    })
+
+    ffmpegProcess.on("close", (code) => {
+      if (code === 0) {
+        const info = parseVideoInfo(output)
+        resolve(info)
+      } else {
+        reject(new Error(`FFmpeg process exited with code ${code}`))
+      }
+    })
+  })
+}
+
+// 解析 ffmpeg 的输出信息
+function parseVideoInfo(info) {
+  const lines = info.split("\n")
+  const videoInfo: VideoInfo = {}
+  // console.log(lines);
+  lines.forEach((line) => {
+    if (line.indexOf("Video") !== -1) {
+      console.log(line)
+
+      const bitrateMatch = line.match(/(\d+\.?\d*) kb/)
+      const codecMatch = line.match(/Stream.*Video: ([^,]+)/)
+      const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/)
+      const frameRateMatch = line.match(/(\d+\.?\d*) fps/)
+
+      if (bitrateMatch && !videoInfo.bitrate) {
+        console
+        videoInfo.bitrate = parseInt(bitrateMatch[1])
+      }
+      if (codecMatch) {
+        videoInfo.codec = codecMatch[1].trim()
+      }
+      if (resolutionMatch) {
+        videoInfo.resolution = {
+          width: parseInt(resolutionMatch[1]),
+          height: parseInt(resolutionMatch[2]),
+        }
+      }
+      if (frameRateMatch && !videoInfo.frameRate) {
+        videoInfo.frameRate = parseFloat(frameRateMatch[1])
+      }
+    }
+    const durationMatch = line.match(/Duration: (\d{2}):(\d{2}):(\d{2})/)
+    if (durationMatch) {
+      videoInfo.duration = convertTimeToSeconds(`${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`)
+    }
+  })
+
+  return videoInfo
 }
 
 app.on("ready", () => {
@@ -88,83 +168,4 @@ app.on("ready", () => {
   ipcMain.handle("FFMPEG_GET_VIDEO_INFO", async (e, params) => {
     return await getVideoInfo(params.filePath)
   })
-
-  interface VideoInfo {
-    duration?: number
-    bitrate?: number
-    codec?: string
-    resolution?: {
-      width: number
-      height: number
-    }
-    frameRate?: number
-  }
-
-  // 获取视频信息
-  const getVideoInfo = async (filePath): Promise<VideoInfo> => {
-    return new Promise((resolve, reject) => {
-      const command = ["-i", filePath, "-f", null, "-"]
-      const ffmpegProcess = spawn(ffmpegPath, command)
-      let output = ""
-
-      ffmpegProcess.stderr.on("data", (data) => {
-        output += data.toString()
-      })
-
-      ffmpegProcess.on("close", (code) => {
-        if (code === 0) {
-          const info = parseVideoInfo(output)
-          resolve(info)
-        } else {
-          reject(new Error(`FFmpeg process exited with code ${code}`))
-        }
-      })
-    })
-  }
-
-  // 解析 ffmpeg 的输出信息
-  function parseVideoInfo(info) {
-    const lines = info.split("\n")
-    const videoInfo: VideoInfo = {}
-    // console.log(lines);
-    lines.forEach((line) => {
-      if (line.indexOf("Video") !== -1) {
-        console.log(line)
-
-        const bitrateMatch = line.match(/(\d+\.?\d*) kb/)
-        const codecMatch = line.match(/Stream.*Video: ([^,]+)/)
-        const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/)
-        const frameRateMatch = line.match(/(\d+\.?\d*) fps/)
-
-        if (bitrateMatch && !videoInfo.bitrate) {
-          console
-          videoInfo.bitrate = parseInt(bitrateMatch[1])
-        }
-        if (codecMatch) {
-          videoInfo.codec = codecMatch[1].trim()
-        }
-        if (resolutionMatch) {
-          videoInfo.resolution = {
-            width: parseInt(resolutionMatch[1]),
-            height: parseInt(resolutionMatch[2]),
-          }
-        }
-        if (frameRateMatch && !videoInfo.frameRate) {
-          videoInfo.frameRate = parseFloat(frameRateMatch[1])
-        }
-      }
-      const durationMatch = line.match(/Duration: (\d{2}):(\d{2}):(\d{2})/)
-      if (durationMatch) {
-        videoInfo.duration = convertTimeToSeconds(`${durationMatch[1]}:${durationMatch[2]}:${durationMatch[3]}`)
-      }
-    })
-
-    return videoInfo
-  }
-
-  // 将时间字符串转换为秒数
-  function convertTimeToSeconds(timeStr) {
-    const [hours, minutes, seconds] = timeStr.split(":").map(parseFloat)
-    return hours * 3600 + minutes * 60 + seconds
-  }
 })

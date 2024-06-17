@@ -48,41 +48,41 @@ export default function Extract() {
   const handleFile = async (outputType) => {
     setShowTypeModal(false)
     if (!filePath) return
-    if (outputType === "text") {
-      // 提取字幕
-      const baseInfo = await getTaskBaseInfo({
-        filePath,
-        outputType,
-        subFloder: SUB_FLODER_NAME,
-      })
-      const params = {
-        ...baseInfo,
-        code: "extract",
-      }
-      window.ipcSend("WHISPER_EXTRACT", params)
-      return
-    }
     const baseInfo = await getTaskBaseInfo({
       filePath,
       outputType,
       subFloder: SUB_FLODER_NAME,
     })
-    const commandObj = {
-      "-i": filePath,
+    if (outputType === "text") {
+      // 提取字幕
+      const params = {
+        ...baseInfo,
+        code: "extract",
+      }
+      changeExtractList([params, ...(extractListRef.current || [])])
+      window.ipcSend("WHISPER_EXTRACT", params)
+      window.ipcOn(`WHISPER_EXTRACT_PROGRESS_${baseInfo.taskId}`, (e, data) =>
+        onProgressChange(e, data, baseInfo.taskId),
+      )
+    } else {
+      // 提取音频、视频
+      const commandObj = {
+        "-i": filePath,
+      }
+      if (outputType === "mp4") {
+        commandObj["-an"] = "-vcodec"
+        commandObj["copy"] = null
+      }
+      const command = ffmpegObj2List(commandObj)
+      const params = {
+        command: [...command],
+        ...baseInfo,
+        code: "extract",
+      }
+      changeExtractList([params, ...(extractListRef.current || [])])
+      window.ipcSend("FFMPEG_COMMAND", params)
+      window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
     }
-    if (outputType === "mp4") {
-      commandObj["-an"] = "-vcodec"
-      commandObj["copy"] = null
-    }
-    const command = ffmpegObj2List(commandObj)
-    const params = {
-      command: [...command],
-      ...baseInfo,
-      code: "extract",
-    }
-    changeExtractList([params, ...(extractListRef.current || [])])
-    window.ipcSend("FFMPEG_COMMAND", params)
-    window.ipcOn(`FFMPEG_PROGRESS_${baseInfo.taskId}`, (e, data) => onProgressChange(e, data, baseInfo.taskId))
   }
 
   // 提取进度
