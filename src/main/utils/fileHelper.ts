@@ -37,7 +37,13 @@ export const deleteFile = (filePath: string) => {
 }
 
 // 获取文件大小
-export function getFileSize(filePath) {
+export function getFileSize(filePath: string) {
   const stats = fs.statSync(filePath)
   return stats.size
+}
+
+// 创建并写入文件
+export function writeFile(filePath: string, content: string) {
+  console.log(content, Object.prototype.toString.call(content))
+  return fs.writeFileSync(filePath, content)
 }
