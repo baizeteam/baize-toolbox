@@ -34,3 +34,11 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
+### 注意
+
+在window下运行时，可能会遇到主进程的控制台乱码问题，可以跟换为如下命令进行启动。
+
+```bash
+$ pnpm dev:win
+```
