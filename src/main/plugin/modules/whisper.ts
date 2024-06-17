@@ -16,6 +16,7 @@ ipcMain.on("WHISPER_EXTRACT", async (e, params) => {
     params: { ...params, progress: 0 },
     key: `${params.code}List`,
   })
+  // 像渲染进程发送消息
   const sendFunc = (data) => {
     const newParams = { ...params, ...data }
     queueStoreUpdate({
@@ -25,9 +26,7 @@ ipcMain.on("WHISPER_EXTRACT", async (e, params) => {
     })
     BrowserWindow.fromWebContents(e.sender)?.webContents.send(`WHISPER_EXTRACT_PROGRESS_${params.taskId}`, newParams)
   }
-
   const whisperWav = `${params.outputFloaderPath}\\whisper-${params.taskId}.wav`
-
   const ffmpegProcess: ChildProcessWithoutNullStreams = spawn(ffmpegPath, [
     "-i",
     params.inputFilePath,
@@ -67,6 +66,9 @@ ipcMain.on("WHISPER_EXTRACT", async (e, params) => {
         audio_ctx: 0,
         n_threads: 6, // 经过测试，4~6线程为佳
       }
+      // todo
+      // 1.暂时没有找到进度的方式，只能使用等待的方式。
+      // 2.编译为node的核心利用率并不佳，4~6线程已经是最快的速度了，后续考虑换成exe，但是exe需要注入一些c++相关的dll。
       await whisperAsync(whisperParams).then(async (result) => {
         const contentText = result.map((item) => item[2]).join(",")
         await writeFile(`${params.outputFloaderPath}/${params.outputFileName}`, contentText)

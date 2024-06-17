@@ -63,18 +63,15 @@ export const getVideoInfo = async (filePath): Promise<VideoInfo> => {
 function parseVideoInfo(info) {
   const lines = info.split("\n")
   const videoInfo: VideoInfo = {}
-  // console.log(lines);
   lines.forEach((line) => {
     if (line.indexOf("Video") !== -1) {
       console.log(line)
-
       const bitrateMatch = line.match(/(\d+\.?\d*) kb/)
       const codecMatch = line.match(/Stream.*Video: ([^,]+)/)
       const resolutionMatch = line.match(/(\d{2,4})x(\d{2,4})/)
       const frameRateMatch = line.match(/(\d+\.?\d*) fps/)
 
       if (bitrateMatch && !videoInfo.bitrate) {
-        console
         videoInfo.bitrate = parseInt(bitrateMatch[1])
       }
       if (codecMatch) {
