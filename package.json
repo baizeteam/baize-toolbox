@@ -1,6 +1,6 @@
 {
   "name": "baize-toolbox",
-  "version": "0.0.1-beta2",
+  "version": "0.0.1-beta3",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "xiaoyu@sulg.top",
