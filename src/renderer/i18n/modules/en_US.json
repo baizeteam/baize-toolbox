@@ -97,7 +97,7 @@
           "config": {
             "btn": "Restore configuration",
             "title": "Confirm restore configuration?",
-            "content": "Restore the configuration, including the export path, theme, language, and automatic startup. Do you want to continue?"
+            "content": "Restore configuration includes all configurations on the current page. Do you want to continue?"
           },
           "all": {
             "btn": "Restore all",
