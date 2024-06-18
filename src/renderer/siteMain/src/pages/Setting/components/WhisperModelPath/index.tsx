@@ -28,7 +28,14 @@ export default function WhisperModelPath() {
       <div styleName="block">
         <div styleName="title">
           <div>{t("siteMain.pages.setting.whisperModelPath")}</div>
-          <div styleName="download">{t("commonText.download")}</div>
+          <div
+            styleName="download"
+            onClick={() => {
+              window.open("https://huggingface.co/ggerganov/whisper.cpp/tree/main", "_blank")
+            }}
+          >
+            {t("commonText.download")}
+          </div>
         </div>
         <div styleName="path">
           <div styleName="text">
