@@ -72,11 +72,12 @@
     "pages": {
       "home": {
         "title": "Baize Toolbox",
-        "desc": "Baize Toolbox is a powerful multimedia tool that provides users with a variety of multimedia processing functions. Whether you need to transcode audio and video, extract audio and video clips, generate text to speech (TTS), record screens, take screenshots, or compress audio and video images, this tool can be easily implemented.",
+        "desc": "Baize Toolbox is a powerful multimedia tool that provides users with a variety of multimedia processing functions. Whether you need to transcode audio and video, extract audio/video/subtitles, text to speech (TTS), record screens, take screenshots, or compress audio and video images, this tool can be easily implemented.",
         "officialWebsite": "Official Website"
       },
       "setting": {
         "outputPath": "Default output path",
+        "whisperModelPath": "Whisper model path",
         "theme": "Theme",
         "language": "Language",
         "change": "Change",
@@ -96,7 +97,7 @@
           "config": {
             "btn": "Restore configuration",
             "title": "Confirm restore configuration?",
-            "content": "Restore the configuration, including the export path, theme, language, and automatic startup. Do you want to continue?"
+            "content": "Restore configuration includes all configurations on the current page. Do you want to continue?"
           },
           "all": {
             "btn": "Restore all",

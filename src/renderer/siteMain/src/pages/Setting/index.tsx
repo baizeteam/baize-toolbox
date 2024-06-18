@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button, Radio, Select } from "antd"
 import Theme from "./components/Theme"
 import DefaultOutPath from "./components/DefaultOutPath"
+import WhisperModelPath from "./components/WhisperModelPath"
 import Language from "./components/Language"
 import Restore from "./components/Restore"
 import AutoLaunch from "./components/AutoLaunch"
@@ -14,6 +15,7 @@ export default function Setting() {
       <Theme />
       <AutoLaunch />
       <DefaultOutPath />
+      <WhisperModelPath />
       <Restore />
     </div>
   )

@@ -2,6 +2,7 @@ node_modules
 resources/mac/*
 resources/win/*
 resources/linux/*
+resources/whisper/*.bin
 dist
 out
 .DS_Store
@@ -9,3 +10,4 @@ out
 .idea
 yarn.lock
 package-lock.json
+

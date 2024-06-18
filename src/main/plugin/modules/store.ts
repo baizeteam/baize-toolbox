@@ -67,6 +67,7 @@ const DEFAULT_OUTPUT_PATH = app.getPath("documents") + "\\output"
 // 默认设置
 const defaultStore = {
   defaultOutPath: DEFAULT_OUTPUT_PATH,
+  whisperModelPath: "",
   defaultSetting: "default",
   theme: "system",
   isAutoLaunch: "false",

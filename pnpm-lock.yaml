@@ -53,7 +53,7 @@ importers:
         version: 4.0.2(react@18.2.0)
       '@lobehub/tts':
         specifier: ^1.24.0
-        version: 1.24.1(@lobehub/ui@1.138.17(@types/react-dom@18.3.0)(@types/react@18.3.1)(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lucide-react@0.395.0(react@18.2.0))(openai@4.40.2)(react-dom@18.2.0(react@18.2.0))(react-layout-kit@1.9.0(react@18.2.0))(react@18.2.0)
+        version: 1.24.1(@lobehub/ui@1.138.17(@types/react-dom@18.3.0)(@types/react@18.3.1)(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lucide-react@0.394.0(react@18.2.0))(openai@4.40.2)(react-dom@18.2.0(react@18.2.0))(react-layout-kit@1.9.0(react@18.2.0))(react@18.2.0)
       '@types/node':
         specifier: ^18.19.5
         version: 18.19.31
@@ -2716,6 +2716,11 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
+  lucide-react@0.394.0:
+    resolution: {integrity: sha512-PzTbJ0bsyXRhH59k5qe7MpTd5MxlpYZUcM9kGSwvPGAfnn0J6FElDwu2EX6Vuh//F7y60rcVJiFQ7EK9DCMgfw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+
   lucide-react@0.395.0:
     resolution: {integrity: sha512-6hzdNH5723A4FLaYZWpK50iyZH8iS2Jq5zuPRRotOFkhu6kxxJiebVdJ72tCR5XkiIeYFOU5NUawFZOac+VeYw==}
     peerDependencies:
@@ -5059,14 +5064,14 @@ snapshots:
 
   '@lobehub/emojilib@1.0.0': {}
 
-  '@lobehub/tts@1.24.1(@lobehub/ui@1.138.17(@types/react-dom@18.3.0)(@types/react@18.3.1)(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lucide-react@0.395.0(react@18.2.0))(openai@4.40.2)(react-dom@18.2.0(react@18.2.0))(react-layout-kit@1.9.0(react@18.2.0))(react@18.2.0)':
+  '@lobehub/tts@1.24.1(@lobehub/ui@1.138.17(@types/react-dom@18.3.0)(@types/react@18.3.1)(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(lucide-react@0.394.0(react@18.2.0))(openai@4.40.2)(react-dom@18.2.0(react@18.2.0))(react-layout-kit@1.9.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.5
       '@lobehub/ui': 1.138.17(@types/react-dom@18.3.0)(@types/react@18.3.1)(antd-style@3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       antd: 5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       antd-style: 3.6.2(@types/react@18.3.1)(antd@5.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       lodash-es: 4.17.21
-      lucide-react: 0.395.0(react@18.2.0)
+      lucide-react: 0.394.0(react@18.2.0)
       openai: 4.40.2
       query-string: 8.2.0
       react: 18.2.0
@@ -7537,6 +7542,10 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
+
+  lucide-react@0.394.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
 
   lucide-react@0.395.0(react@18.2.0):
     dependencies:

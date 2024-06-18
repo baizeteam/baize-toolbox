@@ -29,7 +29,7 @@ export default function DefaultOutPath() {
         <div styleName="title">{t("siteMain.pages.setting.outputPath")}</div>
         <div styleName="path">
           <div styleName="text">
-            <EllipsisTextControl maxWidth={270} content={defaultOutPath} />
+            <EllipsisTextControl maxWidth={270} content={defaultOutPath || "暂无"} />
           </div>
           <Button type="primary" styleName="btn" onClick={onChangeDefaultOutPath}>
             {t("siteMain.pages.setting.change")}
