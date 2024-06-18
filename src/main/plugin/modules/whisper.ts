@@ -3,10 +3,12 @@ import { spawn, ChildProcessWithoutNullStreams } from "child_process"
 import { getFfmpegPath, convertTimeToSeconds, getVideoInfo } from "@main/plugin/modules/ffmpeg"
 import { checkFolderExists, writeFile } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
-import { whisperAsync, whisperModelFile } from "../../utils/whisperHelper.js"
+import { whisperAsync } from "../../utils/whisperHelper.js"
 import { unlinkSync } from "fs"
+import { store } from "@main/plugin/modules/store"
 
 ipcMain.on("WHISPER_EXTRACT", async (e, params) => {
+  const whisperModelFile = store.get("whisperModelPath")
   // 将音视频转换为wav格式
   const videoInfo = await getVideoInfo(params.inputFilePath)
   const videoDuration = videoInfo.duration ?? 0
