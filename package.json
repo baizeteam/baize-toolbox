@@ -1,6 +1,6 @@
 {
   "name": "baize-toolbox",
-  "version": "0.0.1-beta3",
+  "version": "0.0.1-beta4",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "xiaoyu@sulg.top",
@@ -64,8 +64,8 @@
     "bufferutil": "^4.0.8",
     "dayjs": "^1.11.10",
     "easy-auto-launch": "^6.0.2",
-    "electron": "^29.1.6",
-    "electron-builder": "^24.9.1",
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
     "electron-vite": "^2.0.0",
     "generic-names": "^4.0.0",
     "husky": "^9.0.11",
