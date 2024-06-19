@@ -19,7 +19,7 @@ module.exports = async function (context) {
       if (!localesToKeep.includes(file)) {
         fs.unlink(path.join(localesDir, file), (err) => {
           if (err) throw err
-          console.log(`Deleted locale: ${file}`)
+          // console.log(`Deleted locale: ${file}`)
         })
       }
     })
