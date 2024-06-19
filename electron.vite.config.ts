@@ -17,9 +17,15 @@ export default defineConfig({
         "@preload": resolve("src/preload"),
       },
     },
+    build: {
+      minify: "esbuild",
+    },
   },
   preload: {
     plugins: [externalizeDepsPlugin()],
+    build: {
+      minify: "esbuild",
+    },
   },
   renderer: {
     resolve: {
@@ -57,7 +63,7 @@ export default defineConfig({
       },
     },
     build: {
-      minify: "terser",
+      minify: "esbuild",
       cssMinify: "esbuild",
       rollupOptions: {
         input: {

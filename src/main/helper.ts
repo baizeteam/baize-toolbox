@@ -7,53 +7,10 @@ import { InjectData } from "@main/utils/inject"
 import { getSystemInfo } from "@main/utils/systemHelper"
 
 let mainWindow: BrowserWindow
-let loadingWin: BrowserWindow
 export enum START_STATUS {
   pending = "pending",
   success = "success",
   fail = "fail",
-}
-const mainWinStart = {
-  web: START_STATUS.pending,
-  ffmpeg: START_STATUS.pending,
-}
-const handler = {
-  set(target, p, value) {
-    Reflect.set(target, p, value)
-    onMainWinStartChange()
-    return true
-  },
-}
-export const mainWinStartProxy = new Proxy(mainWinStart, handler)
-export function onMainWinStartChange() {
-  let tag = true
-  Object.keys(mainWinStart).forEach((key) => {
-    if (mainWinStart[key] !== START_STATUS.success) {
-      tag = false
-    }
-  })
-  if (tag) {
-    mainWindow.show()
-    loadingWin.hide()
-  }
-}
-
-export function createLoadingWin() {
-  loadingWin = new BrowserWindow({
-    width: 300,
-    height: 100,
-    frame: false, // 隐藏窗口边框
-    transparent: true, // 设置窗口背景透明
-    alwaysOnTop: true, // 置顶显示
-    hasShadow: false, // 隐藏窗口阴影
-    webPreferences: {
-      nodeIntegration: true,
-      webSecurity: false,
-      preload: join(__dirname, "../preload/index.js"),
-    },
-  })
-
-  initWinUrl(loadingWin, "/siteElectronLoading/index.html")
 }
 
 // 加载的url
@@ -100,7 +57,7 @@ export async function createWin({ config, url, injectData, route }: ICreateWin):
   return win
 }
 
-export async function createMainWin(): Promise<void> {
+export async function createMainWin(): Promise<BrowserWindow> {
   mainWindow = await createWin({
     config: {
       width: 1200,
@@ -117,26 +74,9 @@ export async function createMainWin(): Promise<void> {
   mainWindow["customId"] = "main"
   mainWindow.on("ready-to-show", () => {
     showCustomMenu(mainWindow)
+    mainWindow.show()
   })
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: "deny" }
-  })
-  mainWindow.webContents.on("did-start-loading", () => {
-    if (!loadingWin) {
-      createLoadingWin()
-    }
-    if (mainWinStartProxy.web === START_STATUS.pending) {
-      loadingWin.show()
-    }
-  })
-  mainWindow.webContents.on("did-stop-loading", () => {
-    if (mainWinStart.web !== START_STATUS.success) {
-      setTimeout(() => {
-        mainWinStartProxy.web = START_STATUS.success
-      }, 200)
-    }
-  })
+  return mainWindow
   // initWinUrl(mainWindow, "/siteMain/index.html");
 }
 
