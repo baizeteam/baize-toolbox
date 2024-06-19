@@ -2,7 +2,6 @@ const fs = require("fs")
 const path = require("path")
 
 module.exports = async function (context) {
-  console.log("afterPack")
   const appOutDir = context.appOutDir
   const localesDir = path.join(appOutDir, "locales")
 
