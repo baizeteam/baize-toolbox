@@ -3,7 +3,6 @@ import { app, ipcMain, BrowserWindow, dialog } from "electron"
 import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
-import { mainWinStartProxy, START_STATUS } from "@main/helper"
 import * as ffmpegStatic from "ss-ffmpeg-static-electron"
 // import { mainLogSend } from "@main/helper";
 
@@ -98,15 +97,6 @@ function parseVideoInfo(info) {
 
 app.on("ready", () => {
   const ffmpegPath = getFfmpegPath()
-  // 检查 ffmpeg 是否存在
-  execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
-    if (error) {
-      return
-    } else {
-      mainWinStartProxy.ffmpeg = START_STATUS.success
-    }
-    console.log(`ffmpeg 版本信息：\n${stdout}`)
-  })
 
   // 执行ffmpeg 命令
   ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
