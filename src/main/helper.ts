@@ -102,3 +102,8 @@ export function exitWinFullScreen(win: BrowserWindow) {
   })
   win.setSimpleFullScreen(false)
 }
+
+// 主窗口通信
+export function mainWinSend(key, data) {
+  mainWindow.webContents.send(key, data)
+}
