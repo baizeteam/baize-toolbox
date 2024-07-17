@@ -4,7 +4,6 @@ import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 import * as ffmpegStatic from "ss-ffmpeg-static-electron"
-import { mainWinSend } from "@main/helper"
 // import { mainLogSend } from "@main/helper";
 
 interface VideoInfo {
@@ -98,14 +97,13 @@ function parseVideoInfo(info) {
 
 const ffmpegPath = getFfmpegPath()
 console.log("ffmpeg 路径：", ffmpegPath)
-execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
-  if (error) {
-    console.error(`FFmpeg 版本检查失败：${error}`)
-    return
-  }
-  mainWinSend("UPDATATE_SUB_MODULE_STATUS", "ffmpeg")
-  console.log(`ffmpeg 版本信息：\n${stdout}`)
-})
+// execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
+//   if (error) {
+//     console.error(`FFmpeg 版本检查失败：${error}`)
+//     return
+//   }
+//   console.log(`ffmpeg 版本信息：\n${stdout}`)
+// })
 
 // 执行ffmpeg 命令
 ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
