@@ -4,6 +4,7 @@ import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 import * as ffmpegStatic from "ss-ffmpeg-static-electron"
+import { mainWinSend } from "@main/helper"
 // import { mainLogSend } from "@main/helper";
 
 interface VideoInfo {
@@ -95,64 +96,71 @@ function parseVideoInfo(info) {
   return videoInfo
 }
 
-app.on("ready", () => {
-  const ffmpegPath = getFfmpegPath()
+const ffmpegPath = getFfmpegPath()
+console.log("ffmpeg 路径：", ffmpegPath)
+execFile(ffmpegPath, ["-version"], (error, stdout, stderr) => {
+  if (error) {
+    console.error(`FFmpeg 版本检查失败：${error}`)
+    return
+  }
+  mainWinSend("UPDATATE_SUB_MODULE_STATUS", "ffmpeg")
+  console.log(`ffmpeg 版本信息：\n${stdout}`)
+})
 
-  // 执行ffmpeg 命令
-  ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
-    console.log("FFMPEG_COMMAND", params)
-    const videoInfo = await getVideoInfo(params.inputFilePath)
-    const videoDuration = videoInfo.duration ?? 0
-    checkFolderExists(params.outputFloaderPath)
-    const outputFilePath = path.join(params.outputFloaderPath, params.outputFileName)
-    const command = [...params.command, outputFilePath]
-    const ffmpegProcess = spawn(ffmpegPath, command)
-    const taskId = params.taskId
-    queueStoreAdd({
-      params: { ...params, progress: 0 },
+// 执行ffmpeg 命令
+ipcMain.on("FFMPEG_COMMAND", async (e, params) => {
+  console.log("FFMPEG_COMMAND", params)
+  const videoInfo = await getVideoInfo(params.inputFilePath)
+  const videoDuration = videoInfo.duration ?? 0
+  checkFolderExists(params.outputFloaderPath)
+  const outputFilePath = path.join(params.outputFloaderPath, params.outputFileName)
+  const command = [...params.command, outputFilePath]
+  const ffmpegProcess = spawn(ffmpegPath, command)
+  const taskId = params.taskId
+  queueStoreAdd({
+    params: { ...params, progress: 0 },
+    key: `${params.code}List`,
+  })
+  const sendFunc = (data) => {
+    const newParams = { ...params, ...data }
+    queueStoreUpdate({
+      params: newParams,
       key: `${params.code}List`,
+      idKey: "taskId",
     })
-    const sendFunc = (data) => {
-      const newParams = { ...params, ...data }
-      queueStoreUpdate({
-        params: newParams,
-        key: `${params.code}List`,
-        idKey: "taskId",
+    BrowserWindow.fromWebContents(e.sender)?.webContents.send(`FFMPEG_PROGRESS_${taskId}`, newParams)
+  }
+
+  ffmpegProcess.stderr.on("data", (data) => {
+    const result = data.toString()
+    const match = result.match(/time=([0-9:.]+)/)
+    if (match && match[1]) {
+      const currentTime = convertTimeToSeconds(match[1])
+      const progress = ((currentTime / videoDuration) * 100).toFixed(2)
+      console.log(`Progress: ${progress}%`)
+      sendFunc({
+        progress: Number(progress),
       })
-      BrowserWindow.fromWebContents(e.sender)?.webContents.send(`FFMPEG_PROGRESS_${taskId}`, newParams)
     }
-
-    ffmpegProcess.stderr.on("data", (data) => {
-      const result = data.toString()
-      const match = result.match(/time=([0-9:.]+)/)
-      if (match && match[1]) {
-        const currentTime = convertTimeToSeconds(match[1])
-        const progress = ((currentTime / videoDuration) * 100).toFixed(2)
-        console.log(`Progress: ${progress}%`)
-        sendFunc({
-          progress: Number(progress),
-        })
-      }
-    })
-
-    ffmpegProcess.on("close", (code) => {
-      if (code !== 0) {
-        console.error(`FFmpeg 进程关闭，但出现错误，退出码 ${code}`)
-        sendFunc({
-          error: code,
-        })
-      } else {
-        console.log("FFmpeg 进程正常关闭")
-        const outputFileSize = getFileSize(outputFilePath)
-        sendFunc({
-          outputFileSize,
-          progress: 100,
-        })
-      }
-    })
   })
 
-  ipcMain.handle("FFMPEG_GET_VIDEO_INFO", async (e, params) => {
-    return await getVideoInfo(params.filePath)
+  ffmpegProcess.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`FFmpeg 进程关闭，但出现错误，退出码 ${code}`)
+      sendFunc({
+        error: code,
+      })
+    } else {
+      console.log("FFmpeg 进程正常关闭")
+      const outputFileSize = getFileSize(outputFilePath)
+      sendFunc({
+        outputFileSize,
+        progress: 100,
+      })
+    }
   })
+})
+
+ipcMain.handle("FFMPEG_GET_VIDEO_INFO", async (e, params) => {
+  return await getVideoInfo(params.filePath)
 })
