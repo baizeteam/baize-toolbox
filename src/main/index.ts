@@ -6,7 +6,7 @@ import { createMainWin } from "@main/helper"
 const addSubModel = () => {
   setTimeout(() => {
     import("@main/plugin/subModule")
-  }, 500)
+  }, 1000)
 }
 
 app.whenReady().then(async () => {
