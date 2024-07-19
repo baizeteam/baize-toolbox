@@ -3,7 +3,7 @@ import { app, ipcMain, BrowserWindow, dialog } from "electron"
 import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
-// import * as ffmpegStatic from "ss-ffmpeg-static-electron"
+import * as ffmpegStatic from "ss-ffmpeg-static-electron"
 import ffmpegStaticPath from "ffmpeg-static"
 // import { mainLogSend } from "@main/helper";
 
@@ -18,12 +18,24 @@ interface VideoInfo {
   frameRate?: number
 }
 
-// 获取 ffmpeg 路径
-export const getFfmpegPath = (): string => {
+
+export const getFfmpegPathForMac = (): string => {
     if (!app.isPackaged) {
       return ffmpegStaticPath as string
     } else {
     return path.join(process.resourcesPath, "app.asar.unpacked/node_modules/ffmpeg-static/ffmpeg")
+  }
+}
+
+// 获取 ffmpeg 路径
+export const getFfmpegPath = (): string => {
+  if (!app.isPackaged) {
+    return ffmpegStatic.path
+  } else {
+    const basePath = path.join(process.resourcesPath, "app.asar.unpacked/node_modules/ss-ffmpeg-static-electron")
+    const list = ffmpegStatic.path.split("\\ss-ffmpeg-static-electron")
+    const ffmpegPath = list[list.length - 1]
+    return path.join(basePath, ffmpegPath)
   }
 }
 

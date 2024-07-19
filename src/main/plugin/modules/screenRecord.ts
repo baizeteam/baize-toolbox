@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, screen } from "electron"
 import { ChildProcessWithoutNullStreams, spawn } from "child_process"
-import { getFfmpegPath } from "@main/plugin/modules/ffmpeg"
+import { getFfmpegPath, getFfmpegPathForMac } from "@main/plugin/modules/ffmpeg"
 import { checkFolderExists } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
@@ -33,7 +33,7 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   const win = BrowserWindow.fromWebContents(e.sender)
   win?.setResizable(false)
   win?.setMovable(false)
-  const ffmpegPath = getFfmpegPath()
+  const ffmpegPath = process.platform === "darwin" ? getFfmpegPathForMac() : getFfmpegPath()
   checkFolderExists(params.outputFloaderPath)
   queueStoreAdd({
     params: { ...params },
