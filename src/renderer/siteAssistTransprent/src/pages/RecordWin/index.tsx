@@ -57,20 +57,29 @@ export default function RecordWin() {
     const bounds = await window.ipcInvoke("SCREEN_RECORD_GET_CURRENT_INFO")
     setIsRecording(true)
     const contentBounds = contentRef.current.getBoundingClientRect()
-    const screenArea = `${roundDownEven(contentBounds.width * bounds.scaleFactor)}x${roundDownEven(contentBounds.height * bounds.scaleFactor)}`
     // const offset = `+${bounds.x},${bounds.y}`;
     const fileName = `${Date.now()}.${fileType}`
+    
+    const width = roundDownEven(contentBounds.width * bounds.scaleFactor);
+    const height = roundDownEven(contentBounds.height * bounds.scaleFactor);
+    const x =  bounds.x + CONTENT_MARGIN_LEFT * bounds.scaleFactor + "";
+    const y = (bounds.y + CONTENT_MARGIN_TOP) * bounds.scaleFactor + "";
+    const screenArea = `${width}x${height}`
 
     const outputFloaderPath = await window.ipcInvoke("GET_STORE", "defaultOutPath")
     const subOutputFloaderPath = `${outputFloaderPath}${separator}${SUB_FLODER_NAME}`
+    const isMac = window.electron.process.platform === 'darwin'
+
     const commandObj = {
       "-f": COLLECT_TYPE[window.electron.process.platform],
       "-framerate": isGif ? "10" : String(fps),
-      "-offset_x": (bounds.x + CONTENT_MARGIN_LEFT) * bounds.scaleFactor + "",
-      "-offset_y": (bounds.y + CONTENT_MARGIN_TOP) * bounds.scaleFactor + "",
+      // "-offset_x": (bounds.x + CONTENT_MARGIN_LEFT) * bounds.scaleFactor + "", 命令不支持
+      // "-offset_y": (bounds.y + CONTENT_MARGIN_TOP) * bounds.scaleFactor + "",
       "-video_size": screenArea,
-      "-i": "desktop",
+      "-i": isMac ? `Capture screen ${bounds.screenIndex}` : 'desktop',
       "-pix_fmt": "yuv420p",
+      '-vsync':'vfr',
+      '-vf' : `crop=${width}:${height}:${x}:${y}`,
       // "-c:v": "libx264",
       [`${subOutputFloaderPath}${separator}${fileName}`]: null,
     }
