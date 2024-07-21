@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, screen } from "electron"
 import { ChildProcessWithoutNullStreams, spawn } from "child_process"
-import { getFfmpegPath } from "@main/plugin/modules/ffmpeg"
+import { getFfmpegPath, getFfmpegPathForMac } from "@main/plugin/modules/ffmpeg"
 import { checkFolderExists } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 
@@ -14,12 +14,17 @@ ipcMain.handle("SCREEN_RECORD_GET_CURRENT_INFO", async (e, data) => {
     x: bounds.x,
     y: bounds.y,
   })
+  const display = screen.getDisplayMatching({ x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height });
+
+  // 获取屏幕的索引
+  const screenIndex = screen.getAllDisplays().findIndex(d => d.id === display.id);
   const scaleFactor = currentDisplay.scaleFactor
   const windowX = currentDisplay.nativeOrigin.x - currentDisplay.bounds.x + bounds.x
   const windowY = currentDisplay.nativeOrigin.y - currentDisplay.bounds.y + bounds.y
   bounds.x = windowX
   bounds.y = windowY
   bounds["scaleFactor"] = scaleFactor
+  bounds["screenIndex"] = screenIndex
   return bounds
 })
 
@@ -28,7 +33,7 @@ ipcMain.handle("SCREEN_RECORD_START", async (e, params) => {
   const win = BrowserWindow.fromWebContents(e.sender)
   win?.setResizable(false)
   win?.setMovable(false)
-  const ffmpegPath = getFfmpegPath()
+  const ffmpegPath = process.platform === "darwin" ? getFfmpegPathForMac() : getFfmpegPath()
   checkFolderExists(params.outputFloaderPath)
   queueStoreAdd({
     params: { ...params },

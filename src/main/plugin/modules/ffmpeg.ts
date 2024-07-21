@@ -4,6 +4,7 @@ import path, { resolve } from "path"
 import { checkFolderExists, getFileSize } from "@main/utils/fileHelper"
 import { queueStoreAdd, queueStoreUpdate } from "@main/utils/storeHelper"
 import * as ffmpegStatic from "ss-ffmpeg-static-electron"
+import ffmpegStaticPath from "ffmpeg-static"
 // import { mainLogSend } from "@main/helper";
 
 interface VideoInfo {
@@ -15,6 +16,15 @@ interface VideoInfo {
     height: number
   }
   frameRate?: number
+}
+
+
+export const getFfmpegPathForMac = (): string => {
+    if (!app.isPackaged) {
+      return ffmpegStaticPath as string
+    } else {
+    return path.join(process.resourcesPath, "app.asar.unpacked/node_modules/ffmpeg-static/ffmpeg")
+  }
 }
 
 // 获取 ffmpeg 路径
