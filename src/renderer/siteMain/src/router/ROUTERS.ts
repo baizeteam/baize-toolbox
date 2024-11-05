@@ -7,4 +7,5 @@ export const ROUTERS = {
   SCREEN_RECORD: "/screen-record",
   SCREEN_SHOT: "/screen-shot",
   COMPRESS: "/compress",
+  CHAT: "/chat",
 }

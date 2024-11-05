@@ -49,6 +49,7 @@ const Nav: React.FC = () => {
     getItem(t("siteMain.components.nav.screenShot"), ROUTERS.SCREEN_SHOT, <PictureOutlined />),
     getItem(t("siteMain.components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
     getItem(t("siteMain.components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />),
+    getItem(t("siteMain.components.nav.setting"), ROUTERS.CHAT, <SettingOutlined />),
   ]
 
   // 点击菜单项后，路由跳转

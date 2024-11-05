@@ -15,6 +15,7 @@ import Setting from "@siteMain/pages/Setting"
 import ScreenRecord from "@siteMain/pages/ScreenRecord"
 import ScreenShot from "@siteMain/pages/ScreenShot"
 import Compress from "@siteMain/pages/Compress"
+import Chat from "@siteMain/pages/Chat"
 
 // const Home = lazy(() => import("@siteMain/pages/Home"));
 // const Transcode = lazy(() => import("@siteMain/pages/Transcode"));
@@ -42,6 +43,7 @@ export default function BaseRouter() {
               <Route path={ROUTERS.SCREEN_SHOT} element={<ScreenShot />} />
               <Route path={ROUTERS.SETTING} element={<Setting />} />
               <Route path={ROUTERS.COMPRESS} element={<Compress />} />
+              <Route path={ROUTERS.CHAT} element={<Chat />} />
             </Route>
             {/* 通配符路由处理不匹配的情况 */}
             <Route path="*" element={<Navigate to={ROUTERS.HOME} replace />} />

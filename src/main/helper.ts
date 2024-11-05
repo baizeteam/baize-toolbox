@@ -32,7 +32,8 @@ interface ICreateWin {
 export async function createWin({ config, url, injectData, route }: ICreateWin): Promise<BrowserWindow> {
   const win = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
       sandbox: false,
       webSecurity: false,
       preload: join(__dirname, "../preload/index.js"),
