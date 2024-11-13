@@ -55,7 +55,8 @@
       "screenRecord": "Screen Record",
       "screenShot": "Screen Shot",
       "compress": "Compress",
-      "setting": "Setting"
+      "setting": "Setting",
+      "chat": "AI Chat"
     },
     "appSelectFile": {
       "title": "Select or drag files to this area"

@@ -95,7 +95,7 @@ async function generate(messages) {
     }
     self.postMessage({
       status: "update",
-      output: allOutputText,
+      output: allOutputText.replace("<|end|>", ""),
       tps,
       numTokens,
     })

@@ -56,7 +56,8 @@
         "screenRecord": "录屏",
         "screenShot": "截屏",
         "compress": "压缩",
-        "setting": "设置"
+        "setting": "设置",
+        "chat": "AI 聊天"
       },
       "appSelectFile": {
         "title": "选择或拖拽文件到此区域"
