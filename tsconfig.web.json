@@ -13,7 +13,7 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
@@ -33,5 +33,6 @@
         "src/renderer/siteElectronLoading/src"
       ],
     }
-  }
+  },
+  "types":["@webgpu/types"]
 }

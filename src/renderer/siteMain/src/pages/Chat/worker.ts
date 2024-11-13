@@ -1,14 +1,8 @@
 import { AutoTokenizer, AutoModelForCausalLM, TextStreamer, StoppingCriteria, env } from "@huggingface/transformers"
-import { app, ipcMain, BrowserWindow } from "electron"
-import { join } from "path"
 
-// env.remoteHost = "http://localhost:3000/file"
-// env.remotePathTemplate = "{model}"
-// env.useBrowserCache = true
-env.allowRemoteModels = false
-env.useFSCache = true
-env.allowLocalModels = true
-env.localModelPath = join(__dirname, "../../resources/models")
+env.remoteHost = "file://E:\\workplace\\baize\\baize-toolbox\\resources\\models\\" //"http://localhost:3000/file"
+env.remotePathTemplate = "{model}"
+env.useBrowserCache = true
 
 class CallbackTextStreamer extends TextStreamer {
   private cb
@@ -16,6 +10,7 @@ class CallbackTextStreamer extends TextStreamer {
   constructor(tokenizer, cb) {
     super(tokenizer, {
       skip_prompt: true,
+      // skip_special_tokens: true,
     })
     this.cb = cb
   }
@@ -45,6 +40,11 @@ class InterruptableStoppingCriteria extends StoppingCriteria {
   }
 }
 
+const stopping_criteria = new InterruptableStoppingCriteria()
+
+/**
+ * This class uses the Singleton pattern to ensure that only one instance of the model is loaded.
+ */
 class TextGenerationPipeline {
   static model_id = null
   static model = null
@@ -53,6 +53,7 @@ class TextGenerationPipeline {
 
   static async getInstance(progress_callback = null) {
     // Choose the model based on whether fp16 is available
+    // this.model_id = "Phi-3-mini-4k-instruct";
     this.model_id = "Phi-3-mini-4k-instruct"
 
     this.tokenizer ??= AutoTokenizer.from_pretrained(this.model_id, {
@@ -61,10 +62,9 @@ class TextGenerationPipeline {
     })
 
     this.model ??= AutoModelForCausalLM.from_pretrained(this.model_id, {
-      local_files_only: true,
       dtype: "q4",
-      device: "cpu",
-      use_external_data_format: false,
+      device: "webgpu",
+      use_external_data_format: true,
       progress_callback,
     })
 
@@ -73,60 +73,99 @@ class TextGenerationPipeline {
 }
 
 async function generate(messages) {
+  // Retrieve the text-generation pipeline.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance()
+
   const inputs = tokenizer.apply_chat_template(messages, {
     add_generation_prompt: true,
     return_dict: true,
   })
 
   let allOutputText = ""
+
+  let startTime
+  let numTokens = 0
   const cb = (output) => {
     allOutputText += output
-    console.log({
+    startTime ??= performance.now()
+
+    let tps
+    if (numTokens++ > 0) {
+      tps = (numTokens / (performance.now() - startTime)) * 1000
+    }
+    self.postMessage({
       status: "update",
       output: allOutputText,
+      tps,
+      numTokens,
     })
   }
 
   const streamer = new CallbackTextStreamer(tokenizer, cb)
 
+  // Tell the main thread we are starting
+  self.postMessage({ status: "start" })
+
   const outputs = await model.generate({
     ...inputs,
     max_new_tokens: 512,
     streamer,
-    StoppingCriteria,
+    stopping_criteria,
   })
   const outputText = tokenizer.batch_decode(outputs, {
     skip_special_tokens: false,
   })
-  console.log(outputText)
+
+  // Send the output back to the main thread
+  self.postMessage({
+    status: "complete",
+    output: outputText,
+  })
 }
 
 async function load() {
-  console.log("load")
+  self.postMessage({
+    status: "loading",
+    data: "Loading model...",
+  })
+
+  // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
-    console.log("progress", x)
+    // We also add a progress callback to the pipeline so that we can
+    // track model loading.
+    self.postMessage(x)
+  })
+
+  self.postMessage({
+    status: "loading",
+    data: "Compiling shaders and warming up model...",
   })
 
   // Run model with dummy input to compile shaders
-  const inputs = tokenizer("who are you")
+  const inputs = tokenizer("a")
   await model.generate({ ...inputs, max_new_tokens: 1 })
+  self.postMessage({ status: "ready" })
 }
+// Listen for messages from the main thread
+self.addEventListener("message", async (e) => {
+  const { type, data } = e.data
 
-app.on("ready", async () => {
-  console.log("chat ready")
-  const stopping_criteria = new InterruptableStoppingCriteria()
-  ipcMain.on("CHAT_LOAD", (_, key) => {
-    load()
-  })
-  ipcMain.on("CHAT_GENERATE", (_, data) => {
-    console.log("generate", data)
-    generate(data.messages)
-  })
-  ipcMain.on("CHAT_INTERRUPT", (_, data) => {
-    stopping_criteria.interrupt()
-  })
-  ipcMain.on("CHAT_RESET", (_, data) => {
-    stopping_criteria.reset()
-  })
+  switch (type) {
+    case "load":
+      load()
+      break
+
+    case "generate":
+      stopping_criteria.reset()
+      generate(data)
+      break
+
+    case "interrupt":
+      stopping_criteria.interrupt()
+      break
+
+    case "reset":
+      stopping_criteria.reset()
+      break
+  }
 })

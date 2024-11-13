@@ -1,37 +1,61 @@
 import { Button } from "antd"
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { nanoid } from "nanoid"
 import AppInput from "../../components/AppInput"
 
-export default function Chat() {
-  const loadModel = () => {
-    window.ipcSend("CHAT_LOAD")
-  }
+interface MessageItem {
+  id: string
+  role: "user" | "assistant"
+  content: string
+}
 
-  const generate = () => {
-    const messages = [
+export default function Chat() {
+  const workerRef = useRef<Worker | null>(null)
+  const [messageList, setMessageList] = useState<MessageItem[]>([])
+
+  const sendMessage = (value: string) => {
+    const messages: MessageItem[] = [
       {
         id: nanoid(8),
         role: "user",
-        content: "你好呀",
+        content: value,
       },
     ]
-    window.ipcSend("CHAT_GENERATE", {
-      messages,
-    })
+    setMessageList((prev) => [...prev, ...messages])
+    workerRef.current?.postMessage({ type: "generate", data: messages })
   }
 
-  const loadWhisper = () => {
-    window.ipcSend("WHISPER_LOAD")
-  }
+  useEffect(() => {
+    const worker = new Worker(new URL("./worker.ts", import.meta.url), {
+      type: "module",
+    })
+    workerRef.current = worker
+    const onMessageReceived = (e) => {
+      switch (e.data.status) {
+        case "start":
+          break
+        case "update":
+          {
+            const { output, tps, numTokens } = e.data
+            console.log(output, tps, numTokens)
+          }
+          break
+        case "complete":
+          console.log("Generation complete")
+          break
+      }
+    }
+    workerRef.current.addEventListener("message", onMessageReceived)
+    return () => {
+      workerRef.current?.removeEventListener("message", onMessageReceived)
+    }
+  }, [])
 
   return (
     <div>
       <div>chat</div>
+      <Button onClick={() => sendMessage("你好呀")}>send</Button>
       <AppInput />
-      <Button onClick={loadModel}>加载模型</Button>
-      <Button onClick={generate}>生成</Button>
-      <Button onClick={loadWhisper}>加载whisper</Button>
     </div>
   )
 }

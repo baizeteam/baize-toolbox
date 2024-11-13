@@ -18,7 +18,7 @@ export default function AppInput() {
       .then((stream) => {
         setStream(stream)
 
-        recorderRef.current = new MediaRecorder(stream)
+        recorderRef.current = new MediaRecorder(stream, { mimeType: "audio/webm" })
         audioContextRef.current = new AudioContext({ sampleRate: WHISPER_SAMPLING_RATE })
 
         console.log(recorderRef.current)
@@ -43,10 +43,6 @@ export default function AppInput() {
         recorderRef.current.onstop = () => {
           setRecording(false)
         }
-
-        setTimeout(() => {
-          recorderRef.current?.requestData()
-        }, 1000)
       })
       .catch((err) => console.error("The following error occurred: ", err))
   }
