@@ -1,6 +1,5 @@
 import { AutoTokenizer, AutoModelForCausalLM, TextStreamer, StoppingCriteria, env } from "@huggingface/transformers"
 
-env.remoteHost = "file://E:\\workplace\\baize\\baize-toolbox\\resources\\models\\" //"http://localhost:3000/file"
 env.remotePathTemplate = "{model}"
 env.useBrowserCache = true
 
@@ -152,6 +151,10 @@ self.addEventListener("message", async (e) => {
   const { type, data } = e.data
 
   switch (type) {
+    case "init":
+      env.remoteHost = data.remoteHost
+      console.log(env.remoteHost)
+      break
     case "load":
       load()
       break

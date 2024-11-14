@@ -1,4 +1,4 @@
-import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions } from "electron"
+import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions, app } from "electron"
 import { join } from "path"
 import { is } from "@electron-toolkit/utils"
 import icon from "@resources/icon.png?asset"
@@ -46,6 +46,7 @@ export async function createWin({ config, url, injectData, route }: ICreateWin):
     webContents: win.webContents,
     data: {
       system: await getSystemInfo(),
+      resourcePath: app.getAppPath(),
       ...injectData,
     },
   })

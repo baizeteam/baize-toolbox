@@ -5,6 +5,7 @@ import AppChatInput from "../../components/AppChatInput"
 import AppChatList from "../../components/AppChatList"
 import { cloneDeep } from "lodash"
 import { MessageOutlined } from "@ant-design/icons"
+import { separator } from "@renderer/utils/fileHelper"
 import "./index.module.less"
 
 interface MessageItem {
@@ -58,6 +59,12 @@ export default function Chat() {
       type: "module",
     })
     workerRef.current = worker
+    workerRef.current?.postMessage({
+      type: "init",
+      data: {
+        remoteHost: `${window.injectData.resourcePath}${separator}resources${separator}models`,
+      },
+    })
     const onMessageReceived = (e) => {
       switch (e.data.status) {
         case "start":
