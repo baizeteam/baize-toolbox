@@ -49,6 +49,7 @@ export default function Chat() {
     const messages = [...messageListRef.current, message]
 
     changeMessageList(messages)
+    setIsChat(true)
     workerRef.current?.postMessage({ type: "generate", data: messages })
   }
 
@@ -60,7 +61,6 @@ export default function Chat() {
     const onMessageReceived = (e) => {
       switch (e.data.status) {
         case "start":
-          setIsChat(true)
           break
         case "update":
           const { output, tps, numTokens } = e.data
@@ -103,7 +103,7 @@ export default function Chat() {
         <AppChatList messageList={messageList} />
       </div>
       <div styleName="footer">
-        <AppChatInput onSearch={sendMessage} />
+        <AppChatInput onSearch={sendMessage} loading={isChat} />
       </div>
     </div>
   )

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { Input } from "antd"
 
 export default function AppChatInput(props) {
-  const { onSearch } = props
+  const { onSearch, ...rest } = props
   const [_value, _setValue] = useState("")
 
   const handleChange = (e) => {
@@ -13,5 +13,5 @@ export default function AppChatInput(props) {
     _setValue("")
     onSearch(_value)
   }
-  return <Input.Search value={_value} enterButton="发送" onChange={handleChange} onSearch={handleSearch} />
+  return <Input.Search value={_value} enterButton="发送" onChange={handleChange} {...rest} onSearch={handleSearch} />
 }
