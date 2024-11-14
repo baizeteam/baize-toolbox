@@ -6,7 +6,7 @@ export default function AppChatList(props) {
   return (
     <div styleName="app-chat-list">
       {messageList.map((item) => (
-        <div styleName="chat-item" key={item.id}>
+        <div styleName={`chat-item${item.role === "user" ? " flex-end" : ""}`} key={item.id}>
           <div styleName={item.role === "user" ? "user" : "assistant"}>{item.content}</div>
         </div>
       ))}
