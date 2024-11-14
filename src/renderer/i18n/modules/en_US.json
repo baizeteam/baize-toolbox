@@ -46,29 +46,6 @@
     "openFile": "Open",
     "openFileError": "File does not exist"
   },
-  "components": {
-    "nav": {
-      "home": "Home",
-      "transcode": "Transocde",
-      "extract": "Extract",
-      "TTS": "TTS",
-      "screenRecord": "Screen Record",
-      "screenShot": "Screen Shot",
-      "compress": "Compress",
-      "setting": "Setting",
-      "chat": "AI Chat"
-    },
-    "appSelectFile": {
-      "title": "Select or drag files to this area"
-    },
-    "deleteModal": {
-      "content": "Confirm to delete?",
-      "deleteFileText": "Delete files simultaneously?"
-    },
-    "appFunctionDev": {
-      "title": "In development, stay tuned for updates!"
-    }
-  },
   "siteMain": {
     "pages": {
       "home": {
@@ -155,7 +132,8 @@
         "screenRecord": "Screen Record",
         "screenShot": "Screen Shot",
         "compress": "Compress",
-        "setting": "Setting"
+        "setting": "Setting",
+        "chat": "AI Chat"
       },
       "appSelectFile": {
         "title": "Select or drag files to this area"
