@@ -133,7 +133,8 @@ async function load() {
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
     // We also add a progress callback to the pipeline so that we can
     // track model loading.
-    self.postMessage(x)
+    console.log(x.name, x.status, x.progress)
+    // self.postMessage(x)
   })
 
   self.postMessage({

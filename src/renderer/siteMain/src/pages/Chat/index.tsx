@@ -4,6 +4,7 @@ import { nanoid } from "nanoid"
 import AppChatInput from "../../components/AppChatInput"
 import AppChatList from "../../components/AppChatList"
 import { cloneDeep } from "lodash"
+import { MessageOutlined } from "@ant-design/icons"
 import "./index.module.less"
 
 interface MessageItem {
@@ -18,7 +19,7 @@ export default function Chat() {
     // {
     //   id: nanoid(8),
     //   role: "user",
-    //   content: "111",
+    //   content: "111111111111111111111111111111111111111111111111111111111111111111111111",
     // },
     // {
     //   id: nanoid(8),
@@ -30,20 +31,24 @@ export default function Chat() {
 
   const messageListRef = useRef<MessageItem[]>(messageList)
 
+  const loadModel = () => {
+    workerRef.current?.postMessage({ type: "load" })
+  }
+
   const changeMessageList = (list) => {
     messageListRef.current = list
     setMessageList(list)
   }
 
   const sendMessage = (value: string) => {
-    const messages: MessageItem[] = [
-      {
-        id: nanoid(8),
-        role: "user",
-        content: value,
-      },
-    ]
-    changeMessageList([...messageListRef.current, ...messages])
+    const message: MessageItem = {
+      id: nanoid(8),
+      role: "user",
+      content: value,
+    }
+    const messages = [...messageListRef.current, message]
+
+    changeMessageList(messages)
     workerRef.current?.postMessage({ type: "generate", data: messages })
   }
 
@@ -89,6 +94,12 @@ export default function Chat() {
   return (
     <div styleName="chat">
       <div styleName="content">
+        <div styleName="content-header">
+          <div styleName="header-icon">
+            <MessageOutlined />
+          </div>
+          <div styleName="header-text">AI 聊天</div>
+        </div>
         <AppChatList messageList={messageList} />
       </div>
       <div styleName="footer">
