@@ -16,6 +16,7 @@ import { Route, useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import appIcon from "@renderer/assets/images/icon.ico"
 import "./index.module.less"
+import platformUtil from "@renderer/utils/platformUtil"
 
 type MenuItem = Required<MenuProps>["items"][number]
 
@@ -43,16 +44,17 @@ const Nav: React.FC = () => {
 
   const items: MenuItem[] = [
     // getItem(t("siteMain.components.nav.home"), ROUTERS.HOME, <HomeOutlined />),
-
     getItem(t("translation:siteMain.components.nav.transcode"), ROUTERS.TRANSCODE, <NodeExpandOutlined />),
     getItem(t("translation:siteMain.components.nav.extract"), ROUTERS.EXTRACT, <ContainerOutlined />),
     getItem(t("translation:siteMain.components.nav.TTS"), ROUTERS.TTS, <AudioOutlined />),
-    getItem(t("translation:siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />),
+    platformUtil.isWin
+      ? getItem(t("translation:siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />)
+      : null,
     getItem(t("translation:siteMain.components.nav.screenShot"), ROUTERS.SCREEN_SHOT, <PictureOutlined />),
     getItem(t("translation:siteMain.components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
     getItem(t("translation:siteMain.components.nav.chat"), ROUTERS.CHAT, <MessageOutlined />),
     getItem(t("translation:siteMain.components.nav.setting"), ROUTERS.SETTING, <SettingOutlined />),
-  ]
+  ].filter((item) => item)
 
   // 点击菜单项后，路由跳转
   const handleMenuClick = (e: any) => {
