@@ -1,5 +1,6 @@
 import React from "react"
 import "./index.module.less"
+import AppMarkdown from "../AppMarkdown"
 
 export default function AppChatList(props) {
   const { messageList } = props
@@ -7,7 +8,9 @@ export default function AppChatList(props) {
     <div styleName="app-chat-list">
       {messageList.map((item) => (
         <div styleName={`chat-item${item.role === "user" ? " flex-end" : ""}`} key={item.id}>
-          <div styleName={item.role === "user" ? "user" : "assistant"}>{item.content}</div>
+          <div styleName={item.role === "user" ? "user" : "assistant"}>
+            <AppMarkdown>{item.content}</AppMarkdown>
+          </div>
         </div>
       ))}
     </div>

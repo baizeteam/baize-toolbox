@@ -47,6 +47,8 @@
     "mobx-react": "^9.1.1",
     "nanoid": "^5.0.6",
     "path": "^0.12.7",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
     "ss-ffmpeg-static-electron": "^2.0.4"
   },
   "devDependencies": {
