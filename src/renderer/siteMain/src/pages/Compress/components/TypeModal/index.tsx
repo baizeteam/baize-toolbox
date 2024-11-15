@@ -63,7 +63,7 @@ export default function TypeModal(props: ITypeModalProps) {
 
   return (
     <Modal
-      title={t("siteMain.pages.compress.typeModal.title")}
+      title={t("translation:siteMain.pages.compress.typeModal.title")}
       {...props}
       onOk={_handleOk}
       okButtonProps={{ disabled: loading || !settingInfo }}
@@ -76,28 +76,29 @@ export default function TypeModal(props: ITypeModalProps) {
             {fileSelectAccetps?.video.includes(filePath?.split(".").pop() ?? "") && (
               <div styleName="video-info">
                 <div styleName="info">
-                  <div styleName="title">{t("siteMain.pages.compress.typeModal.infoTitle")}</div>
+                  <div styleName="title">{t("translation:siteMain.pages.compress.typeModal.infoTitle")}</div>
                   <div styleName="content">
                     <div>
-                      {t("commonText.bitrate")}:{fileInfo?.bitrate}
+                      {t("translation:commonText.bitrate")}:{fileInfo?.bitrate}
                     </div>
                     <div>
-                      {t("commonText.duration")}:{fileInfo?.duration}
+                      {t("translation:commonText.duration")}:{fileInfo?.duration}
                     </div>
                     <div>
-                      {t("commonText.fps")}:{fileInfo?.frameRate}
+                      {t("translation:commonText.fps")}:{fileInfo?.frameRate}
                     </div>
                     <div>
-                      {t("commonText.resolution")}:{fileInfo?.resolution?.width}x{fileInfo?.resolution?.height}
+                      {t("translation:commonText.resolution")}:{fileInfo?.resolution?.width}x
+                      {fileInfo?.resolution?.height}
                     </div>
                   </div>
                 </div>
 
                 <div styleName="setting">
-                  <div styleName="title">{t("siteMain.pages.compress.typeModal.compressSetting")}</div>
+                  <div styleName="title">{t("translation:siteMain.pages.compress.typeModal.compressSetting")}</div>
                   <div styleName="content">
                     <div>
-                      {t("commonText.fps")}:
+                      {t("translation:commonText.fps")}:
                       <Select
                         options={fpsOptions}
                         defaultValue={fileInfo?.frameRate}
@@ -110,7 +111,7 @@ export default function TypeModal(props: ITypeModalProps) {
                       />
                     </div>
                     <div>
-                      {t("commonText.bitrate")}:
+                      {t("translation:commonText.bitrate")}:
                       <div style={{ padding: "0 16px" }}>
                         <Slider
                           defaultValue={fileInfo?.bitrate}

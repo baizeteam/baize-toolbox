@@ -18,7 +18,7 @@ export default function AppSelectFile(props: UploadProps) {
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
-        <p className="ant-upload-text">{t("siteMain.components.appSelectFile.title")}</p>
+        <p className="ant-upload-text">{t("translation:siteMain.components.appSelectFile.title")}</p>
       </Dragger>
     </div>
   )

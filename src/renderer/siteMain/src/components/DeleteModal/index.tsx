@@ -19,9 +19,9 @@ export default function DeleteModal(props: IDeleteModalProps) {
     })
   }
   return (
-    <Modal {...props} title={t("siteMain.components.deleteModal.content")} onOk={_onOk}>
+    <Modal {...props} title={t("translation:siteMain.components.deleteModal.content")} onOk={_onOk}>
       <Checkbox value={value} onChange={(e) => setValue(e.target.checked)}>
-        {t("siteMain.components.deleteModal.deleteFileText")}
+        {t("translation:siteMain.components.deleteModal.deleteFileText")}
       </Checkbox>
     </Modal>
   )

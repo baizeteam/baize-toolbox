@@ -23,7 +23,7 @@ export default function ScreenRecord() {
   const columns = [
     tableFile,
     {
-      title: t("siteMain.pages.screenRecord.createType"),
+      title: t("translation:siteMain.pages.screenRecord.createType"),
       dataIndex: "createType",
       key: "createType",
       width: 160,
@@ -31,7 +31,7 @@ export default function ScreenRecord() {
     tableFps,
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       width: 200,
@@ -67,7 +67,7 @@ export default function ScreenRecord() {
         <div styleName="icon">
           <VideoCameraOutlined />
         </div>
-        <p className="ant-upload-text">{t("siteMain.pages.screenRecord.createBtn")}</p>
+        <p className="ant-upload-text">{t("translation:siteMain.pages.screenRecord.createBtn")}</p>
       </div>
       <AppTableHeader
         title={"siteMain.pages.screenRecord.tableTitle"}

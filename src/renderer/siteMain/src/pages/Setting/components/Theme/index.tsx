@@ -24,11 +24,11 @@ export default function Theme() {
   return (
     <div styleName="theme">
       <div styleName="block">
-        <div styleName="title">{t("siteMain.pages.setting.theme")}</div>
+        <div styleName="title">{t("translation:siteMain.pages.setting.theme")}</div>
         <Radio.Group value={theme} onChange={onThemeChange}>
-          <Radio value={"light"}>{t("siteMain.pages.setting.themeOptions.light")}</Radio>
-          <Radio value={"dark"}>{t("siteMain.pages.setting.themeOptions.dark")}</Radio>
-          <Radio value={"system"}>{t("siteMain.pages.setting.themeOptions.system")}</Radio>
+          <Radio value={"light"}>{t("translation:siteMain.pages.setting.themeOptions.light")}</Radio>
+          <Radio value={"dark"}>{t("translation:siteMain.pages.setting.themeOptions.dark")}</Radio>
+          <Radio value={"system"}>{t("translation:siteMain.pages.setting.themeOptions.system")}</Radio>
         </Radio.Group>
       </div>
     </div>

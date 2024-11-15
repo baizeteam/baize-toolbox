@@ -27,14 +27,14 @@ export default function WhisperModelPath() {
     <div styleName="whisper-model-path">
       <div styleName="block">
         <div styleName="title">
-          <div>{t("siteMain.pages.setting.whisperModelPath")}</div>
+          <div>{t("translation:siteMain.pages.setting.whisperModelPath")}</div>
           <div
             styleName="download"
             onClick={() => {
               window.open("https://huggingface.co/ggerganov/whisper.cpp/tree/main", "_blank")
             }}
           >
-            {t("commonText.download")}
+            {t("translation:commonText.download")}
           </div>
         </div>
         <div styleName="path">
@@ -42,7 +42,7 @@ export default function WhisperModelPath() {
             <EllipsisTextControl maxWidth={270} content={whisperModelPath || "暂无"} />
           </div>
           <Button type="primary" styleName="btn" onClick={onChangeWhisperModelPath}>
-            {t("siteMain.pages.setting.change")}
+            {t("translation:siteMain.pages.setting.change")}
           </Button>
         </div>
       </div>

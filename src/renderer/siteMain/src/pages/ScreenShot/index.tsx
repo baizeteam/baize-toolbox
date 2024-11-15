@@ -18,15 +18,15 @@ export default function ScreenShot() {
       filePath,
     })
     if (res === true) {
-      message.success(t("commonText.saveSuccess"))
+      message.success(t("translation:commonText.saveSuccess"))
     } else {
-      message.error(t("commonText.saveError"))
+      message.error(t("translation:commonText.saveError"))
     }
   }
 
   const columns = [
     {
-      title: t("commonText.image"),
+      title: t("translation:commonText.image"),
       dataIndex: "base64",
       key: "base64",
       width: 200,
@@ -45,7 +45,7 @@ export default function ScreenShot() {
       },
     },
     {
-      title: t("commonText.size"),
+      title: t("translation:commonText.size"),
       dataIndex: "cutInfo",
       key: "cutInfo",
       width: 160,
@@ -55,7 +55,7 @@ export default function ScreenShot() {
     },
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       width: 200,
@@ -89,7 +89,11 @@ export default function ScreenShot() {
           <PictureOutlined />
         </div>
         <p className="ant-upload-text">
-          {t(platformUtil.isMac ? "siteMain.pages.screenShot.macCreateText" : "siteMain.pages.screenShot.createText")}
+          {t(
+            platformUtil.isMac
+              ? "translation:siteMain.pages.screenShot.macCreateText"
+              : "translation:siteMain.pages.screenShot.createText",
+          )}
         </p>
       </div>
       <AppTableHeader

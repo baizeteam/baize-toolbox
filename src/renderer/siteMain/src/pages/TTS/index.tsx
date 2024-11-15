@@ -50,16 +50,16 @@ export default function TTS() {
       filePath,
     })
     if (res === true) {
-      message.success(t("commonText.saveSuccess"))
+      message.success(t("translation:commonText.saveSuccess"))
     } else {
-      message.error(t("commonText.saveError"))
+      message.error(t("translation:commonText.saveError"))
     }
   }
 
   const columns = [
     tableText,
     {
-      title: t("commonText.audio"),
+      title: t("translation:commonText.audio"),
       dataIndex: "url",
       width: 120,
       key: "url",
@@ -68,7 +68,7 @@ export default function TTS() {
       },
     },
     {
-      title: t("commonText.vocalLine"),
+      title: t("translation:commonText.vocalLine"),
       dataIndex: "voice",
       key: "voice",
       width: 160,
@@ -76,7 +76,7 @@ export default function TTS() {
     },
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
@@ -157,7 +157,7 @@ export default function TTS() {
       />
       <div styleName="action">
         <div>
-          <span styleName="label">{t("commonText.vocalLine")}</span>
+          <span styleName="label">{t("translation:commonText.vocalLine")}</span>
           <Cascader
             allowClear={false}
             options={options}
@@ -166,7 +166,7 @@ export default function TTS() {
           />
         </div>
         <Button onClick={createTTS} type="primary">
-          {t("commonText.generate")}
+          {t("translation:commonText.generate")}
         </Button>
       </div>
       <Divider />
