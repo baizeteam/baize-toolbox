@@ -47,9 +47,9 @@ const Nav: React.FC = () => {
     getItem(t("translation:siteMain.components.nav.transcode"), ROUTERS.TRANSCODE, <NodeExpandOutlined />),
     getItem(t("translation:siteMain.components.nav.extract"), ROUTERS.EXTRACT, <ContainerOutlined />),
     getItem(t("translation:siteMain.components.nav.TTS"), ROUTERS.TTS, <AudioOutlined />),
-    platformUtil.isWin
-      ? getItem(t("translation:siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />)
-      : null,
+    platformUtil.isLinux
+      ? null
+      : getItem(t("translation:siteMain.components.nav.screenRecord"), ROUTERS.SCREEN_RECORD, <VideoCameraOutlined />),
     getItem(t("translation:siteMain.components.nav.screenShot"), ROUTERS.SCREEN_SHOT, <PictureOutlined />),
     getItem(t("translation:siteMain.components.nav.compress"), ROUTERS.COMPRESS, <FallOutlined />),
     getItem(t("translation:siteMain.components.nav.chat"), ROUTERS.CHAT, <MessageOutlined />),
