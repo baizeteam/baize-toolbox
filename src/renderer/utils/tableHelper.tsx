@@ -75,7 +75,7 @@ export const SaveFileBtn = (props: ITableBtnProps) => {
 
   return (
     <Button onClick={handleSaveFile} type="link" className="common-table-link-btn">
-      {t("commonText.save")}
+      {t("translation:commonText.save")}
     </Button>
   )
 }
@@ -90,7 +90,7 @@ export const OpenFileBtn = (props: ITableBtnProps) => {
       type="link"
       className="common-table-link-btn"
     >
-      {t("commonText.openFile")}
+      {t("translation:commonText.openFile")}
     </Button>
   )
 }
@@ -101,7 +101,7 @@ export const OpenFolderBtn = (props: ITableBtnProps) => {
   const { t } = useTranslation()
   return (
     <Button onClick={() => openFolder(record.outputFloaderPath)} type="link" className="common-table-link-btn">
-      {t("commonText.openFolder")}
+      {t("translation:commonText.openFolder")}
     </Button>
   )
 }
@@ -130,9 +130,11 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
       const res = await window.ipcInvoke("WIN_DELETE_FILE", {
         path,
       })
-      res ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
+      res ? message.success(t("translation:commonText.success")) : message.error(t("translation:commonText.error"))
     } else {
-      recordDeleteRes ? message.success(t("commonText.success")) : message.error(t("commonText.error"))
+      recordDeleteRes
+        ? message.success(t("translation:commonText.success"))
+        : message.error(t("translation:commonText.error"))
     }
     callback && callback()
   }
@@ -140,10 +142,10 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
   // 删除按钮点击事件, 弹出确认框
   const onDelete = (record) => {
     Modal.confirm({
-      title: t("siteMain.components.deleteModal.content"),
+      title: t("translation:siteMain.components.deleteModal.content"),
       content: hasFile ? (
         <Checkbox defaultChecked onChange={onCheckBoxChnage}>
-          {t("siteMain.components.deleteModal.deleteFileText")}
+          {t("translation:siteMain.components.deleteModal.deleteFileText")}
         </Checkbox>
       ) : null,
       onOk: () => {
@@ -153,7 +155,7 @@ export const DeleteRecordBtn = (props: ITableBtnProps) => {
   }
   return (
     <Button onClick={() => onDelete(record)} type="link" className="common-table-link-btn">
-      {t("commonText.delete")}
+      {t("translation:commonText.delete")}
     </Button>
   )
 }

@@ -8,8 +8,8 @@ export default function AutoLaunch() {
   const { t } = useTranslation()
 
   const options = [
-    { value: "true", label: t("siteMain.pages.setting.autoLaunchOption.yes") },
-    { value: "false", label: t("siteMain.pages.setting.autoLaunchOption.no") },
+    { value: "true", label: t("translation:siteMain.pages.setting.autoLaunchOption.yes") },
+    { value: "false", label: t("translation:siteMain.pages.setting.autoLaunchOption.no") },
   ]
 
   const onChange = async (e) => {
@@ -27,7 +27,7 @@ export default function AutoLaunch() {
 
   return (
     <div styleName="auto-launch">
-      <div styleName="title">{t("siteMain.pages.setting.autoLaunch")}</div>
+      <div styleName="title">{t("translation:siteMain.pages.setting.autoLaunch")}</div>
       <Select options={options} style={{ width: 120 }} value={isAutoLaunch} onChange={onChange} />
     </div>
   )

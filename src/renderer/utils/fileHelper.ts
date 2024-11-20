@@ -24,7 +24,7 @@ export const openFolder = (path) => {
     })
     .then((res) => {
       if (!res) {
-        message.error(i18n.t("commonText.openFolderError"))
+        message.error(i18n.t("translation:commonText.openFolderError"))
       }
     })
 }
@@ -37,7 +37,7 @@ export const openFile = (path) => {
     })
     .then((res) => {
       if (!res) {
-        message.error(i18n.t("commonText.openFileError"))
+        message.error(i18n.t("translation:commonText.openFileError"))
       }
     })
 }

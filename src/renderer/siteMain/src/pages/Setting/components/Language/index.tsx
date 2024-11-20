@@ -28,7 +28,7 @@ export default function Language() {
   return (
     <div styleName="language">
       <div styleName="block">
-        <div styleName="title">{t("siteMain.pages.setting.language")}</div>
+        <div styleName="title">{t("translation:siteMain.pages.setting.language")}</div>
         <Select options={options} style={{ width: 120 }} value={language} onChange={onChange} />
       </div>
     </div>

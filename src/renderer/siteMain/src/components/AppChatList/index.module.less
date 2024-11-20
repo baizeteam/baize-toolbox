@@ -1,0 +1,24 @@
+.app-chat-list {
+  .chat-item {
+    position: relative;
+    display: flex;
+    &.flex-end {
+      justify-content: flex-end;
+    }
+    .assistant,
+    .user {
+      display: inline-block;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      padding: 0 12px;
+      max-width: 70%;
+      word-break: break-all;
+    }
+    .assistant {
+      background: rgba(#ccc, 0.2);
+    }
+    .user {
+      background: rgba(#ccc, 0.45);
+    }
+  }
+}

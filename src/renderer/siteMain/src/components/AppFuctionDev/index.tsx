@@ -8,7 +8,7 @@ export default function AppFunctionDev() {
   const { t } = useTranslation()
   return (
     <div styleName="app-function-dev">
-      <Empty description={t("siteMain.components.appFunctionDev.title")} image={BlankSvg} />
+      <Empty description={t("translation:siteMain.components.appFunctionDev.title")} image={BlankSvg} />
     </div>
   )
 }

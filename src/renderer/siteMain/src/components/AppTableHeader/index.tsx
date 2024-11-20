@@ -16,11 +16,11 @@ export default function AppTableHeader(props: IAppTableHeaderProps) {
 
   const handleClean = () => {
     const modal = Modal.confirm({
-      title: t("commonText.clean"),
-      content: t("commonText.clean") + t("commonText.interval") + t(title),
+      title: t("translation:commonText.clean"),
+      content: t("translation:commonText.clean") + t("translation:commonText.interval") + t(title),
       onOk(e) {
         window.electron.ipcRenderer.invoke("RESET_STORE_BY_KEY", valueKey).then(() => {
-          message.success(t("commonText.success"))
+          message.success(t("translation:commonText.success"))
           onClean()
           modal.destroy()
         })
@@ -32,7 +32,7 @@ export default function AppTableHeader(props: IAppTableHeaderProps) {
     <div styleName="app-table-header">
       <div styleName="title">{t(title)}</div>
       <div styleName="delete-btn" onClick={handleClean}>
-        <div styleName="text">{t("commonText.clean")}</div>
+        <div styleName="text">{t("translation:commonText.clean")}</div>
         <AppIcon icon="#baize-shanchu" />
       </div>
     </div>

@@ -2,6 +2,7 @@ node_modules
 resources/mac/*
 resources/win/*
 resources/linux/*
+resources/models/*
 resources/whisper/*.bin
 dist
 out

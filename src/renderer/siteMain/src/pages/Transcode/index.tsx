@@ -87,7 +87,7 @@ export default function Transcode() {
   const columns = [
     tableOriginFile,
     {
-      title: t("siteMain.pages.transcode.transcodeType"),
+      title: t("translation:siteMain.pages.transcode.transcodeType"),
       dataIndex: "outputType",
       key: "outputType",
       width: 160,
@@ -95,7 +95,7 @@ export default function Transcode() {
     tableProgress,
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       width: 200,

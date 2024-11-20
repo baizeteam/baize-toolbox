@@ -101,14 +101,14 @@ export default function Compress() {
   const columns = [
     tableOriginFile,
     {
-      title: t("siteMain.pages.compress.originFileSize"),
+      title: t("translation:siteMain.pages.compress.originFileSize"),
       dataIndex: "originFileSize",
       key: "originFileSize",
       width: 160,
       render: (text) => formatFileSize(text),
     },
     {
-      title: t("siteMain.pages.compress.compressFileSize"),
+      title: t("translation:siteMain.pages.compress.compressFileSize"),
       dataIndex: "outputFileSize",
       key: "outputFileSize",
       width: 160,
@@ -117,7 +117,7 @@ export default function Compress() {
     tableProgress,
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       width: 200,

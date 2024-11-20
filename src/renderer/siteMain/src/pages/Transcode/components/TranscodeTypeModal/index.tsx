@@ -27,7 +27,7 @@ export default function TranscodeTypeModal(props: ITranscodeTypeModalProps) {
   }
 
   return (
-    <Modal title={t("siteMain.pages.transcode.typeModal.title")} {...props} onOk={_handleOk}>
+    <Modal title={t("translation:siteMain.pages.transcode.typeModal.title")} {...props} onOk={_handleOk}>
       <div>
         <Radio.Group value={value} onChange={_handleChange}>
           {options.map((item) => (

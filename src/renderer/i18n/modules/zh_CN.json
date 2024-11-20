@@ -56,7 +56,8 @@
         "screenRecord": "录屏",
         "screenShot": "截屏",
         "compress": "压缩",
-        "setting": "设置"
+        "setting": "设置",
+        "chat": "AI 聊天"
       },
       "appSelectFile": {
         "title": "选择或拖拽文件到此区域"
@@ -104,6 +105,13 @@
             "title": "确认还原全部？",
             "content": "还原全部包括配置、历史记录，是否继续？"
           }
+        },
+        "transformersModels": {
+          "title": "聊天模型",
+          "openFolder": "打开聊天模型文件夹",
+          "downloadFromBaidu": "从百度网盘下载",
+          "downloadFromAliyun": "从阿里云盘下载",
+          "huggingfaceSource": "Huggingface源文件"
         }
       },
       "transcode": {

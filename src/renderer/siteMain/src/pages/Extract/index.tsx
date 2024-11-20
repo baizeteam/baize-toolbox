@@ -103,7 +103,7 @@ export default function Extract() {
   const columns = [
     tableOriginFile,
     {
-      title: t("siteMain.pages.extract.extractType"),
+      title: t("translation:siteMain.pages.extract.extractType"),
       dataIndex: "outputType",
       key: "outputType",
       width: 160,
@@ -111,7 +111,7 @@ export default function Extract() {
     tableProgress,
     tableCreateTime,
     {
-      title: t("commonText.action"),
+      title: t("translation:commonText.action"),
       dataIndex: "action",
       key: "action",
       width: 200,
@@ -142,7 +142,7 @@ export default function Extract() {
     <div styleName="extract" className="common-content">
       <AppSelectFile onChange={selectFile} accept={accept} />
       <AppTableHeader
-        title={"siteMain.pages.extract.tableTitle"}
+        title={"translation:siteMain.pages.extract.tableTitle"}
         valueKey="extractList"
         onClean={() => setExtractList([])}
       />

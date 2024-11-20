@@ -10,6 +10,7 @@ export const checkFolderExists = (folderPath: string) => {
 
 // 打开文件、文件夹
 export const openFile = (filePath: string) => {
+  console.log("filePath", filePath)
   // 检查文件夹是否存在
   return new Promise((resolve) => {
     fs.access(filePath, fs.constants.F_OK, (err) => {

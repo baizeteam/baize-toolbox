@@ -11,7 +11,7 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "types": ["electron-vite/node"],
     "baseUrl": ".",
     "paths": {

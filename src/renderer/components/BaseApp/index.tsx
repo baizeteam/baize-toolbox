@@ -1,8 +1,15 @@
 import React, { useEffect } from "react"
-import { ConfigProvider, Spin, theme } from "antd"
+import { ConfigProvider, message, Spin, theme } from "antd"
 import "./app.module.less"
 
 import i18n, { antdLocale } from "@renderer/i18n"
+
+message.config({
+  top: 60,
+  duration: 2,
+  maxCount: 3,
+  // rtl: true,
+})
 
 export default function App(props) {
   const { children, showBgColor, ...rest } = props

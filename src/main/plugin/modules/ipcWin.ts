@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow } from "electron"
+import { app, ipcMain, BrowserWindow, shell } from "electron"
 import { createWin } from "@main/helper"
 import { showCustomMenu } from "@main/plugin/modules/MenuManger"
 import { autoLaunch } from "@main/utils/autoLaunch"
@@ -82,4 +82,9 @@ app.on("ready", async () => {
   // ipcMain.handle("SET_AUTO_LAUNCH", (_, bool) => {
   //   autoLaunch(bool === "true")
   // })
+
+  // 通过系统浏览器打开链接
+  ipcMain.on("OPEN_URL_IN_BROWSER", (e, data) => {
+    shell.openExternal(data.url)
+  })
 })

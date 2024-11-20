@@ -35,7 +35,7 @@ export default function TypeModal(props: ITypeModalProps) {
   }
 
   return (
-    <Modal title={t("siteMain.pages.extract.typeModal.title")} {...props} onOk={_handleOk}>
+    <Modal title={t("translation:siteMain.pages.extract.typeModal.title")} {...props} onOk={_handleOk}>
       <div>
         <Radio.Group value={value} onChange={_handleChange}>
           {options.map((item) => (

@@ -1,0 +1,39 @@
+.chat {
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  .content {
+    flex: 1;
+    overflow: auto;
+    .content-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .header-icon {
+        display: flex;
+        justify-content: center;
+        svg {
+          color: @primary-color;
+          font-size: 60px;
+        }
+      }
+      .header-text {
+        display: flex;
+        justify-content: center;
+        color: @primary-color;
+        font-size: 32px;
+        margin: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+  .footer {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 32px #eee;
+  }
+}

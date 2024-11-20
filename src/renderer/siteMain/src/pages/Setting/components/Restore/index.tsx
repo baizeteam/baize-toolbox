@@ -10,8 +10,8 @@ export default function Restore() {
   const handleRestoreConfig = () => {
     console.log("还原配置")
     Modal.confirm({
-      title: t("siteMain.pages.setting.restore.config.title"),
-      content: t("siteMain.pages.setting.restore.config.content"),
+      title: t("translation:siteMain.pages.setting.restore.config.title"),
+      content: t("translation:siteMain.pages.setting.restore.config.content"),
       onOk() {
         window.ipcInvoke("STORE_RESTORE_CONFIG")
       },
@@ -21,8 +21,8 @@ export default function Restore() {
   // 还原全部
   const handleRestoreAll = () => {
     Modal.confirm({
-      title: t("siteMain.pages.setting.restore.all.title"),
-      content: t("siteMain.pages.setting.restore.all.content"),
+      title: t("translation:siteMain.pages.setting.restore.all.title"),
+      content: t("translation:siteMain.pages.setting.restore.all.content"),
       onOk() {
         window.ipcInvoke("STORE_RESTORE_ALL")
       },
@@ -31,10 +31,10 @@ export default function Restore() {
   return (
     <div styleName="restore">
       <div styleName="btn" onClick={handleRestoreConfig}>
-        {t("siteMain.pages.setting.restore.config.btn")}
+        {t("translation:siteMain.pages.setting.restore.config.btn")}
       </div>
       <div styleName="btn" onClick={handleRestoreAll}>
-        {t("siteMain.pages.setting.restore.all.btn")}
+        {t("translation:siteMain.pages.setting.restore.all.btn")}
       </div>
     </div>
   )

@@ -9,7 +9,9 @@ function App() {
 
   // 打开官方网站
   const openOfficialWebsite = () => {
-    window.open("https://baize.plume.vip")
+    window.ipcSend("OPEN_URL_IN_BROWSER", {
+      url: "https://baize.plume.vip",
+    })
   }
 
   return (
@@ -17,14 +19,21 @@ function App() {
       <div styleName="content">
         <img styleName="img" onClick={openOfficialWebsite} src={appIcon} />
 
-        <div styleName="title">{t("siteMain.pages.home.title")}</div>
-        <div styleName="desc">{t("siteMain.pages.home.desc")}</div>
+        <div styleName="title">{t("translation:siteMain.pages.home.title")}</div>
+        <div styleName="desc">{t("translation:siteMain.pages.home.desc")}</div>
       </div>
       <div styleName="footer">
         <Button type="link" onClick={openOfficialWebsite}>
-          {t("siteMain.pages.home.officialWebsite")}
+          {t("translation:siteMain.pages.home.officialWebsite")}
         </Button>
-        <Button type="link" onClick={() => window.open("https://github.com/baizeteam/baize-toolbox")}>
+        <Button
+          type="link"
+          onClick={() =>
+            window.ipcSend("OPEN_URL_IN_BROWSER", {
+              url: "https://github.com/baizeteam/baize-toolbox",
+            })
+          }
+        >
           Github
         </Button>
       </div>
