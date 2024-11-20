@@ -8,7 +8,7 @@ message.config({
   top: 60,
   duration: 2,
   maxCount: 3,
-  rtl: true,
+  // rtl: true,
 })
 
 export default function App(props) {
