@@ -1,8 +1,10 @@
 import { Button } from "antd"
 import React from "react"
 import { separator } from "@renderer/utils/fileHelper"
+import { useTranslation } from "react-i18next"
 
 export default function TransformersModels() {
+  const { t } = useTranslation()
   return (
     <div>
       <Button
@@ -12,7 +14,7 @@ export default function TransformersModels() {
           })
         }
       >
-        打开聊天模型文件夹
+        {t("translation:siteMain.pages.setting.transformersModels.openFolder")}
       </Button>
       <Button
         type="link"
@@ -22,7 +24,7 @@ export default function TransformersModels() {
           })
         }}
       >
-        从百度网盘下载
+        {t("translation:siteMain.pages.setting.transformersModels.downloadFromBaidu")}
       </Button>
       <Button
         type="link"
@@ -32,7 +34,7 @@ export default function TransformersModels() {
           })
         }}
       >
-        从阿里云盘下载
+        {t("translation:siteMain.pages.setting.transformersModels.downloadFromAliyun")}
       </Button>
       <Button
         type="link"
@@ -42,7 +44,7 @@ export default function TransformersModels() {
           })
         }}
       >
-        huggingface源文件
+        {t("translation:siteMain.pages.setting.transformersModels.huggingfaceSource")}
       </Button>
     </div>
   )

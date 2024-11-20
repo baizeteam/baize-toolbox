@@ -82,6 +82,13 @@
             "title": "Confirm restore all?",
             "content": "Restoring all includes configuration and history. Do you want to continue?"
           }
+        },
+        "transformersModels": {
+          "title": "Chat Transformers Models",
+          "openFolder": "Open chat model folder",
+          "downloadFromBaidu": "Download from Baidu",
+          "downloadFromAliyun": "Download from Aliyun",
+          "huggingfaceSource": "Huggingface source"
         }
       },
       "transcode": {
