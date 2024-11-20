@@ -1,4 +1,4 @@
-import { Button } from "antd"
+import { Button, message } from "antd"
 import React, { useEffect, useRef, useState } from "react"
 import { nanoid } from "nanoid"
 import AppChatInput from "../../components/AppChatInput"
@@ -67,6 +67,10 @@ export default function Chat() {
     })
     const onMessageReceived = (e) => {
       switch (e.data.status) {
+        case "errorMessage":
+          message.error(e.data.message)
+          setIsChat(false)
+          break
         case "start":
           break
         case "update":

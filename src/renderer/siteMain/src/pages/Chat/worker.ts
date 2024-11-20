@@ -74,7 +74,16 @@ class TextGenerationPipeline {
 async function generate(messages) {
   // Retrieve the text-generation pipeline.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance()
-
+    .then((res) => {
+      return res
+    })
+    .catch((e) => {
+      self.postMessage({
+        status: "errorMessage",
+        message: "模型加载失败，请到设置页面检查模型！",
+      })
+      return null
+    })
   const inputs = tokenizer.apply_chat_template(messages, {
     add_generation_prompt: true,
     return_dict: true,
