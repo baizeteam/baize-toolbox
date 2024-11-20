@@ -43,15 +43,14 @@ export class MenuManger {
 const menuObj = {
   destory: new MenuItem({
     label: "销毁",
-    click: (menuItem, browserWindow, event) => {
+    click: (menuItem, browserWindow: BrowserWindow, event) => {
       browserWindow?.destroy()
     },
   }),
   reload: new MenuItem({
     label: "刷新",
-    click: (menuItem, browserWindow, event) => {
+    click: (menuItem, browserWindow: BrowserWindow, event) => {
       if (browserWindow) {
-        console.log(browserWindow.webContents.getURL())
         browserWindow.reload()
         showCustomMenu(browserWindow)
       }
@@ -59,7 +58,7 @@ const menuObj = {
   }),
   devTools: new MenuItem({
     label: "开发者工具",
-    click: (menuItem, browserWindow, event) => {
+    click: (menuItem, browserWindow: BrowserWindow, event) => {
       browserWindow?.webContents?.openDevTools()
     },
   }),

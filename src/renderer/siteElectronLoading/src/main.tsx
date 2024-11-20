@@ -11,7 +11,7 @@ const App = () => {
     <BaseApp>
       <div styleName="electron-loading">
         <Spin size="large" />
-        <div styleName="tip">{t("siteElectronLoading.tip")}</div>
+        <div styleName="tip">{t("translation:siteElectronLoading.tip")}</div>
       </div>
     </BaseApp>
   )

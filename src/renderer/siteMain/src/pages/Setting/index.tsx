@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Theme from "./components/Theme"
 import DefaultOutPath from "./components/DefaultOutPath"
-import WhisperModelPath from "./components/WhisperModelPath"
 import Language from "./components/Language"
 import Restore from "./components/Restore"
 import AutoLaunch from "./components/AutoLaunch"
@@ -16,7 +15,6 @@ export default function Setting() {
       <AutoLaunch />
       <TransformersModels />
       <DefaultOutPath />
-      {/* <WhisperModelPath /> */}
       <Restore />
     </div>
   )
