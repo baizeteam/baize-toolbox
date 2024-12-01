@@ -35,7 +35,6 @@
     "src/**/*.{js,ts,jsx,tsx,json}": "prettier --write"
   },
   "dependencies": {
-    "@huggingface/transformers": "^3.0.2",
     "ajv": "^8.12.0",
     "easy-auto-launch": "^6.0.2",
     "electron-store": "^8.1.0",
@@ -52,6 +51,7 @@
     "ss-ffmpeg-static-electron": "^2.0.4"
   },
   "devDependencies": {
+    "@huggingface/transformers": "^3.0.2",
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron-toolkit/utils": "^3.0.0",
