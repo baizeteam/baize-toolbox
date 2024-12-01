@@ -2,17 +2,14 @@ import { Button } from "antd"
 import React from "react"
 import { separator } from "@renderer/utils/fileHelper"
 import { useTranslation } from "react-i18next"
+import { openFolder } from "@renderer/utils/fileHelper"
 
 export default function TransformersModels() {
   const { t } = useTranslation()
   return (
     <div>
       <Button
-        onClick={() =>
-          window.ipcInvoke("WIN_OPEN_FILE", {
-            path: `${window.injectData.resourcePath}${separator}resources${separator}models`,
-          })
-        }
+        onClick={() => openFolder(`${window.injectData.unpackedResourcePath}${separator}resources${separator}models`)}
       >
         {t("translation:siteMain.pages.setting.transformersModels.openFolder")}
       </Button>
@@ -26,7 +23,7 @@ export default function TransformersModels() {
       >
         {t("translation:siteMain.pages.setting.transformersModels.downloadFromBaidu")}
       </Button>
-      <Button
+      {/* <Button
         type="link"
         onClick={() => {
           window.ipcSend("OPEN_URL_IN_BROWSER", {
@@ -35,7 +32,7 @@ export default function TransformersModels() {
         }}
       >
         {t("translation:siteMain.pages.setting.transformersModels.downloadFromAliyun")}
-      </Button>
+      </Button> */}
       <Button
         type="link"
         onClick={() => {

@@ -1,5 +1,5 @@
 import { BrowserWindow, screen, shell, BrowserWindowConstructorOptions, app } from "electron"
-import { join } from "path"
+import { join, dirname } from "path"
 import { is } from "@electron-toolkit/utils"
 import icon from "@resources/icon.png?asset"
 import { showCustomMenu } from "@main/plugin/modules/MenuManger"
@@ -42,11 +42,12 @@ export async function createWin({ config, url, injectData, route }: ICreateWin):
     },
     ...config,
   })
+  const resourcesDir = dirname(app.getAppPath())
   InjectData({
     webContents: win.webContents,
     data: {
       system: await getSystemInfo(),
-      resourcePath: app.getAppPath(),
+      unpackedResourcePath: is.dev ? app.getAppPath() : join(resourcesDir, "app.asar.unpacked"),
       ...injectData,
     },
   })

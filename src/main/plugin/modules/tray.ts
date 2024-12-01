@@ -13,22 +13,22 @@ app.on("ready", () => {
 export const initTray = (tray) => {
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: i18n.t("tray.home"),
+      label: i18n.t("translation:tray.home"),
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/home")
       },
     },
     {
-      label: i18n.t("tray.setting"),
+      label: i18n.t("translation:tray.setting"),
       type: "normal",
       click: () => {
         showMainPage("/siteMain/index.html#/setting")
       },
     },
-    { label: i18n.t("tray.exit"), type: "normal", click: () => app.quit() },
+    { label: i18n.t("translation:tray.exit"), type: "normal", click: () => app.quit() },
   ])
-  tray.setToolTip(i18n.t("appTitle")) // 鼠标悬停时的提示文本
+  tray.setToolTip(i18n.t("translation:appTitle")) // 鼠标悬停时的提示文本
   tray.setContextMenu(contextMenu)
 }
 

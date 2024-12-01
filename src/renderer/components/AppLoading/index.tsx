@@ -8,7 +8,7 @@ export default function AppLoading() {
   return (
     <div styleName="app-loading">
       <Spin size="large" />
-      <div styleName="tip">{t("commonText.loading")}</div>
+      <div styleName="tip">{t("translation:commonText.loading")}</div>
     </div>
   )
 }

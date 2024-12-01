@@ -1,6 +1,6 @@
 import { app, ipcMain, dialog } from "electron"
 import { promisify } from "node:util"
-import { openFile, deleteFile, checkFolderExists } from "@main/utils/fileHelper"
+import { openFile, deleteFile, checkFolderExists, openFolder } from "@main/utils/fileHelper"
 import fs from "fs"
 import path from "path"
 
@@ -53,6 +53,11 @@ ipcMain.handle("WIN_SAVE_AND_RENAME", async (e, data) => {
 // 打开文件
 ipcMain.handle("WIN_OPEN_FILE", async (e, data) => {
   return openFile(data.path)
+})
+
+// 打开文件夹
+ipcMain.handle("WIN_OPEN_FOLDER", async (e, data) => {
+  return openFolder(data.path)
 })
 
 // 删除文件

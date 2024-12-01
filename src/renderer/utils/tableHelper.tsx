@@ -7,7 +7,7 @@ import { openFile, openFolder, separator } from "@renderer/utils/fileHelper"
 
 // 文本
 export const tableText = {
-  title: <Trans i18nKey="commonText.text" />,
+  title: <Trans i18nKey={"translation:commonText.text" as string & never[]} />,
   dataIndex: "text",
   key: "text",
   width: 400,
@@ -16,7 +16,7 @@ export const tableText = {
 
 // 文件
 export const tableFile = {
-  title: <Trans i18nKey="commonText.file" />,
+  title: <Trans i18nKey={"translation:commonText.file" as string & never[]} />,
   dataIndex: "outputFileName",
   key: "outputFileName",
   width: 400,
@@ -25,7 +25,7 @@ export const tableFile = {
 
 // 源文件
 export const tableOriginFile = {
-  title: <Trans i18nKey="commonText.originFile" />,
+  title: <Trans i18nKey={"translation:commonText.originFile" as string & never[]} />,
   dataIndex: "inputFilePath",
   key: "inputFilePath",
   width: 240,
@@ -34,7 +34,7 @@ export const tableOriginFile = {
 
 //
 export const tableFps = {
-  title: <Trans i18nKey="commonText.fps" />,
+  title: <Trans i18nKey={"translation:commonText.fps" as string & never[]} />,
   dataIndex: "fps",
   key: "fps",
   width: 60,
@@ -42,7 +42,7 @@ export const tableFps = {
 
 // 进度
 export const tableProgress = {
-  title: <Trans i18nKey="commonText.progress" />,
+  title: <Trans i18nKey={"translation:commonText.progress" as string & never[]} />,
   dataIndex: "progress",
   key: "progress",
   render: (progress) => <Progress percent={progress} />,
@@ -50,7 +50,7 @@ export const tableProgress = {
 
 // 创建时间
 export const tableCreateTime = {
-  title: <Trans i18nKey="commonText.createTime" />,
+  title: <Trans i18nKey={"translation:commonText.createTime" as string & never[]} />,
   dataIndex: "createTime",
   key: "createTime",
   width: 160,
@@ -86,7 +86,7 @@ export const OpenFileBtn = (props: ITableBtnProps) => {
   const { t } = useTranslation()
   return (
     <Button
-      onClick={() => openFile(`${record.outputFloaderPath}${separator}${record.outputFileName}`)}
+      onClick={() => openFolder(`${record.outputFloaderPath}${separator}${record.outputFileName}`)}
       type="link"
       className="common-table-link-btn"
     >

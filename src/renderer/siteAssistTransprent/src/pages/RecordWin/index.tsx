@@ -126,7 +126,7 @@ export default function RecordWin() {
   return (
     <div styleName="record-win">
       <div styleName="header">
-        <div styleName="title">{t("siteAssistTransprent.pages.recordWin.title")}</div>
+        <div styleName="title">{t("translation:siteAssistTransprent.pages.recordWin.title")}</div>
         <AppIcon
           styleName="close-btn"
           icon="#baize-guanbi"
@@ -147,7 +147,7 @@ export default function RecordWin() {
         <div styleName="right">
           {!isGif && (
             <div styleName="record-select">
-              <div styleName="label">{t("commonText.fps")}</div>
+              <div styleName="label">{t("translation:commonText.fps")}</div>
               <Select
                 virtual={false}
                 size="small"

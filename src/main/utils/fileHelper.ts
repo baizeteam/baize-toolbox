@@ -2,9 +2,9 @@ import fs from "fs"
 import { shell } from "electron"
 
 // 检测文件夹，如果不存在，创建文件夹
-export const checkFolderExists = (folderPath: string) => {
+export const checkFolderExists = async (folderPath: string) => {
   if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true })
+    await fs.mkdirSync(folderPath, { recursive: true })
   }
 }
 
@@ -13,7 +13,7 @@ export const openFile = (filePath: string) => {
   console.log("filePath", filePath)
   // 检查文件夹是否存在
   return new Promise((resolve) => {
-    fs.access(filePath, fs.constants.F_OK, (err) => {
+    fs.access(filePath, fs.constants.F_OK, async (err) => {
       if (err) {
         resolve(false)
       } else {
@@ -22,6 +22,13 @@ export const openFile = (filePath: string) => {
       }
     })
   })
+}
+
+// 打开文件夹
+export const openFolder = async (folderPath: string) => {
+  await checkFolderExists(folderPath)
+  shell.openPath(folderPath)
+  return true
 }
 
 // 删除文件
