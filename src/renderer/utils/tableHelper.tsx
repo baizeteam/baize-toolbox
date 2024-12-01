@@ -86,7 +86,7 @@ export const OpenFileBtn = (props: ITableBtnProps) => {
   const { t } = useTranslation()
   return (
     <Button
-      onClick={() => openFile(`${record.outputFloaderPath}${separator}${record.outputFileName}`)}
+      onClick={() => openFolder(`${record.outputFloaderPath}${separator}${record.outputFileName}`)}
       type="link"
       className="common-table-link-btn"
     >

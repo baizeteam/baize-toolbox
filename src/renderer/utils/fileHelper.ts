@@ -19,7 +19,7 @@ export const separator = platformUtil.isWin ? "\\" : "/"
 // 打开文件夹
 export const openFolder = (path) => {
   window.electron.ipcRenderer
-    .invoke("WIN_OPEN_FILE", {
+    .invoke("WIN_OPEN_FOLDER", {
       path,
     })
     .then((res) => {
