@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@huggingface/transformers':
-        specifier: ^3.0.2
-        version: 3.0.2
       ajv:
         specifier: ^8.12.0
         version: 8.17.1
@@ -63,6 +60,9 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^3.0.0
         version: 3.0.0(electron@31.7.5)
+      '@huggingface/transformers':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@koale/useworker':
         specifier: ^4.0.2
         version: 4.0.2(react@18.2.0)
