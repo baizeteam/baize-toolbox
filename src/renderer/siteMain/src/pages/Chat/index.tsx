@@ -62,7 +62,7 @@ export default function Chat() {
     workerRef.current?.postMessage({
       type: "init",
       data: {
-        remoteHost: `${window.injectData.resourcePath}${separator}resources${separator}models`,
+        remoteHost: `${window.injectData.unpackedResourcePath}${separator}resources${separator}models`,
       },
     })
     const onMessageReceived = (e) => {

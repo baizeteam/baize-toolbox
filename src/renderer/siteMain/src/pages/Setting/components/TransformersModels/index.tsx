@@ -8,7 +8,9 @@ export default function TransformersModels() {
   const { t } = useTranslation()
   return (
     <div>
-      <Button onClick={() => openFolder(`${window.injectData.resourcePath}${separator}resources${separator}models`)}>
+      <Button
+        onClick={() => openFolder(`${window.injectData.unpackedResourcePath}${separator}resources${separator}models`)}
+      >
         {t("translation:siteMain.pages.setting.transformersModels.openFolder")}
       </Button>
       <Button
