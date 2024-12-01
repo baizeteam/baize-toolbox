@@ -1,4 +1,4 @@
-appId: com.baize.box.app
+appId: com.baize.toolbox.app
 productName: baize-toolbox
 directories:
   buildResources: build
@@ -12,6 +12,7 @@ files:
   - "!resources/win/*"
   - "!resources/mac/*"
   - "!resources/linux/*"
+  - "!resources/models/*"
 asarUnpack:
   - resources/**
 win:
